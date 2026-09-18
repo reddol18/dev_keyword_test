@@ -1,0 +1,52 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# generated native folders
+# 네이티브 프로젝트는 `npx expo prebuild`로 재생성한다.
+# onnxruntime 패치는 scripts-postinstall.js가 처리하므로
+# android/를 버전관리할 필요가 없다.
+/ios
+/android
+
+# ONNX 모델은 106MB라 git에 넣지 않는다.
+# 받는 법: scripts-fetch-model.sh 참조
+/assets/model/model.onnx
+
+# 개인 작업 메모 — 공개 저장소에 포함하지 않는다
+/CLAUDE.md
+/DEMO.md

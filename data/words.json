@@ -1,0 +1,618 @@
+[
+  {
+    "word": "kind",
+    "meanings": [
+      "친절한",
+      "종류"
+    ],
+    "partOfSpeech": "adj/n",
+    "near": [
+      "상냥한",
+      "다정한",
+      "친절"
+    ]
+  },
+  {
+    "word": "hard",
+    "meanings": [
+      "어려운",
+      "단단한",
+      "열심히"
+    ],
+    "partOfSpeech": "adj/adv",
+    "near": [
+      "힘든",
+      "딱딱한",
+      "굳은"
+    ]
+  },
+  {
+    "word": "right",
+    "meanings": [
+      "옳은",
+      "오른쪽",
+      "권리"
+    ],
+    "partOfSpeech": "adj/n",
+    "near": [
+      "맞는",
+      "정확한",
+      "바른"
+    ]
+  },
+  {
+    "word": "leave",
+    "meanings": [
+      "떠나다",
+      "남기다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "나가다",
+      "출발하다",
+      "두고가다"
+    ]
+  },
+  {
+    "word": "break",
+    "meanings": [
+      "부수다",
+      "휴식"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "깨다",
+      "부러뜨리다",
+      "고장내다",
+      "쉬다"
+    ]
+  },
+  {
+    "word": "close",
+    "meanings": [
+      "닫다",
+      "가까운"
+    ],
+    "partOfSpeech": "v/adj",
+    "near": [
+      "잠그다",
+      "닫히다",
+      "친한"
+    ]
+  },
+  {
+    "word": "fair",
+    "meanings": [
+      "공정한",
+      "박람회"
+    ],
+    "partOfSpeech": "adj/n",
+    "near": [
+      "공평한",
+      "정당한",
+      "축제"
+    ]
+  },
+  {
+    "word": "free",
+    "meanings": [
+      "자유로운",
+      "무료의"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "공짜의",
+      "한가한",
+      "풀어주다"
+    ]
+  },
+  {
+    "word": "light",
+    "meanings": [
+      "빛",
+      "가벼운"
+    ],
+    "partOfSpeech": "n/adj",
+    "near": [
+      "밝은",
+      "조명",
+      "불빛"
+    ]
+  },
+  {
+    "word": "matter",
+    "meanings": [
+      "문제"
+    ],
+    "partOfSpeech": "n/v",
+    "near": [
+      "사안",
+      "일",
+      "중요하다"
+    ]
+  },
+  {
+    "word": "mean",
+    "meanings": [
+      "의미하다",
+      "못된"
+    ],
+    "partOfSpeech": "v/adj",
+    "near": [
+      "뜻하다",
+      "심술궂은",
+      "비열한"
+    ]
+  },
+  {
+    "word": "miss",
+    "meanings": [
+      "놓치다",
+      "그리워하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "빠뜨리다",
+      "못보다",
+      "보고싶다"
+    ]
+  },
+  {
+    "word": "order",
+    "meanings": [
+      "주문하다",
+      "순서",
+      "명령"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "시키다",
+      "정렬",
+      "차례"
+    ]
+  },
+  {
+    "word": "part",
+    "meanings": [
+      "부분",
+      "역할"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "일부",
+      "조각",
+      "부품"
+    ]
+  },
+  {
+    "word": "place",
+    "meanings": [
+      "장소",
+      "놓다"
+    ],
+    "partOfSpeech": "n/v",
+    "near": [
+      "위치하다",
+      "두다",
+      "배치하다",
+      "자리"
+    ]
+  },
+  {
+    "word": "point",
+    "meanings": [
+      "점",
+      "요점",
+      "가리키다"
+    ],
+    "partOfSpeech": "n/v",
+    "near": [
+      "지점",
+      "포인트",
+      "찌르다"
+    ]
+  },
+  {
+    "word": "save",
+    "meanings": [
+      "구하다",
+      "저축하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "아끼다",
+      "모으다",
+      "보관하다"
+    ]
+  },
+  {
+    "word": "sign",
+    "meanings": [
+      "표지판",
+      "신호",
+      "서명하다"
+    ],
+    "partOfSpeech": "n/v",
+    "near": [
+      "사인",
+      "징조",
+      "간판"
+    ]
+  },
+  {
+    "word": "spring",
+    "meanings": [
+      "봄",
+      "샘"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "용수철",
+      "튀다"
+    ]
+  },
+  {
+    "word": "watch",
+    "meanings": [
+      "보다",
+      "손목시계"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "지켜보다",
+      "관찰하다",
+      "시계"
+    ]
+  },
+  {
+    "word": "change",
+    "meanings": [
+      "바꾸다",
+      "거스름돈"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "변하다",
+      "교환하다",
+      "바뀌다"
+    ]
+  },
+  {
+    "word": "fine",
+    "meanings": [
+      "좋은",
+      "벌금"
+    ],
+    "partOfSpeech": "adj/n",
+    "near": [
+      "괜찮은",
+      "훌륭한",
+      "멋진"
+    ]
+  },
+  {
+    "word": "check",
+    "meanings": [
+      "확인하다",
+      "계산서"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "점검하다",
+      "살피다",
+      "검사하다"
+    ]
+  },
+  {
+    "word": "cool",
+    "meanings": [
+      "시원한",
+      "멋진"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "차가운",
+      "서늘한",
+      "쿨한"
+    ]
+  },
+  {
+    "word": "excited",
+    "meanings": [
+      "신난",
+      "흥분한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "설레는",
+      "들뜬",
+      "기쁜"
+    ]
+  },
+  {
+    "word": "important",
+    "meanings": [
+      "중요한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "소중한",
+      "귀한"
+    ]
+  },
+  {
+    "word": "difficult",
+    "meanings": [
+      "힘든"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "어려운",
+      "까다로운"
+    ]
+  },
+  {
+    "word": "favorite",
+    "meanings": [
+      "가장 좋아하는"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "제일좋아하는",
+      "최애"
+    ]
+  },
+  {
+    "word": "dangerous",
+    "meanings": [
+      "위험한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "위태로운",
+      "아슬아슬한"
+    ]
+  },
+  {
+    "word": "delicious",
+    "meanings": [
+      "맛있는"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "맛좋은",
+      "고소한"
+    ]
+  },
+  {
+    "word": "beautiful",
+    "meanings": [
+      "아름다운"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "예쁜",
+      "고운",
+      "멋진"
+    ]
+  },
+  {
+    "word": "healthy",
+    "meanings": [
+      "건강한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "튼튼한",
+      "건강에좋은"
+    ]
+  },
+  {
+    "word": "careful",
+    "meanings": [
+      "조심스러운"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "신중한",
+      "주의깊은"
+    ]
+  },
+  {
+    "word": "famous",
+    "meanings": [
+      "유명한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "유명세",
+      "잘알려진"
+    ]
+  },
+  {
+    "word": "quiet",
+    "meanings": [
+      "조용한"
+    ],
+    "partOfSpeech": "adj",
+    "near": [
+      "고요한",
+      "잠잠한",
+      "조용히"
+    ]
+  },
+  {
+    "word": "borrow",
+    "meanings": [
+      "빌리다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "대여하다",
+      "빌려오다"
+    ]
+  },
+  {
+    "word": "invite",
+    "meanings": [
+      "초대하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "부르다",
+      "청하다"
+    ]
+  },
+  {
+    "word": "decide",
+    "meanings": [
+      "결정하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "정하다",
+      "결심하다"
+    ]
+  },
+  {
+    "word": "remember",
+    "meanings": [
+      "기억하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "떠올리다",
+      "외우다",
+      "생각나다"
+    ]
+  },
+  {
+    "word": "forget",
+    "meanings": [
+      "잊다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "까먹다"
+    ]
+  },
+  {
+    "word": "understand",
+    "meanings": [
+      "이해하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "알다",
+      "파악하다",
+      "이해되다"
+    ]
+  },
+  {
+    "word": "practice",
+    "meanings": [
+      "연습하다",
+      "연습"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "훈련하다",
+      "익히다"
+    ]
+  },
+  {
+    "word": "travel",
+    "meanings": [
+      "여행하다",
+      "여행"
+    ],
+    "partOfSpeech": "v/n",
+    "near": [
+      "다니다",
+      "이동하다"
+    ]
+  },
+  {
+    "word": "wear",
+    "meanings": [
+      "입다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "착용하다",
+      "신다",
+      "쓰다"
+    ]
+  },
+  {
+    "word": "bring",
+    "meanings": [
+      "가져오다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "데려오다",
+      "들고오다",
+      "챙기다"
+    ]
+  },
+  {
+    "word": "choose",
+    "meanings": [
+      "고르다",
+      "선택하다"
+    ],
+    "partOfSpeech": "v",
+    "near": [
+      "정하다",
+      "뽑다"
+    ]
+  },
+  {
+    "word": "weather",
+    "meanings": [
+      "날씨"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "일기",
+      "기상"
+    ]
+  },
+  {
+    "word": "vacation",
+    "meanings": [
+      "방학",
+      "휴가"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "쉬는날",
+      "연휴"
+    ]
+  },
+  {
+    "word": "hobby",
+    "meanings": [
+      "취미"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "여가",
+      "관심사"
+    ]
+  },
+  {
+    "word": "subject",
+    "meanings": [
+      "과목",
+      "주제"
+    ],
+    "partOfSpeech": "n",
+    "near": [
+      "학과",
+      "대상",
+      "제목"
+    ]
+  }
+]
