@@ -12,18 +12,30 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
 ## 화면
 
-| 복수정답 인정 | "비슷했어요" |
+| 시작 — 범위를 고른다 | 목록 — 전체를 훑어본다 |
 |---|---|
-| <img src="docs/screenshots/01-correct.png" width="260"> | <img src="docs/screenshots/02-close.png" width="260"> |
-| `kind`의 두 번째 뜻 **"종류"**도 정답.<br>채점 후 두 뜻을 함께 보여준다 | `place` → **"위치하다"**는 오답이지만<br>뜻이 통한다는 것을 알려준다 |
+| <img src="docs/screenshots/01-start.png" width="260"> | <img src="docs/screenshots/05-list.png" width="260"> |
+| 단어장·난이도·분야·방식·문항 수.<br>조건에 맞는 개수가 아래에 계속 보인다 | 분야별로 묶이고 헤더가 고정된다.<br>★는 면접 우선 등급 |
 
-| AI 활용형 판정 | 결과 · 오답노트 |
+| 객관식 — 헷갈리는 것끼리 묶어 낸다 | 채점 |
 |---|---|
-| <img src="docs/screenshots/03-ai.png" width="260"> | <img src="docs/screenshots/04-result.png" width="260"> |
-| `careful` → **"조심스럽게"**.<br>규칙으로는 못 잡는다 (유사도 0.92) | 내가 **뭐라고 썼는지 원문 그대로**.<br>"비슷했어요"는 주황으로 구분 |
+| <img src="docs/screenshots/02-choice.png" width="260"> | <img src="docs/screenshots/03-correct.png" width="260"> |
+| `OAuth`의 오답 보기가 **SSO·ABAC·RBAC**.<br>같은 분야에서 실제로 헷갈리는 용어들이다 | 정답은 초록.<br>한국어 뜻과 영문 풀네임을 함께 보여준다 |
 
-> 위 화면은 채점 동작을 보여주기 위한 영단어 예시다.
-> 기본 단어장은 아래의 **IT 개발 용어**다.
+| 오답 | 결과 · 오답노트 |
+|---|---|
+| <img src="docs/screenshots/06-wrong.png" width="260"> | <img src="docs/screenshots/04-result.png" width="260"> |
+| 내가 고른 것은 빨강, 정답은 초록.<br>둘을 동시에 보여준다 | 내가 **뭐라고 답했는지 그대로**.<br>정답과 나란히 둔다 |
+
+### 주관식 채점 — 직접 입력했을 때
+
+| 복수정답 인정 | "비슷했어요" | AI 활용형 판정 |
+|---|---|---|
+| <img src="docs/screenshots/01-correct.png" width="200"> | <img src="docs/screenshots/02-close.png" width="200"> | <img src="docs/screenshots/03-ai.png" width="200"> |
+| `kind`의 두 번째 뜻<br>**"종류"**도 정답 | `place` → **"위치하다"**는<br>오답이되 통한다고 알려준다 | `careful` → **"조심스럽게"**.<br>규칙으로는 못 잡는다 (0.92) |
+
+> 주관식 3장은 채점 동작을 보여주려고 영단어로 찍은 것이다.
+> 기본 단어장은 **IT 개발 용어**다.
 
 ---
 
