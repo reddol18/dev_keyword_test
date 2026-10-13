@@ -50,3 +50,9 @@ yarn-error.*
 # 개인 작업 메모 — 공개 저장소에 포함하지 않는다
 /CLAUDE.md
 /DEMO.md
+
+# 이 PC 전용 빌드 스크립트 (E 드라이브 경로가 박혀 있다)
+/build-android.ps1
+
+# 작업용 화면 캡처 — 공개하는 것은 docs/screenshots/ 쪽이다
+/docs/screens/

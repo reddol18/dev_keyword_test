@@ -1,0 +1,1718 @@
+[
+  {
+    "word": "deprecated",
+    "meanings": [
+      "더 이상 권장되지 않는",
+      "폐기 예정인"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "사용 중단된",
+      "구식의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Deprecated",
+      "deprecated"
+    ],
+    "confusable": [
+      "obsolete",
+      "legacy",
+      "discouraged"
+    ]
+  },
+  {
+    "word": "obsolete",
+    "meanings": [
+      "한물간",
+      "쓸모없어진"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "구식의",
+      "퇴물이 된"
+    ],
+    "level": 2,
+    "aliases": [
+      "Obsolete",
+      "obsolete"
+    ],
+    "confusable": [
+      "deprecated",
+      "legacy",
+      "outdated"
+    ]
+  },
+  {
+    "word": "legacy",
+    "meanings": [
+      "예전부터 써 온",
+      "구형의"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "레거시",
+      "기존의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Legacy",
+      "legacy"
+    ],
+    "confusable": [
+      "deprecated",
+      "obsolete",
+      "existing"
+    ]
+  },
+  {
+    "word": "arbitrary",
+    "meanings": [
+      "임의의",
+      "아무렇게나 정한"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "제멋대로인",
+      "자의적인"
+    ],
+    "level": 1,
+    "aliases": [
+      "Arbitrary",
+      "arbitrary"
+    ],
+    "confusable": [
+      "random",
+      "specific",
+      "explicit"
+    ]
+  },
+  {
+    "word": "explicit",
+    "meanings": [
+      "명시적인",
+      "분명히 밝힌"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "명확한",
+      "드러낸"
+    ],
+    "level": 1,
+    "aliases": [
+      "Explicit",
+      "explicit"
+    ],
+    "confusable": [
+      "implicit",
+      "specific",
+      "verbose"
+    ]
+  },
+  {
+    "word": "implicit",
+    "meanings": [
+      "암묵적인",
+      "말하지 않아도 되는"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "내재된",
+      "묵시적인"
+    ],
+    "level": 1,
+    "aliases": [
+      "Implicit",
+      "implicit"
+    ],
+    "confusable": [
+      "explicit",
+      "inherent",
+      "default"
+    ]
+  },
+  {
+    "word": "inherent",
+    "meanings": [
+      "본래부터 있는",
+      "타고난"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "내재적인",
+      "고유한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Inherent",
+      "inherent"
+    ],
+    "confusable": [
+      "implicit",
+      "intrinsic",
+      "built-in"
+    ]
+  },
+  {
+    "word": "subsequent",
+    "meanings": [
+      "뒤이어 오는",
+      "그다음의"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "후속의",
+      "이후의"
+    ],
+    "level": 2,
+    "aliases": [
+      "Subsequent",
+      "subsequent"
+    ],
+    "confusable": [
+      "preceding",
+      "consecutive",
+      "following"
+    ]
+  },
+  {
+    "word": "preceding",
+    "meanings": [
+      "앞선",
+      "바로 전의"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "선행하는",
+      "이전의"
+    ],
+    "level": 2,
+    "aliases": [
+      "Preceding",
+      "preceding"
+    ],
+    "confusable": [
+      "subsequent",
+      "prior",
+      "previous"
+    ]
+  },
+  {
+    "word": "respectively",
+    "meanings": [
+      "각각",
+      "순서대로 각기"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "차례대로"
+    ],
+    "level": 2,
+    "aliases": [
+      "Respectively",
+      "respectively"
+    ],
+    "confusable": [
+      "accordingly",
+      "consecutively",
+      "separately"
+    ]
+  },
+  {
+    "word": "accordingly",
+    "meanings": [
+      "그에 맞게",
+      "따라서"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "그에 따라"
+    ],
+    "level": 2,
+    "aliases": [
+      "Accordingly",
+      "accordingly"
+    ],
+    "confusable": [
+      "respectively",
+      "consequently",
+      "hence"
+    ]
+  },
+  {
+    "word": "regardless",
+    "meanings": [
+      "상관없이",
+      "무관하게"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "개의치 않고"
+    ],
+    "level": 1,
+    "aliases": [
+      "Regardless",
+      "regardless"
+    ],
+    "confusable": [
+      "nevertheless",
+      "irrespective",
+      "despite"
+    ]
+  },
+  {
+    "word": "prerequisite",
+    "meanings": [
+      "사전에 갖춰야 할 것",
+      "선행 조건"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "전제 조건",
+      "필수 조건"
+    ],
+    "level": 1,
+    "aliases": [
+      "Prerequisite",
+      "prerequisite"
+    ],
+    "confusable": [
+      "dependency",
+      "requirement",
+      "constraint"
+    ]
+  },
+  {
+    "word": "constraint",
+    "meanings": [
+      "제약",
+      "제한 조건"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "구속 조건",
+      "한계"
+    ],
+    "level": 1,
+    "aliases": [
+      "Constraint",
+      "constraint"
+    ],
+    "confusable": [
+      "limitation",
+      "restriction",
+      "prerequisite"
+    ]
+  },
+  {
+    "word": "caveat",
+    "meanings": [
+      "주의할 점",
+      "단서"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "유의사항",
+      "경고"
+    ],
+    "level": 2,
+    "aliases": [
+      "Caveat",
+      "caveat"
+    ],
+    "confusable": [
+      "disclaimer",
+      "limitation",
+      "warning"
+    ]
+  },
+  {
+    "word": "verbose",
+    "meanings": [
+      "장황한",
+      "말이 많은"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "상세한",
+      "수다스러운"
+    ],
+    "level": 2,
+    "aliases": [
+      "Verbose",
+      "verbose"
+    ],
+    "confusable": [
+      "explicit",
+      "concise",
+      "detailed"
+    ]
+  },
+  {
+    "word": "concise",
+    "meanings": [
+      "간결한",
+      "짧고 명확한"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "간명한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Concise",
+      "concise"
+    ],
+    "confusable": [
+      "verbose",
+      "brief",
+      "terse"
+    ]
+  },
+  {
+    "word": "ambiguous",
+    "meanings": [
+      "모호한",
+      "여러 뜻으로 읽히는"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "애매한",
+      "불분명한"
+    ],
+    "level": 1,
+    "aliases": [
+      "Ambiguous",
+      "ambiguous"
+    ],
+    "confusable": [
+      "vague",
+      "explicit",
+      "obscure"
+    ]
+  },
+  {
+    "word": "trivial",
+    "meanings": [
+      "사소한",
+      "별것 아닌"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "하찮은",
+      "간단한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Trivial",
+      "trivial"
+    ],
+    "confusable": [
+      "negligible",
+      "significant",
+      "minor"
+    ]
+  },
+  {
+    "word": "negligible",
+    "meanings": [
+      "무시해도 될 만큼 작은"
+    ],
+    "partOfSpeech": "문서 읽기",
+    "near": [
+      "미미한",
+      "하찮은"
+    ],
+    "level": 2,
+    "aliases": [
+      "Negligible",
+      "negligible"
+    ],
+    "confusable": [
+      "trivial",
+      "minimal",
+      "insignificant"
+    ]
+  },
+  {
+    "word": "invalid",
+    "meanings": [
+      "유효하지 않은",
+      "잘못된"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "부적합한",
+      "무효한"
+    ],
+    "level": 1,
+    "aliases": [
+      "Invalid",
+      "invalid"
+    ],
+    "confusable": [
+      "malformed",
+      "corrupt",
+      "unexpected"
+    ]
+  },
+  {
+    "word": "malformed",
+    "meanings": [
+      "형식이 깨진",
+      "잘못 만들어진"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "형식 오류의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Malformed",
+      "malformed"
+    ],
+    "confusable": [
+      "invalid",
+      "corrupt",
+      "truncated"
+    ]
+  },
+  {
+    "word": "corrupt",
+    "meanings": [
+      "손상된",
+      "깨진"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "망가진",
+      "훼손된"
+    ],
+    "level": 1,
+    "aliases": [
+      "Corrupt",
+      "corrupt"
+    ],
+    "confusable": [
+      "malformed",
+      "invalid",
+      "damaged"
+    ]
+  },
+  {
+    "word": "truncated",
+    "meanings": [
+      "잘려 나간",
+      "중간에 끊긴"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "절단된",
+      "잘린"
+    ],
+    "level": 1,
+    "aliases": [
+      "Truncated",
+      "truncated"
+    ],
+    "confusable": [
+      "corrupt",
+      "trimmed",
+      "incomplete"
+    ]
+  },
+  {
+    "word": "exceed",
+    "meanings": [
+      "넘어서다",
+      "초과하다"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "초과",
+      "웃돌다"
+    ],
+    "level": 1,
+    "aliases": [
+      "Exceed",
+      "exceed"
+    ],
+    "confusable": [
+      "surpass",
+      "overflow",
+      "violate"
+    ]
+  },
+  {
+    "word": "overflow",
+    "meanings": [
+      "넘쳐흐르다",
+      "용량을 넘다"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "오버플로",
+      "범람"
+    ],
+    "level": 1,
+    "aliases": [
+      "Overflow",
+      "overflow"
+    ],
+    "confusable": [
+      "exceed",
+      "underflow",
+      "leak"
+    ]
+  },
+  {
+    "word": "stale",
+    "meanings": [
+      "오래돼 쓸 수 없는",
+      "낡은"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "묵은",
+      "만료된"
+    ],
+    "level": 1,
+    "aliases": [
+      "Stale",
+      "stale"
+    ],
+    "confusable": [
+      "expired",
+      "obsolete",
+      "cached"
+    ]
+  },
+  {
+    "word": "expired",
+    "meanings": [
+      "기한이 지난",
+      "만료된"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "유효기간이 끝난"
+    ],
+    "level": 1,
+    "aliases": [
+      "Expired",
+      "expired"
+    ],
+    "confusable": [
+      "stale",
+      "revoked",
+      "timeout"
+    ]
+  },
+  {
+    "word": "revoked",
+    "meanings": [
+      "철회된",
+      "취소된"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "회수된",
+      "무효화된"
+    ],
+    "level": 2,
+    "aliases": [
+      "Revoked",
+      "revoked"
+    ],
+    "confusable": [
+      "expired",
+      "denied",
+      "invalidated"
+    ]
+  },
+  {
+    "word": "denied",
+    "meanings": [
+      "거부된",
+      "허용되지 않은"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "거절된"
+    ],
+    "level": 1,
+    "aliases": [
+      "Denied",
+      "denied"
+    ],
+    "confusable": [
+      "revoked",
+      "forbidden",
+      "rejected"
+    ]
+  },
+  {
+    "word": "forbidden",
+    "meanings": [
+      "금지된",
+      "접근이 막힌"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "허가되지 않은"
+    ],
+    "level": 1,
+    "aliases": [
+      "Forbidden",
+      "forbidden"
+    ],
+    "confusable": [
+      "denied",
+      "unauthorized",
+      "restricted"
+    ]
+  },
+  {
+    "word": "unauthorized",
+    "meanings": [
+      "인증되지 않은",
+      "권한이 없는"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "미인증의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Unauthorized",
+      "unauthorized"
+    ],
+    "confusable": [
+      "forbidden",
+      "denied",
+      "unauthenticated"
+    ]
+  },
+  {
+    "word": "abort",
+    "meanings": [
+      "중도에 멈추다",
+      "중단하다"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "중지",
+      "취소하다"
+    ],
+    "level": 1,
+    "aliases": [
+      "Abort",
+      "abort"
+    ],
+    "confusable": [
+      "terminate",
+      "cancel",
+      "halt"
+    ]
+  },
+  {
+    "word": "terminate",
+    "meanings": [
+      "끝내다",
+      "종료시키다"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "종료",
+      "끊다"
+    ],
+    "level": 1,
+    "aliases": [
+      "Terminate",
+      "terminate"
+    ],
+    "confusable": [
+      "abort",
+      "kill",
+      "exit"
+    ]
+  },
+  {
+    "word": "stacktrace",
+    "meanings": [
+      "오류가 난 호출 경로 기록"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "스택 트레이스",
+      "호출 스택"
+    ],
+    "level": 2,
+    "aliases": [
+      "Stacktrace",
+      "stacktrace"
+    ],
+    "confusable": [
+      "traceback",
+      "log",
+      "dump"
+    ]
+  },
+  {
+    "word": "threshold",
+    "meanings": [
+      "넘으면 반응하는 기준값",
+      "임계값"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "문턱값",
+      "기준선"
+    ],
+    "level": 1,
+    "aliases": [
+      "Threshold",
+      "threshold"
+    ],
+    "confusable": [
+      "limit",
+      "baseline",
+      "quota"
+    ]
+  },
+  {
+    "word": "quota",
+    "meanings": [
+      "쓸 수 있는 할당량"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "쿼터",
+      "한도"
+    ],
+    "level": 1,
+    "aliases": [
+      "Quota",
+      "quota"
+    ],
+    "confusable": [
+      "threshold",
+      "limit",
+      "capacity"
+    ]
+  },
+  {
+    "word": "leak",
+    "meanings": [
+      "새어 나가다",
+      "누수"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "유출",
+      "누출"
+    ],
+    "level": 1,
+    "aliases": [
+      "Leak",
+      "leak"
+    ],
+    "confusable": [
+      "overflow",
+      "exposure",
+      "drain"
+    ]
+  },
+  {
+    "word": "flaky",
+    "meanings": [
+      "됐다 안 됐다 하는",
+      "불안정한"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "간헐적으로 실패하는"
+    ],
+    "level": 2,
+    "aliases": [
+      "Flaky",
+      "flaky"
+    ],
+    "confusable": [
+      "intermittent",
+      "unstable",
+      "unreliable"
+    ]
+  },
+  {
+    "word": "intermittent",
+    "meanings": [
+      "간헐적인",
+      "띄엄띄엄 일어나는"
+    ],
+    "partOfSpeech": "에러·로그",
+    "near": [
+      "단속적인"
+    ],
+    "level": 2,
+    "aliases": [
+      "Intermittent",
+      "intermittent"
+    ],
+    "confusable": [
+      "flaky",
+      "sporadic",
+      "occasional"
+    ]
+  },
+  {
+    "word": "mitigate",
+    "meanings": [
+      "피해를 줄이다",
+      "완화하다"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "경감하다",
+      "누그러뜨리다"
+    ],
+    "level": 1,
+    "aliases": [
+      "Mitigate",
+      "mitigate"
+    ],
+    "confusable": [
+      "alleviate",
+      "resolve",
+      "prevent"
+    ]
+  },
+  {
+    "word": "alleviate",
+    "meanings": [
+      "덜어 주다",
+      "누그러뜨리다"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "완화하다",
+      "경감"
+    ],
+    "level": 2,
+    "aliases": [
+      "Alleviate",
+      "alleviate"
+    ],
+    "confusable": [
+      "mitigate",
+      "relieve",
+      "reduce"
+    ]
+  },
+  {
+    "word": "workaround",
+    "meanings": [
+      "근본 해결은 아니지만 우회하는 방법"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "임시 방편",
+      "우회책"
+    ],
+    "level": 1,
+    "aliases": [
+      "Workaround",
+      "workaround"
+    ],
+    "confusable": [
+      "hotfix",
+      "patch",
+      "fallback"
+    ]
+  },
+  {
+    "word": "fallback",
+    "meanings": [
+      "안 될 때 대신 쓰는 대안"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "폴백",
+      "대비책"
+    ],
+    "level": 1,
+    "aliases": [
+      "Fallback",
+      "fallback"
+    ],
+    "confusable": [
+      "workaround",
+      "backup",
+      "default"
+    ]
+  },
+  {
+    "word": "tradeoff",
+    "meanings": [
+      "하나를 얻으면 하나를 잃는 관계"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "트레이드오프",
+      "맞바꿈"
+    ],
+    "level": 1,
+    "aliases": [
+      "Tradeoff",
+      "tradeoff"
+    ],
+    "confusable": [
+      "compromise",
+      "balance",
+      "constraint"
+    ]
+  },
+  {
+    "word": "edge case",
+    "meanings": [
+      "드물게 일어나는 경계 상황"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "엣지 케이스",
+      "예외 상황"
+    ],
+    "level": 1,
+    "aliases": [
+      "Edge case",
+      "edge case",
+      "edge-case",
+      "edgecase"
+    ],
+    "confusable": [
+      "corner case",
+      "outlier",
+      "exception"
+    ]
+  },
+  {
+    "word": "regression",
+    "meanings": [
+      "잘 되던 게 다시 망가지는 것"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "회귀",
+      "퇴행"
+    ],
+    "level": 1,
+    "aliases": [
+      "Regression",
+      "regression"
+    ],
+    "confusable": [
+      "bug",
+      "defect",
+      "rollback"
+    ]
+  },
+  {
+    "word": "refactor",
+    "meanings": [
+      "동작은 그대로 두고 구조만 고치다"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "리팩터링",
+      "구조 개선"
+    ],
+    "level": 1,
+    "aliases": [
+      "Refactor",
+      "refactor"
+    ],
+    "confusable": [
+      "rewrite",
+      "optimize",
+      "restructure"
+    ]
+  },
+  {
+    "word": "nit",
+    "meanings": [
+      "사소한 지적",
+      "잔소리 수준의 의견"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "닛픽",
+      "소소한 지적"
+    ],
+    "level": 2,
+    "aliases": [
+      "Nit",
+      "nit"
+    ],
+    "confusable": [
+      "nitpick",
+      "minor",
+      "suggestion"
+    ]
+  },
+  {
+    "word": "bikeshedding",
+    "meanings": [
+      "사소한 문제로 논쟁을 오래 끄는 것"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "바이크셰딩"
+    ],
+    "level": 3,
+    "aliases": [
+      "Bikeshedding",
+      "bikeshedding"
+    ],
+    "confusable": [
+      "nitpick",
+      "overthinking",
+      "debate"
+    ]
+  },
+  {
+    "word": "rationale",
+    "meanings": [
+      "그렇게 한 이유",
+      "근거"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "논거",
+      "타당한 이유"
+    ],
+    "level": 1,
+    "aliases": [
+      "Rationale",
+      "rationale"
+    ],
+    "confusable": [
+      "justification",
+      "context",
+      "reasoning"
+    ]
+  },
+  {
+    "word": "assumption",
+    "meanings": [
+      "당연하다고 전제한 것"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "가정",
+      "전제"
+    ],
+    "level": 1,
+    "aliases": [
+      "Assumption",
+      "assumption"
+    ],
+    "confusable": [
+      "premise",
+      "hypothesis",
+      "constraint"
+    ]
+  },
+  {
+    "word": "scope",
+    "meanings": [
+      "다룰 범위",
+      "작업 경계"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "스코프",
+      "범위"
+    ],
+    "level": 1,
+    "aliases": [
+      "Scope",
+      "scope"
+    ],
+    "confusable": [
+      "boundary",
+      "context",
+      "extent"
+    ]
+  },
+  {
+    "word": "defer",
+    "meanings": [
+      "나중으로 미루다",
+      "뒤로 미루다"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "연기하다",
+      "지연"
+    ],
+    "level": 1,
+    "aliases": [
+      "Defer",
+      "defer"
+    ],
+    "confusable": [
+      "postpone",
+      "delay",
+      "suspend"
+    ]
+  },
+  {
+    "word": "supersede",
+    "meanings": [
+      "대신하다",
+      "대체해 밀어내다"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "대체하다"
+    ],
+    "level": 3,
+    "aliases": [
+      "Supersede",
+      "supersede"
+    ],
+    "confusable": [
+      "replace",
+      "deprecate",
+      "override"
+    ]
+  },
+  {
+    "word": "redundant",
+    "meanings": [
+      "중복된",
+      "없어도 되는"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "불필요한",
+      "군더더기의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Redundant",
+      "redundant"
+    ],
+    "confusable": [
+      "duplicate",
+      "verbose",
+      "excessive"
+    ]
+  },
+  {
+    "word": "idempotent",
+    "meanings": [
+      "여러 번 해도 결과가 같은"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "멱등한",
+      "멱등성"
+    ],
+    "level": 2,
+    "aliases": [
+      "Idempotent",
+      "idempotent"
+    ],
+    "confusable": [
+      "deterministic",
+      "atomic",
+      "stateless"
+    ]
+  },
+  {
+    "word": "deterministic",
+    "meanings": [
+      "같은 입력이면 항상 같은 결과인"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "결정론적인",
+      "예측 가능한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Deterministic",
+      "deterministic"
+    ],
+    "confusable": [
+      "idempotent",
+      "predictable",
+      "consistent"
+    ]
+  },
+  {
+    "word": "consensus",
+    "meanings": [
+      "여럿이 합의한 결론"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "합의",
+      "의견 일치"
+    ],
+    "level": 2,
+    "aliases": [
+      "Consensus",
+      "consensus"
+    ],
+    "confusable": [
+      "agreement",
+      "quorum",
+      "alignment"
+    ]
+  },
+  {
+    "word": "ambiguity",
+    "meanings": [
+      "여러 뜻으로 읽히는 상태",
+      "모호함"
+    ],
+    "partOfSpeech": "리뷰·협업",
+    "near": [
+      "애매함",
+      "불명확성"
+    ],
+    "level": 2,
+    "aliases": [
+      "Ambiguity",
+      "ambiguity"
+    ],
+    "confusable": [
+      "vagueness",
+      "uncertainty",
+      "confusion"
+    ]
+  },
+  {
+    "word": "rollout",
+    "meanings": [
+      "단계적으로 배포해 나가는 것"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "롤아웃",
+      "점진 배포"
+    ],
+    "level": 1,
+    "aliases": [
+      "Rollout",
+      "rollout"
+    ],
+    "confusable": [
+      "rollback",
+      "deployment",
+      "release"
+    ]
+  },
+  {
+    "word": "rollback",
+    "meanings": [
+      "이전 버전으로 되돌리는 것"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "롤백",
+      "원복"
+    ],
+    "level": 1,
+    "aliases": [
+      "Rollback",
+      "rollback"
+    ],
+    "confusable": [
+      "rollout",
+      "revert",
+      "restore"
+    ]
+  },
+  {
+    "word": "revert",
+    "meanings": [
+      "변경을 되돌리다"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "되돌리기",
+      "원상복구"
+    ],
+    "level": 1,
+    "aliases": [
+      "Revert",
+      "revert"
+    ],
+    "confusable": [
+      "rollback",
+      "undo",
+      "reset"
+    ]
+  },
+  {
+    "word": "hotfix",
+    "meanings": [
+      "급하게 내보내는 긴급 수정"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "핫픽스",
+      "긴급 패치"
+    ],
+    "level": 1,
+    "aliases": [
+      "Hotfix",
+      "hotfix"
+    ],
+    "confusable": [
+      "patch",
+      "workaround",
+      "bugfix"
+    ]
+  },
+  {
+    "word": "patch",
+    "meanings": [
+      "부분적으로 고쳐 덧대는 수정"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "패치",
+      "수정본"
+    ],
+    "level": 1,
+    "aliases": [
+      "Patch",
+      "patch"
+    ],
+    "confusable": [
+      "hotfix",
+      "fix",
+      "update"
+    ]
+  },
+  {
+    "word": "downtime",
+    "meanings": [
+      "서비스가 멈춰 있는 시간"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "다운타임",
+      "중단 시간"
+    ],
+    "level": 1,
+    "aliases": [
+      "Downtime",
+      "downtime"
+    ],
+    "confusable": [
+      "outage",
+      "maintenance",
+      "latency"
+    ]
+  },
+  {
+    "word": "outage",
+    "meanings": [
+      "장애로 서비스가 끊긴 상태"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "장애",
+      "서비스 중단"
+    ],
+    "level": 1,
+    "aliases": [
+      "Outage",
+      "outage"
+    ],
+    "confusable": [
+      "downtime",
+      "incident",
+      "failure"
+    ]
+  },
+  {
+    "word": "incident",
+    "meanings": [
+      "대응이 필요한 장애 사건"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "인시던트",
+      "사고"
+    ],
+    "level": 1,
+    "aliases": [
+      "Incident",
+      "incident"
+    ],
+    "confusable": [
+      "outage",
+      "issue",
+      "postmortem"
+    ]
+  },
+  {
+    "word": "postmortem",
+    "meanings": [
+      "장애 후 원인을 정리한 회고"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "포스트모템",
+      "사후 분석"
+    ],
+    "level": 2,
+    "aliases": [
+      "Postmortem",
+      "postmortem"
+    ],
+    "confusable": [
+      "retrospective",
+      "incident",
+      "review"
+    ]
+  },
+  {
+    "word": "mitigation",
+    "meanings": [
+      "피해를 줄이기 위한 조치"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "완화 조치",
+      "경감책"
+    ],
+    "level": 2,
+    "aliases": [
+      "Mitigation",
+      "mitigation"
+    ],
+    "confusable": [
+      "remediation",
+      "workaround",
+      "prevention"
+    ]
+  },
+  {
+    "word": "remediation",
+    "meanings": [
+      "문제를 바로잡는 시정 조치"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "시정",
+      "교정 조치"
+    ],
+    "level": 3,
+    "aliases": [
+      "Remediation",
+      "remediation"
+    ],
+    "confusable": [
+      "mitigation",
+      "fix",
+      "correction"
+    ]
+  },
+  {
+    "word": "provision",
+    "meanings": [
+      "필요한 자원을 미리 마련해 두다"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "프로비저닝",
+      "자원 할당"
+    ],
+    "level": 2,
+    "aliases": [
+      "Provision",
+      "provision"
+    ],
+    "confusable": [
+      "allocate",
+      "deploy",
+      "configure"
+    ]
+  },
+  {
+    "word": "throttle",
+    "meanings": [
+      "속도·요청량을 일부러 줄이다"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "쓰로틀링",
+      "속도 제한"
+    ],
+    "level": 1,
+    "aliases": [
+      "Throttle",
+      "throttle"
+    ],
+    "confusable": [
+      "rate limit",
+      "quota",
+      "restrict"
+    ]
+  },
+  {
+    "word": "graceful",
+    "meanings": [
+      "갑자기 끊지 않고 부드럽게 처리하는"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "우아한",
+      "안전한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Graceful",
+      "graceful"
+    ],
+    "confusable": [
+      "clean",
+      "soft",
+      "safe"
+    ]
+  },
+  {
+    "word": "idle",
+    "meanings": [
+      "아무 일도 안 하고 놀고 있는"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "유휴의",
+      "대기 중인"
+    ],
+    "level": 1,
+    "aliases": [
+      "Idle",
+      "idle"
+    ],
+    "confusable": [
+      "pending",
+      "inactive",
+      "standby"
+    ]
+  },
+  {
+    "word": "pending",
+    "meanings": [
+      "아직 처리되지 않고 대기 중인"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "보류 중인",
+      "대기 중"
+    ],
+    "level": 1,
+    "aliases": [
+      "Pending",
+      "pending"
+    ],
+    "confusable": [
+      "idle",
+      "queued",
+      "blocked"
+    ]
+  },
+  {
+    "word": "obsolete build",
+    "meanings": [
+      "더 쓰지 않는 예전 빌드"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "폐기된 빌드"
+    ],
+    "level": 3,
+    "aliases": [
+      "Obsolete build",
+      "obsolete build",
+      "obsolete-build",
+      "obsoletebuild"
+    ],
+    "confusable": [
+      "stale build",
+      "legacy build",
+      "old build"
+    ]
+  },
+  {
+    "word": "saturate",
+    "meanings": [
+      "더 못 받을 만큼 가득 차다"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "포화되다",
+      "한계에 이르다"
+    ],
+    "level": 3,
+    "aliases": [
+      "Saturate",
+      "saturate"
+    ],
+    "confusable": [
+      "exhaust",
+      "overload",
+      "fill"
+    ]
+  },
+  {
+    "word": "degrade",
+    "meanings": [
+      "성능이 서서히 나빠지다"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "저하되다",
+      "성능 하락"
+    ],
+    "level": 1,
+    "aliases": [
+      "Degrade",
+      "degrade"
+    ],
+    "confusable": [
+      "deteriorate",
+      "decline",
+      "drop"
+    ]
+  },
+  {
+    "word": "resilient",
+    "meanings": [
+      "장애가 나도 잘 버티는"
+    ],
+    "partOfSpeech": "릴리스·운영",
+    "near": [
+      "회복력 있는",
+      "탄력적인"
+    ],
+    "level": 2,
+    "aliases": [
+      "Resilient",
+      "resilient"
+    ],
+    "confusable": [
+      "robust",
+      "fault-tolerant",
+      "durable"
+    ]
+  }
+]

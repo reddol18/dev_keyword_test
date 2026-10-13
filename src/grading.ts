@@ -1,4 +1,4 @@
-import type { Grade, Word } from './types';
+import type { Grade, QuizMode, Word } from './types';
 import { isModelReady, maxSimilarity } from './embedding';
 
 /**
@@ -130,6 +130,76 @@ export async function gradeAsync(input: string, word: Word): Promise<Grade> {
 /** 기존 호출부 호환용 — 정답일 때만 true */
 export function isCorrect(input: string, word: Word): boolean {
   return grade(input, word) === 'correct';
+}
+
+/* ────────────────────────────────────────────────────────────────
+ * 뜻 → 용어 방향 채점
+ *
+ * 이쪽은 영문 약어가 정답이라 한국어 어간 처리가 무의미하다.
+ * "Load balancing" 을 물으면 LB / 로드밸런서 / load-balancer 처럼
+ * 표기만 다른 답이 들어온다. 그래서 표기 차이를 지우고 비교한다.
+ * ──────────────────────────────────────────────────────────────── */
+
+/**
+ * 용어 표기 정규화.
+ * 소문자로 내리고 공백·하이픈·슬래시·점을 모두 지운다.
+ *   "Load-Balancer" / "load balancer" / "LOADBALANCER" → "loadbalancer"
+ *   "S.L.A" / "SLA" → "sla"
+ */
+export function normalizeTerm(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\-_/.]/g, '');
+}
+
+/**
+ * 뜻→용어 채점.
+ *
+ * aliases 에 맞으면 정답. 데이터가 인정 범위를 직접 들고 있으므로
+ * 모델을 쓰지 않는다 — 용어는 "비슷한 철자"가 곧 다른 용어라서
+ * 유사도로 봐주면 오히려 틀린 답을 통과시킨다. (SLA ↔ SLO)
+ *
+ * confusable 에 든 답은 "비슷했어요"로 돌린다. 헷갈릴 만해서
+ * 일부러 넣어 둔 목록이니, 틀렸다고만 하는 것보다 도움이 된다.
+ */
+export function gradeTerm(input: string, word: Word): Grade {
+  const answer = normalizeTerm(input);
+  if (!answer) return 'wrong';
+
+  const accepted = word.aliases ?? [word.word];
+  if (accepted.some((a) => normalizeTerm(a) === answer)) return 'correct';
+
+  // 용어 자체도 항상 인정 (aliases 가 비어 있는 덱 대비)
+  if (normalizeTerm(word.word) === answer) return 'correct';
+
+  const confusable = word.confusable ?? [];
+  if (confusable.some((c) => normalizeTerm(c) === answer)) return 'close';
+
+  return 'wrong';
+}
+
+/** 출제 방식에 맞는 채점기를 고른다. 객관식은 보기 문자열을 그대로 받는다. */
+export async function gradeByMode(
+  input: string,
+  word: Word,
+  mode: QuizMode,
+): Promise<Grade> {
+  switch (mode) {
+    case 'type-term-to-meaning':
+      return gradeAsync(input, word);
+    case 'type-meaning-to-term':
+      return gradeTerm(input, word);
+    case 'choice-term-to-meaning':
+      // 보기에서 고른 문자열이 정답 뜻과 같은지만 본다
+      return word.meanings.some((m) => normalize(m) === normalize(input))
+        ? 'correct'
+        : 'wrong';
+    case 'choice-meaning-to-term':
+      return normalizeTerm(word.word) === normalizeTerm(input)
+        ? 'correct'
+        : 'wrong';
+  }
 }
 
 /** 배열을 섞는다 (Fisher-Yates). 원본은 건드리지 않는다. */

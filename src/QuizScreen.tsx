@@ -1,50 +1,78 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
-import wordsData from '../data/words.json';
-import { gradeAsync, shuffle } from './grading';
-import { loadModel } from './embedding';
-import type { Answer, Word } from './types';
+import { applyFilter, getDeck } from './decks';
+import { gradeByMode } from './grading';
+import { buildQuiz, hintOf } from './quiz';
+import type { Answer, Question } from './types';
+import { MODE_LABEL, isChoiceMode } from './types';
+import type { StartConfig } from './StartScreen';
+import ResultScreen from './ResultScreen';
+import { loadToday, recordCorrect } from './progress';
+import { C, S } from './theme';
 
-const QUIZ_SIZE = 10;
-
-export default function QuizScreen() {
-  // 앱을 켤 때마다 순서를 새로 섞는다. 리뷰 불만 #2 "문제가 다 순서대로 나와요"
-  const [deck, setDeck] = useState<Word[]>(() =>
-    shuffle(wordsData as Word[]).slice(0, QUIZ_SIZE),
+export default function QuizScreen({
+  config, modelReady, onExit,
+}: {
+  config: StartConfig;
+  modelReady: boolean;
+  onExit: () => void;
+}) {
+  const pool = useMemo(
+    () => applyFilter(getDeck(config.deckId), config.filter),
+    [config],
   );
+  // 오늘 맞힌 기록. 읽기 전에는 빈 값이라 가중치 없이 출제된다.
+  // 기록은 ref 에도 둬서 '다시 풀기' 때 최신 값을 쓴다.
+  const correctToday = useRef<Record<string, number>>({});
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([]);
-  // 채점 직후 정답/오답을 잠깐 보여주는 상태. null이면 입력 중.
+  // 채점 직후 결과를 잠깐 보여주는 상태. null이면 아직 답하는 중.
   const [judged, setJudged] = useState<Answer | null>(null);
   const [grading, setGrading] = useState(false);
-  const [modelReady, setModelReady] = useState(false);
 
-  // 모델 로딩은 수 초 걸린다. 그동안에도 앱은 쓸 수 있고,
-  // 채점은 규칙 기반으로 동작한다.
+  // 기록을 읽은 뒤 첫 문제를 만든다. 저장소 읽기는 보통 수십 ms라
+  // 체감되지 않지만, 실패해도 가중치 없이 그대로 출제된다.
   useEffect(() => {
-    loadModel()
-      .then(() => setModelReady(true))
-      .catch((e) => console.warn('[model] 로딩 실패, 규칙 기반으로 동작:', e));
-  }, []);
+    let alive = true;
+    loadToday()
+      .then((c) => { if (alive) correctToday.current = c; })
+      .catch((e) => console.warn('[progress] 로딩 실패, 가중치 없이 출제:', e))
+      .finally(() => {
+        if (alive) {
+          setQuestions(buildQuiz(pool, config.modes, config.count, correctToday.current));
+        }
+      });
+    return () => { alive = false; };
+  }, [pool, config.modes, config.count]);
 
-  const current = deck[index];
-  const finished = index >= deck.length;
+  const q = questions[index];
+  // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
+  const finished = questions.length > 0 && index >= questions.length;
 
-  const submit = async () => {
-    if (!input.trim() || judged || grading) return;
+  const commit = async (raw: string) => {
+    if (!raw.trim() || judged || grading) return;
     setGrading(true);
     const result: Answer = {
-      word: current,
-      input,                              // 입력 원문을 그대로 보관 → 오답노트에서 쓴다
-      grade: await gradeAsync(input, current),
+      word: q.word,
+      mode: q.mode,
+      input: raw,            // 입력 원문을 그대로 보관 → 오답노트에서 쓴다
+      grade: await gradeByMode(raw, q.word, q.mode),
     };
     setAnswers((prev) => [...prev, result]);
     setJudged(result);
     setGrading(false);
+
+    // 맞힌 것만 센다. "비슷했어요"는 아직 정확히 모르는 것이라 세지 않는다.
+    if (result.grade === 'correct') {
+      const w = q.word.word;
+      correctToday.current[w] = (correctToday.current[w] ?? 0) + 1;
+      recordCorrect(w).catch(() => {});   // 저장 실패가 학습을 막지 않게
+    }
   };
 
   const next = () => {
@@ -54,7 +82,8 @@ export default function QuizScreen() {
   };
 
   const restart = () => {
-    setDeck(shuffle(wordsData as Word[]).slice(0, QUIZ_SIZE));
+    // 방금 맞힌 것도 반영되도록 ref 의 최신 기록을 쓴다
+    setQuestions(buildQuiz(pool, config.modes, config.count, correctToday.current));
     setIndex(0);
     setInput('');
     setAnswers([]);
@@ -62,198 +91,178 @@ export default function QuizScreen() {
   };
 
   if (finished) {
-    return <ResultView answers={answers} onRestart={restart} />;
+    return <ResultScreen answers={answers} onRestart={restart} onExit={onExit} />;
+  }
+
+  // 기록을 읽는 동안의 짧은 공백. 여기서 q 가 없는데 아래로 내려가면 터진다.
+  if (!q) {
+    return (
+      <View style={[S.flex, { alignItems: 'center', justifyContent: 'center' }]}>
+        <Text style={S.sub}>문제 준비 중…</Text>
+      </View>
+    );
   }
 
   return (
     <KeyboardAvoidingView
-      style={styles.flex}
+      style={S.flex}
       // Android도 'height'를 줘야 한다. undefined면 아무 보정도 하지 않아
       // 키보드가 입력창을 덮는다. (Manifest는 adjustResize로 설정돼 있음)
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
-        contentContainerStyle={styles.container}
+        style={S.flex}
+        contentContainerStyle={[S.screen, S.screenFill, { justifyContent: 'center' }]}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        bounces={false}
       >
-        <View style={styles.topRow}>
-          <Text style={styles.progress}>
-            {index + 1} / {deck.length}
+        <View style={q2.topRow}>
+          <Pressable onPress={onExit} hitSlop={12}>
+            <Text style={q2.exit}>← 설정</Text>
+          </Pressable>
+          <Text style={q2.progress}>
+            {index + 1} / {questions.length}
           </Text>
-          <Text style={modelReady ? styles.aiOn : styles.aiOff}>
-            {modelReady ? '● AI 채점' : '○ 모델 로딩 중'}
+          <Text style={modelReady ? q2.aiOn : q2.aiOff}>
+            {modelReady ? '● AI 채점' : '○ 로딩 중'}
           </Text>
         </View>
 
-        <View style={styles.card}>
-          <Text style={styles.pos}>{current.partOfSpeech}</Text>
-          <Text style={styles.word}>{current.word}</Text>
+        <View style={q2.card}>
+          <Text style={q2.meta}>
+            {q.word.partOfSpeech}
+            {q.word.level != null ? `  ·  L${q.word.level}` : ''}
+          </Text>
+          <Text style={isChoiceMode(q.mode) || q.prompt.length > 20
+            ? q2.promptSmall : q2.prompt}>
+            {q.prompt}
+          </Text>
+          <Text style={q2.modeTag}>{MODE_LABEL[q.mode]}</Text>
         </View>
 
-        <TextInput
-          style={[
-            styles.input,
-            judged && (judged.grade === 'correct' ? styles.inputOk
-                     : judged.grade === 'close'   ? styles.inputClose
-                     : styles.inputNo),
-          ]}
-          value={input}
-          onChangeText={setInput}
-          placeholder="뜻을 입력하세요"
-          placeholderTextColor="#9ca3af"
-          // ★ 리뷰 불만 #4 "단어쓰기 할때 대문자로 계속 시작해서 불편해요"
-          autoCapitalize="none"
-          autoCorrect={false}
-          editable={!judged}
-          onSubmitEditing={submit}
-          returnKeyType="done"
-          autoFocus
-        />
+        {isChoiceMode(q.mode) ? (
+          <View style={{ gap: 10 }}>
+            {q.choices!.map((c, i) => {
+              const chosen = judged?.input === c;
+              const isAnswer = i === q.answerIndex;
+              return (
+                <Pressable
+                  key={`${c}-${i}`}
+                  disabled={!!judged || grading}
+                  onPress={() => commit(c)}
+                  style={[
+                    q2.choice,
+                    judged && isAnswer && q2.choiceOk,
+                    judged && chosen && !isAnswer && q2.choiceNo,
+                  ]}
+                >
+                  <Text style={q2.choiceText}>{c}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        ) : (
+          <TextInput
+            style={[
+              q2.input,
+              judged && (judged.grade === 'correct' ? q2.inputOk
+                       : judged.grade === 'close' ? q2.inputClose
+                       : q2.inputNo),
+            ]}
+            value={input}
+            onChangeText={setInput}
+            placeholder={hintOf(q.mode)}
+            placeholderTextColor={C.faint}
+            // ★ 리뷰 불만 "단어쓰기 할때 대문자로 계속 시작해서 불편해요"
+            autoCapitalize="none"
+            autoCorrect={false}
+            editable={!judged}
+            onSubmitEditing={() => commit(input)}
+            returnKeyType="done"
+            autoFocus
+          />
+        )}
 
         {judged ? (
-          <View style={styles.feedback}>
+          <View style={q2.feedback}>
             <Text style={
-              judged.grade === 'correct' ? styles.ok
-              : judged.grade === 'close' ? styles.closeText
-              : styles.no
+              judged.grade === 'correct' ? q2.ok
+              : judged.grade === 'close' ? q2.closeText : q2.no
             }>
               {judged.grade === 'correct' ? '정답입니다'
-               : judged.grade === 'close' ? '비슷했어요'
-               : '오답입니다'}
+               : judged.grade === 'close' ? '비슷했어요' : '오답입니다'}
             </Text>
             {judged.grade === 'close' && (
-              <Text style={styles.closeHint}>
-                뜻은 통하지만 정확한 답은 아닙니다
-              </Text>
+              <Text style={q2.closeHint}>뜻은 통하지만 정확한 답은 아닙니다</Text>
             )}
-            {/* 복수정답을 모두 보여준다 — 하나만 써도 맞다는 걸 학습자가 알게 된다 */}
-            <Text style={styles.allMeanings}>
-              {current.meanings.join(' · ')}
-            </Text>
-            <Pressable style={styles.button} onPress={next}>
-              <Text style={styles.buttonText}>
-                {index + 1 === deck.length ? '결과 보기' : '다음'}
+            <Text style={q2.answerLine}>{q.word.word}</Text>
+            <Text style={q2.answerMeaning}>{q.word.meanings.join(' · ')}</Text>
+            <Pressable style={S.button} onPress={next}>
+              <Text style={S.buttonText}>
+                {index + 1 === questions.length ? '결과 보기' : '다음'}
               </Text>
             </Pressable>
           </View>
-        ) : (
+        ) : !isChoiceMode(q.mode) ? (
           <Pressable
-            style={[styles.button, (!input.trim() || grading) && styles.buttonOff]}
-            onPress={submit}
+            style={[S.button, (!input.trim() || grading) && S.buttonOff]}
+            onPress={() => commit(input)}
             disabled={!input.trim() || grading}
           >
-            <Text style={styles.buttonText}>{grading ? '채점 중…' : '확인'}</Text>
+            <Text style={S.buttonText}>{grading ? '채점 중…' : '확인'}</Text>
           </Pressable>
-        )}
+        ) : null}
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
-function ResultView({
-  answers, onRestart,
-}: { answers: Answer[]; onRestart: () => void }) {
-  const wrong = useMemo(
-    () => answers.filter((a) => a.grade !== 'correct'),
-    [answers],
-  );
-  const score = answers.length - wrong.length;
-
-  return (
-    <ScrollView contentContainerStyle={styles.resultBox}>
-      <Text style={styles.scoreLabel}>결과</Text>
-      <Text style={styles.score}>
-        {score} <Text style={styles.scoreTotal}>/ {answers.length}</Text>
-      </Text>
-
-      {wrong.length > 0 && (
-        <View style={styles.noteBox}>
-          <Text style={styles.noteTitle}>오답노트</Text>
-          {wrong.map((a, i) => (
-            <View
-              key={i}
-              style={[styles.noteRow, a.grade === 'close' && styles.noteRowClose]}
-            >
-              <View style={styles.noteHead}>
-                <Text style={styles.noteWord}>{a.word.word}</Text>
-                {a.grade === 'close' && (
-                  <Text style={styles.badge}>비슷했어요</Text>
-                )}
-              </View>
-              {/* 내가 뭐라고 썼는지 그대로 보여준다 */}
-              <Text style={a.grade === 'close' ? styles.noteMineClose : styles.noteMine}>
-                내 답: {a.input}
-              </Text>
-              <Text style={styles.noteAnswer}>
-                정답: {a.word.meanings.join(' · ')}
-              </Text>
-            </View>
-          ))}
-        </View>
-      )}
-
-      <Pressable style={styles.button} onPress={onRestart}>
-        <Text style={styles.buttonText}>다시 풀기</Text>
-      </Pressable>
-    </ScrollView>
-  );
-}
-
-const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  container: { flexGrow: 1, padding: 24, justifyContent: 'center', gap: 20 },
+const q2 = StyleSheet.create({
   topRow: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    flexDirection: 'row', alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  progress: { color: '#6b7280', fontSize: 15 },
-  aiOn: { color: '#16a34a', fontSize: 12, fontWeight: '600' },
-  aiOff: { color: '#9ca3af', fontSize: 12 },
+  exit: { color: C.sub, fontSize: 14 },
+  progress: { color: C.sub, fontSize: 15 },
+  aiOn: { color: C.ok, fontSize: 12, fontWeight: '600' },
+  aiOff: { color: C.faint, fontSize: 12 },
+
   card: {
-    backgroundColor: '#f3f4f6', borderRadius: 16,
-    paddingVertical: 28, alignItems: 'center', gap: 8,
+    backgroundColor: C.card, borderRadius: 16,
+    paddingVertical: 26, paddingHorizontal: 18,
+    alignItems: 'center', gap: 8,
   },
-  pos: { color: '#6b7280', fontSize: 14 },
-  word: { fontSize: 40, fontWeight: '700', color: '#111827' },
+  meta: { color: C.sub, fontSize: 13 },
+  prompt: { fontSize: 38, fontWeight: '700', color: C.text, textAlign: 'center' },
+  promptSmall: {
+    fontSize: 21, fontWeight: '700', color: C.text,
+    textAlign: 'center', lineHeight: 30,
+  },
+  modeTag: { color: C.faint, fontSize: 12 },
+
   input: {
-    borderWidth: 2, borderColor: '#d1d5db', borderRadius: 12,
-    paddingHorizontal: 16, paddingVertical: 14, fontSize: 20,
-    color: '#111827',
+    borderWidth: 2, borderColor: C.line, borderRadius: 12,
+    paddingHorizontal: 16, paddingVertical: 14, fontSize: 20, color: C.text,
   },
-  inputOk: { borderColor: '#16a34a', backgroundColor: '#f0fdf4' },
-  inputNo: { borderColor: '#dc2626', backgroundColor: '#fef2f2' },
-  inputClose: { borderColor: '#f59e0b', backgroundColor: '#fffbeb' },
-  feedback: { gap: 12, alignItems: 'center' },
-  ok: { color: '#16a34a', fontSize: 20, fontWeight: '700' },
-  no: { color: '#dc2626', fontSize: 20, fontWeight: '700' },
-  closeText: { color: '#d97706', fontSize: 20, fontWeight: '700' },
-  closeHint: { color: '#92400e', fontSize: 14 },
-  allMeanings: { fontSize: 18, color: '#374151' },
-  button: {
-    backgroundColor: '#2563eb', borderRadius: 12,
-    paddingVertical: 16, alignItems: 'center', alignSelf: 'stretch',
+  inputOk: { borderColor: C.ok, backgroundColor: C.okBg },
+  inputClose: { borderColor: C.closeBorder, backgroundColor: C.closeBg },
+  inputNo: { borderColor: C.no, backgroundColor: C.noBg },
+
+  choice: {
+    borderWidth: 1.5, borderColor: C.line, borderRadius: 12,
+    paddingVertical: 15, paddingHorizontal: 16, backgroundColor: '#fff',
   },
-  buttonOff: { backgroundColor: '#cbd5e1' },
-  buttonText: { color: '#fff', fontSize: 17, fontWeight: '600' },
-  resultBox: { padding: 24, gap: 16, justifyContent: 'center', flexGrow: 1 },
-  scoreLabel: { fontSize: 15, color: '#6b7280', textAlign: 'center' },
-  score: { fontSize: 56, fontWeight: '700', textAlign: 'center', color: '#111827' },
-  scoreTotal: { fontSize: 28, color: '#9ca3af', fontWeight: '400' },
-  noteBox: { gap: 12 },
-  noteTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
-  noteRow: {
-    backgroundColor: '#fef2f2', borderRadius: 12, padding: 14, gap: 4,
+  choiceOk: { borderColor: C.ok, backgroundColor: C.okBg },
+  choiceNo: { borderColor: C.no, backgroundColor: C.noBg },
+  choiceText: { fontSize: 16, color: C.text, lineHeight: 22 },
+
+  feedback: { gap: 8, alignItems: 'center' },
+  ok: { color: C.ok, fontSize: 20, fontWeight: '700' },
+  closeText: { color: C.close, fontSize: 20, fontWeight: '700' },
+  closeHint: { color: C.closeText, fontSize: 14 },
+  no: { color: C.no, fontSize: 20, fontWeight: '700' },
+  answerLine: { fontSize: 19, fontWeight: '700', color: C.text, marginTop: 2 },
+  answerMeaning: {
+    fontSize: 15, color: C.sub, textAlign: 'center', marginBottom: 4,
   },
-  noteRowClose: { backgroundColor: '#fffbeb' },
-  noteHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  noteWord: { fontSize: 20, fontWeight: '700', color: '#111827' },
-  badge: {
-    fontSize: 12, color: '#92400e', backgroundColor: '#fde68a',
-    paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999,
-    overflow: 'hidden',
-  },
-  noteMine: { fontSize: 15, color: '#dc2626' },
-  noteMineClose: { fontSize: 15, color: '#d97706' },
-  noteAnswer: { fontSize: 15, color: '#16a34a' },
 });

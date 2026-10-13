@@ -1,0 +1,4868 @@
+[
+  {
+    "word": "LLM",
+    "meanings": [
+      "대규모 언어 모델",
+      "Large Language Model"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "거대언어모델",
+      "언어모델"
+    ],
+    "level": 3,
+    "aliases": [
+      "LLM",
+      "Large Language Model"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Agent",
+    "meanings": [
+      "목표를 받아 도구를 쓰며 스스로 여러 단계를 수행하는 AI",
+      "AI Agent"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "에이전트",
+      "자율 AI"
+    ],
+    "level": 3,
+    "aliases": [
+      "Agent",
+      "AI Agent"
+    ],
+    "confusable": [
+      "Subagent",
+      "Multi-agent",
+      "Orchestration"
+    ]
+  },
+  {
+    "word": "Agentic workflow",
+    "meanings": [
+      "에이전트가 계획·실행·검토를 반복하는 작업 흐름",
+      "Agentic Workflow"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "에이전트형 워크플로"
+    ],
+    "level": 3,
+    "aliases": [
+      "Agentic workflow",
+      "Agentic Workflow"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "System prompt",
+    "meanings": [
+      "모델의 역할·규칙·권한을 정해 두는 최상위 지시문",
+      "System Prompt"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "시스템 프롬프트",
+      "시스템 지시"
+    ],
+    "level": 3,
+    "aliases": [
+      "System prompt",
+      "System Prompt"
+    ],
+    "confusable": [
+      "Few-shot",
+      "CoT",
+      "Temperature"
+    ]
+  },
+  {
+    "word": "Tool calling",
+    "meanings": [
+      "모델이 외부 함수·API를 호출하는 기능",
+      "Tool / Function Calling"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "함수 호출",
+      "펑션 콜링",
+      "도구 호출"
+    ],
+    "level": 3,
+    "aliases": [
+      "Tool calling",
+      "Tool / Function Calling",
+      "Function calling"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "MCP",
+    "meanings": [
+      "AI가 외부 도구·데이터에 붙는 표준 연결 규약",
+      "Model Context Protocol"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "모델 컨텍스트 프로토콜"
+    ],
+    "level": 3,
+    "aliases": [
+      "MCP",
+      "Model Context Protocol"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "RAG",
+    "meanings": [
+      "검색한 자료를 근거로 답을 생성하는 방식",
+      "Retrieval-Augmented Generation"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "검색 증강 생성"
+    ],
+    "level": 3,
+    "aliases": [
+      "RAG",
+      "Retrieval-Augmented Generation"
+    ],
+    "confusable": [
+      "Fine-tuning",
+      "Grounding",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "HITL",
+    "meanings": [
+      "중요 단계에 사람의 확인·승인을 끼워 넣는 구조",
+      "Human-in-the-Loop"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "휴먼 인 더 루프",
+      "사람 개입"
+    ],
+    "level": 3,
+    "aliases": [
+      "HITL",
+      "Human-in-the-Loop"
+    ],
+    "confusable": [
+      "Escalation",
+      "Approval gate"
+    ]
+  },
+  {
+    "word": "Guardrail",
+    "meanings": [
+      "모델이 넘지 말아야 할 행동을 막는 안전장치",
+      "Guardrail"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "가드레일",
+      "안전장치"
+    ],
+    "level": 3,
+    "aliases": [
+      "Guardrail"
+    ],
+    "confusable": [
+      "Hallucination",
+      "Prompt injection"
+    ]
+  },
+  {
+    "word": "Hallucination",
+    "meanings": [
+      "사실이 아닌 내용을 그럴듯하게 지어내는 현상",
+      "Hallucination"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "환각",
+      "할루시네이션"
+    ],
+    "level": 3,
+    "aliases": [
+      "Hallucination"
+    ],
+    "confusable": [
+      "Prompt injection",
+      "Guardrail"
+    ]
+  },
+  {
+    "word": "Grounding",
+    "meanings": [
+      "답을 실제 자료·데이터에 근거하게 만드는 것",
+      "Grounding"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "그라운딩",
+      "근거 기반"
+    ],
+    "level": 3,
+    "aliases": [
+      "Grounding"
+    ],
+    "confusable": [
+      "RAG",
+      "Fine-tuning",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "Escalation",
+    "meanings": [
+      "에이전트가 판단 범위를 넘으면 사람에게 넘기는 것",
+      "Escalation"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "에스컬레이션",
+      "상위 이관"
+    ],
+    "level": 3,
+    "aliases": [
+      "Escalation"
+    ],
+    "confusable": [
+      "HITL",
+      "Approval gate"
+    ]
+  },
+  {
+    "word": "Reversibility",
+    "meanings": [
+      "행동이 틀렸을 때 되돌릴 수 있는 정도(자율 허용 기준)",
+      "Reversibility"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "가역성",
+      "되돌림 가능성"
+    ],
+    "level": 3,
+    "aliases": [
+      "Reversibility"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Confidence",
+    "meanings": [
+      "모델이 자기 판단을 얼마나 확신하는지의 값",
+      "Confidence Score"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "확신도",
+      "신뢰도"
+    ],
+    "level": 3,
+    "aliases": [
+      "Confidence",
+      "Confidence Score"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Orchestration",
+    "meanings": [
+      "여러 에이전트·도구의 순서와 역할을 조율하는 것",
+      "Agent Orchestration"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "오케스트레이션",
+      "조율"
+    ],
+    "level": 3,
+    "aliases": [
+      "Orchestration",
+      "Agent Orchestration"
+    ],
+    "confusable": [
+      "Agent",
+      "Subagent",
+      "Multi-agent"
+    ]
+  },
+  {
+    "word": "Multi-agent",
+    "meanings": [
+      "역할이 다른 에이전트 여럿이 협업하는 구조",
+      "Multi-Agent System"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "멀티 에이전트",
+      "다중 에이전트"
+    ],
+    "level": 3,
+    "aliases": [
+      "Multi-agent",
+      "Multi-Agent System"
+    ],
+    "confusable": [
+      "Agent",
+      "Subagent",
+      "Orchestration"
+    ]
+  },
+  {
+    "word": "Subagent",
+    "meanings": [
+      "메인 에이전트가 일을 떼어 맡기는 하위 에이전트",
+      "Subagent"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "서브에이전트",
+      "하위 에이전트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Subagent"
+    ],
+    "confusable": [
+      "Agent",
+      "Multi-agent",
+      "Orchestration"
+    ]
+  },
+  {
+    "word": "Context window",
+    "meanings": [
+      "모델이 한 번에 읽을 수 있는 토큰 한도",
+      "Context Window"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "컨텍스트 윈도",
+      "문맥 길이"
+    ],
+    "level": 3,
+    "aliases": [
+      "Context window",
+      "Context Window"
+    ],
+    "confusable": [
+      "Token",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "Token",
+    "meanings": [
+      "모델이 글을 쪼개 처리하는 단위(과금 단위)",
+      "Token"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "토큰"
+    ],
+    "level": 2,
+    "aliases": [
+      "Token"
+    ],
+    "confusable": [
+      "Context window",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "Embedding",
+    "meanings": [
+      "글의 의미를 숫자 벡터로 바꾼 것",
+      "Embedding"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "임베딩",
+      "벡터화"
+    ],
+    "level": 2,
+    "aliases": [
+      "Embedding"
+    ],
+    "confusable": [
+      "RAG",
+      "Fine-tuning",
+      "Grounding",
+      "Token",
+      "Context window",
+      "Chunking",
+      "Top-k"
+    ]
+  },
+  {
+    "word": "Vector DB",
+    "meanings": [
+      "임베딩을 저장해 의미로 검색하는 DB",
+      "Vector Database"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "벡터 데이터베이스",
+      "벡터 DB"
+    ],
+    "level": 2,
+    "aliases": [
+      "Vector DB",
+      "Vector Database"
+    ],
+    "confusable": [
+      "pgvector",
+      "Milvus",
+      "Qdrant"
+    ]
+  },
+  {
+    "word": "Fine-tuning",
+    "meanings": [
+      "기존 모델을 특정 데이터로 추가 학습시키는 것",
+      "Fine-tuning"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "파인튜닝",
+      "미세조정"
+    ],
+    "level": 2,
+    "aliases": [
+      "Fine-tuning"
+    ],
+    "confusable": [
+      "RAG",
+      "Grounding",
+      "Embedding",
+      "LoRA",
+      "Quantization"
+    ]
+  },
+  {
+    "word": "RLHF",
+    "meanings": [
+      "사람 피드백으로 모델을 강화학습시키는 방법",
+      "Reinforcement Learning from Human Feedback"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "인간 피드백 강화학습"
+    ],
+    "level": 2,
+    "aliases": [
+      "RLHF",
+      "Reinforcement Learning from Human Feedback"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "CoT",
+    "meanings": [
+      "단계별로 생각을 풀어 답하게 하는 기법",
+      "Chain-of-Thought"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "사고의 사슬",
+      "단계적 추론"
+    ],
+    "level": 2,
+    "aliases": [
+      "CoT",
+      "Chain-of-Thought"
+    ],
+    "confusable": [
+      "System prompt",
+      "Few-shot",
+      "Temperature"
+    ]
+  },
+  {
+    "word": "ReAct",
+    "meanings": [
+      "생각과 행동(도구 사용)을 번갈아 하는 에이전트 패턴",
+      "Reason + Act"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "리액트 패턴"
+    ],
+    "level": 2,
+    "aliases": [
+      "ReAct",
+      "Reason + Act"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Few-shot",
+    "meanings": [
+      "예시 몇 개를 프롬프트에 넣어 따라 하게 하는 것",
+      "Few-shot Prompting"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "퓨샷",
+      "예시 학습"
+    ],
+    "level": 2,
+    "aliases": [
+      "Few-shot",
+      "Few-shot Prompting"
+    ],
+    "confusable": [
+      "System prompt",
+      "CoT",
+      "Temperature"
+    ]
+  },
+  {
+    "word": "Eval",
+    "meanings": [
+      "모델·에이전트 품질을 정해진 시험셋으로 재는 것",
+      "Evaluation"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "평가",
+      "이밸"
+    ],
+    "level": 3,
+    "aliases": [
+      "Eval",
+      "Evaluation",
+      "Evals"
+    ],
+    "confusable": [
+      "RAGAS",
+      "Faithfulness",
+      "Golden set"
+    ]
+  },
+  {
+    "word": "Prompt injection",
+    "meanings": [
+      "외부 입력에 숨긴 지시로 모델을 조종하는 공격",
+      "Prompt Injection"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "프롬프트 인젝션",
+      "프롬프트 주입"
+    ],
+    "level": 3,
+    "aliases": [
+      "Prompt injection",
+      "Prompt Injection"
+    ],
+    "confusable": [
+      "Hallucination",
+      "Guardrail"
+    ]
+  },
+  {
+    "word": "Red teaming",
+    "meanings": [
+      "일부러 공격해 약점을 찾는 검증",
+      "Red Teaming"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "레드팀",
+      "레드티밍"
+    ],
+    "level": 2,
+    "aliases": [
+      "Red teaming",
+      "Red Teaming"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Temperature",
+    "meanings": [
+      "답의 무작위성(창의성)을 정하는 값",
+      "Temperature"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "온도",
+      "템퍼러처"
+    ],
+    "level": 2,
+    "aliases": [
+      "Temperature"
+    ],
+    "confusable": [
+      "System prompt",
+      "Few-shot",
+      "CoT"
+    ]
+  },
+  {
+    "word": "Inference",
+    "meanings": [
+      "학습된 모델로 실제 답을 내는 과정",
+      "Inference"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "추론",
+      "인퍼런스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Inference"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SLM",
+    "meanings": [
+      "작고 가벼운 언어 모델(기업 내부 구축·기기 내 실행용)",
+      "Small Language Model"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "소형 언어 모델",
+      "sLLM",
+      "경량 LLM"
+    ],
+    "level": 3,
+    "aliases": [
+      "SLM",
+      "Small Language Model",
+      "sLLM",
+      "SLLM",
+      "경량 LLM",
+      "소형 LLM"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "On-device AI",
+    "meanings": [
+      "서버 없이 기기 안에서 도는 AI",
+      "On-device AI"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "온디바이스",
+      "기기 내 AI"
+    ],
+    "level": 2,
+    "aliases": [
+      "On-device AI"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Multimodal",
+    "meanings": [
+      "글·이미지·음성 등 여러 형식을 함께 다루는 것",
+      "Multimodal"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "멀티모달",
+      "다중 모달"
+    ],
+    "level": 2,
+    "aliases": [
+      "Multimodal"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "AX",
+    "meanings": [
+      "AI로 업무·조직을 바꾸는 것",
+      "AI Transformation"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "AI 전환",
+      "AI 트랜스포메이션"
+    ],
+    "level": 3,
+    "aliases": [
+      "AX",
+      "AI Transformation"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Sovereign AI",
+    "meanings": [
+      "자국 기술·데이터로 통제하는 AI",
+      "Sovereign AI"
+    ],
+    "partOfSpeech": "AI·에이전트",
+    "near": [
+      "소버린 AI",
+      "주권 AI"
+    ],
+    "level": 2,
+    "aliases": [
+      "Sovereign AI"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "CI/CD",
+    "meanings": [
+      "코드 통합·테스트·배포를 자동으로 이어 가는 체계",
+      "Continuous Integration / Continuous Delivery"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "지속적 통합 배포"
+    ],
+    "level": 3,
+    "aliases": [
+      "CI/CD",
+      "Continuous Integration / Continuous Delivery",
+      "CICD",
+      "CI CD"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "DevOps",
+    "meanings": [
+      "개발과 운영을 한 흐름으로 자동화하는 문화·방식",
+      "Development + Operations"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "데브옵스"
+    ],
+    "level": 3,
+    "aliases": [
+      "DevOps",
+      "Development + Operations"
+    ],
+    "confusable": [
+      "MLOps",
+      "LLMOps"
+    ]
+  },
+  {
+    "word": "LLMOps",
+    "meanings": [
+      "LLM 기반 서비스의 배포·평가·모니터링 운영",
+      "LLM Operations"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "엘엘엠옵스"
+    ],
+    "level": 3,
+    "aliases": [
+      "LLMOps",
+      "LLM Operations"
+    ],
+    "confusable": [
+      "MLOps",
+      "DevOps"
+    ]
+  },
+  {
+    "word": "MLOps",
+    "meanings": [
+      "ML 모델의 학습·배포·운영 자동화",
+      "Machine Learning Operations"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "엠엘옵스"
+    ],
+    "level": 2,
+    "aliases": [
+      "MLOps",
+      "Machine Learning Operations"
+    ],
+    "confusable": [
+      "LLMOps",
+      "DevOps"
+    ]
+  },
+  {
+    "word": "Spec-driven development",
+    "meanings": [
+      "명세를 먼저 쓰고 그 명세로 AI·코드를 구현하는 방식",
+      "Spec-driven Development"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "명세 주도 개발",
+      "스펙 드리븐"
+    ],
+    "level": 3,
+    "aliases": [
+      "Spec-driven development",
+      "Spec-driven Development"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Vibe coding",
+    "meanings": [
+      "자연어로 AI에게 지시하며 코드를 만드는 방식",
+      "Vibe Coding"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "바이브 코딩"
+    ],
+    "level": 2,
+    "aliases": [
+      "Vibe coding",
+      "Vibe Coding"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Hook",
+    "meanings": [
+      "특정 이벤트 때 자동 실행되게 걸어 두는 스크립트",
+      "Hook"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "훅",
+      "후크"
+    ],
+    "level": 3,
+    "aliases": [
+      "Hook"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "PR",
+    "meanings": [
+      "변경 코드를 합치기 전 검토를 요청하는 것",
+      "Pull Request"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "풀 리퀘스트",
+      "병합 요청"
+    ],
+    "level": 3,
+    "aliases": [
+      "PR",
+      "Pull Request"
+    ],
+    "confusable": [
+      "Commit",
+      "Branch",
+      "Merge"
+    ]
+  },
+  {
+    "word": "Code review",
+    "meanings": [
+      "다른 사람이 코드를 검토하는 과정",
+      "Code Review"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "코드 리뷰"
+    ],
+    "level": 2,
+    "aliases": [
+      "Code review",
+      "Code Review"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "TDD",
+    "meanings": [
+      "테스트를 먼저 쓰고 코드를 맞추는 개발 방식",
+      "Test-Driven Development"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "테스트 주도 개발"
+    ],
+    "level": 2,
+    "aliases": [
+      "TDD",
+      "Test-Driven Development"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Regression test",
+    "meanings": [
+      "고친 뒤 기존 기능이 안 깨졌는지 보는 테스트",
+      "Regression Test"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "회귀 테스트"
+    ],
+    "level": 3,
+    "aliases": [
+      "Regression test",
+      "Regression Test"
+    ],
+    "confusable": [
+      "QA",
+      "UAT",
+      "Smoke test",
+      "E2E test"
+    ]
+  },
+  {
+    "word": "E2E test",
+    "meanings": [
+      "사용자 흐름 처음부터 끝까지 검증하는 테스트",
+      "End-to-End Test"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "종단간 테스트",
+      "이투이"
+    ],
+    "level": 2,
+    "aliases": [
+      "E2E test",
+      "End-to-End Test"
+    ],
+    "confusable": [
+      "QA",
+      "UAT",
+      "Regression test",
+      "Smoke test"
+    ]
+  },
+  {
+    "word": "Smoke test",
+    "meanings": [
+      "핵심 기능만 빠르게 켜 보는 최소 테스트",
+      "Smoke Test"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "스모크 테스트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Smoke test",
+      "Smoke Test"
+    ],
+    "confusable": [
+      "QA",
+      "UAT",
+      "Regression test",
+      "E2E test"
+    ]
+  },
+  {
+    "word": "Rollback",
+    "meanings": [
+      "문제 생긴 배포를 이전 상태로 되돌리는 것",
+      "Rollback"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "롤백",
+      "되돌리기"
+    ],
+    "level": 3,
+    "aliases": [
+      "Rollback"
+    ],
+    "confusable": [
+      "Canary release",
+      "Blue-green",
+      "Feature flag"
+    ]
+  },
+  {
+    "word": "Canary release",
+    "meanings": [
+      "일부 사용자에게만 먼저 배포해 보는 방식",
+      "Canary Release"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "카나리 배포"
+    ],
+    "level": 2,
+    "aliases": [
+      "Canary release",
+      "Canary Release"
+    ],
+    "confusable": [
+      "Blue-green",
+      "Feature flag",
+      "Rollback"
+    ]
+  },
+  {
+    "word": "Blue-green",
+    "meanings": [
+      "두 환경을 두고 한 번에 전환하는 배포",
+      "Blue-Green Deployment"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "블루그린 배포"
+    ],
+    "level": 2,
+    "aliases": [
+      "Blue-green",
+      "Blue-Green Deployment"
+    ],
+    "confusable": [
+      "Canary release",
+      "Feature flag",
+      "Rollback"
+    ]
+  },
+  {
+    "word": "Feature flag",
+    "meanings": [
+      "코드 배포 없이 기능을 켜고 끄는 스위치",
+      "Feature Flag"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "기능 플래그",
+      "피처 토글"
+    ],
+    "level": 2,
+    "aliases": [
+      "Feature flag",
+      "Feature Flag"
+    ],
+    "confusable": [
+      "Canary release",
+      "Blue-green",
+      "Rollback"
+    ]
+  },
+  {
+    "word": "IaC",
+    "meanings": [
+      "인프라 구성을 코드로 관리하는 것",
+      "Infrastructure as Code"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "코드형 인프라"
+    ],
+    "level": 2,
+    "aliases": [
+      "IaC",
+      "Infrastructure as Code"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Observability",
+    "meanings": [
+      "로그·지표·추적으로 시스템 내부 상태를 보는 능력",
+      "Observability"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "관측성",
+      "옵저버빌리티"
+    ],
+    "level": 3,
+    "aliases": [
+      "Observability"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SLA",
+    "meanings": [
+      "서비스 수준 약정(지키기로 한 응답·가용 수준)",
+      "Service Level Agreement"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "서비스 수준 협약"
+    ],
+    "level": 3,
+    "aliases": [
+      "SLA",
+      "Service Level Agreement"
+    ],
+    "confusable": [
+      "SLO",
+      "SLI"
+    ]
+  },
+  {
+    "word": "SLO",
+    "meanings": [
+      "내부적으로 정한 서비스 수준 목표치",
+      "Service Level Objective"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "서비스 수준 목표"
+    ],
+    "level": 3,
+    "aliases": [
+      "SLO",
+      "Service Level Objective"
+    ],
+    "confusable": [
+      "SLA",
+      "SLI"
+    ]
+  },
+  {
+    "word": "SLI",
+    "meanings": [
+      "서비스 수준을 재는 실제 지표(응답시간 등)",
+      "Service Level Indicator"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "서비스 수준 지표"
+    ],
+    "level": 2,
+    "aliases": [
+      "SLI",
+      "Service Level Indicator"
+    ],
+    "confusable": [
+      "SLA",
+      "SLO"
+    ]
+  },
+  {
+    "word": "MTTR",
+    "meanings": [
+      "장애부터 복구까지 평균 시간",
+      "Mean Time To Recovery"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "평균 복구 시간"
+    ],
+    "level": 3,
+    "aliases": [
+      "MTTR",
+      "Mean Time To Recovery"
+    ],
+    "confusable": [
+      "Incident",
+      "Postmortem",
+      "Runbook"
+    ]
+  },
+  {
+    "word": "Incident",
+    "meanings": [
+      "서비스에 영향을 준 장애·사고",
+      "Incident"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "인시던트",
+      "장애"
+    ],
+    "level": 2,
+    "aliases": [
+      "Incident"
+    ],
+    "confusable": [
+      "Postmortem",
+      "Runbook",
+      "MTTR"
+    ]
+  },
+  {
+    "word": "Postmortem",
+    "meanings": [
+      "장애 후 원인·재발방지를 정리하는 회고",
+      "Postmortem"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "포스트모템",
+      "사후 분석"
+    ],
+    "level": 3,
+    "aliases": [
+      "Postmortem"
+    ],
+    "confusable": [
+      "Incident",
+      "Runbook",
+      "MTTR"
+    ]
+  },
+  {
+    "word": "Runbook",
+    "meanings": [
+      "상황별 대응 절차를 적어 둔 운영 매뉴얼",
+      "Runbook"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "런북",
+      "운영 절차서"
+    ],
+    "level": 3,
+    "aliases": [
+      "Runbook"
+    ],
+    "confusable": [
+      "Incident",
+      "Postmortem",
+      "MTTR"
+    ]
+  },
+  {
+    "word": "Idempotency",
+    "meanings": [
+      "같은 요청을 여러 번 해도 결과가 한 번과 같은 성질",
+      "Idempotency"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "멱등성"
+    ],
+    "level": 3,
+    "aliases": [
+      "Idempotency"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Retry / Backoff",
+    "meanings": [
+      "실패 시 간격을 늘려 가며 다시 시도하는 것",
+      "Retry with Exponential Backoff"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "재시도",
+      "지수 백오프"
+    ],
+    "level": 3,
+    "aliases": [
+      "Retry / Backoff",
+      "Retry with Exponential Backoff",
+      "Retry",
+      "Backoff",
+      "Exponential backoff"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Rate limit",
+    "meanings": [
+      "일정 시간당 요청 수를 제한하는 것",
+      "Rate Limiting"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "속도 제한",
+      "호출 제한"
+    ],
+    "level": 2,
+    "aliases": [
+      "Rate limit",
+      "Rate Limiting"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Circuit breaker",
+    "meanings": [
+      "실패가 이어지면 호출을 잠시 끊어 전체 장애를 막는 패턴",
+      "Circuit Breaker"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "서킷 브레이커"
+    ],
+    "level": 2,
+    "aliases": [
+      "Circuit breaker",
+      "Circuit Breaker"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Cron",
+    "meanings": [
+      "정해진 시각에 작업을 자동 실행하는 스케줄러",
+      "Cron"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "크론",
+      "예약 실행"
+    ],
+    "level": 2,
+    "aliases": [
+      "Cron"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Daemon",
+    "meanings": [
+      "뒤에서 계속 돌며 일하는 프로그램",
+      "Daemon"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "데몬",
+      "백그라운드 프로세스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Daemon"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "API",
+    "meanings": [
+      "프로그램끼리 기능을 주고받는 약속된 창구",
+      "Application Programming Interface"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "응용 프로그래밍 인터페이스"
+    ],
+    "level": 3,
+    "aliases": [
+      "API",
+      "Application Programming Interface"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "REST",
+    "meanings": [
+      "HTTP 자원 중심으로 API를 설계하는 방식",
+      "Representational State Transfer"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "레스트",
+      "RESTful"
+    ],
+    "level": 2,
+    "aliases": [
+      "REST",
+      "Representational State Transfer"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Webhook",
+    "meanings": [
+      "일이 생기면 상대 서버로 알려 주는 역방향 호출",
+      "Webhook"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "웹훅"
+    ],
+    "level": 3,
+    "aliases": [
+      "Webhook"
+    ],
+    "confusable": [
+      "Queue",
+      "Pub/Sub",
+      "Event-driven"
+    ]
+  },
+  {
+    "word": "Batch",
+    "meanings": [
+      "모아 두었다 한꺼번에 처리하는 방식",
+      "Batch Processing"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "배치",
+      "일괄 처리"
+    ],
+    "level": 3,
+    "aliases": [
+      "Batch",
+      "Batch Processing"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Queue",
+    "meanings": [
+      "작업을 줄 세워 두고 순서대로 처리하게 하는 장치",
+      "Message Queue"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "메시지 큐",
+      "대기열"
+    ],
+    "level": 3,
+    "aliases": [
+      "Queue",
+      "Message Queue"
+    ],
+    "confusable": [
+      "Pub/Sub",
+      "Webhook",
+      "Event-driven"
+    ]
+  },
+  {
+    "word": "Event-driven",
+    "meanings": [
+      "사건(이벤트) 발생에 반응해 동작하는 구조",
+      "Event-driven Architecture"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "이벤트 기반"
+    ],
+    "level": 2,
+    "aliases": [
+      "Event-driven",
+      "Event-driven Architecture"
+    ],
+    "confusable": [
+      "Queue",
+      "Pub/Sub",
+      "Webhook"
+    ]
+  },
+  {
+    "word": "Pub/Sub",
+    "meanings": [
+      "발행자가 보내면 구독자들이 받는 메시지 방식",
+      "Publish / Subscribe"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "발행 구독"
+    ],
+    "level": 2,
+    "aliases": [
+      "Pub/Sub",
+      "Publish / Subscribe",
+      "PubSub",
+      "Pub Sub"
+    ],
+    "confusable": [
+      "Queue",
+      "Webhook",
+      "Event-driven"
+    ]
+  },
+  {
+    "word": "MSA",
+    "meanings": [
+      "기능을 작은 서비스 여럿으로 나눈 구조",
+      "Microservice Architecture"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "마이크로서비스"
+    ],
+    "level": 2,
+    "aliases": [
+      "MSA",
+      "Microservice Architecture"
+    ],
+    "confusable": [
+      "Monolith",
+      "Serverless"
+    ]
+  },
+  {
+    "word": "Monolith",
+    "meanings": [
+      "하나로 뭉친 단일 애플리케이션 구조",
+      "Monolithic Architecture"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "모놀리식",
+      "단일 구조"
+    ],
+    "level": 2,
+    "aliases": [
+      "Monolith",
+      "Monolithic Architecture"
+    ],
+    "confusable": [
+      "MSA",
+      "Serverless"
+    ]
+  },
+  {
+    "word": "Cache",
+    "meanings": [
+      "자주 쓰는 데이터를 가까이 임시 저장하는 것",
+      "Cache"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "캐시"
+    ],
+    "level": 2,
+    "aliases": [
+      "Cache"
+    ],
+    "confusable": [
+      "CDN",
+      "Proxy"
+    ]
+  },
+  {
+    "word": "CDN",
+    "meanings": [
+      "콘텐츠를 가까운 서버에서 내려주는 전송망",
+      "Content Delivery Network"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "콘텐츠 전송 네트워크"
+    ],
+    "level": 2,
+    "aliases": [
+      "CDN",
+      "Content Delivery Network"
+    ],
+    "confusable": [
+      "Cache",
+      "Proxy"
+    ]
+  },
+  {
+    "word": "Transaction",
+    "meanings": [
+      "전부 성공하거나 전부 취소되는 작업 묶음",
+      "Transaction"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "트랜잭션"
+    ],
+    "level": 3,
+    "aliases": [
+      "Transaction"
+    ],
+    "confusable": [
+      "ACID",
+      "Eventual consistency"
+    ]
+  },
+  {
+    "word": "ACID",
+    "meanings": [
+      "트랜잭션이 지켜야 할 네 가지 성질",
+      "Atomicity, Consistency, Isolation, Durability"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "원자성 일관성 고립성 지속성"
+    ],
+    "level": 2,
+    "aliases": [
+      "ACID",
+      "Atomicity, Consistency, Isolation, Durability"
+    ],
+    "confusable": [
+      "Transaction",
+      "Eventual consistency"
+    ]
+  },
+  {
+    "word": "Eventual consistency",
+    "meanings": [
+      "시간이 지나면 결국 데이터가 맞춰지는 일관성",
+      "Eventual Consistency"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "최종적 일관성"
+    ],
+    "level": 2,
+    "aliases": [
+      "Eventual consistency",
+      "Eventual Consistency"
+    ],
+    "confusable": [
+      "Transaction",
+      "ACID"
+    ]
+  },
+  {
+    "word": "ETL",
+    "meanings": [
+      "데이터를 뽑아 바꿔서 적재하는 과정",
+      "Extract, Transform, Load"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "추출 변환 적재"
+    ],
+    "level": 2,
+    "aliases": [
+      "ETL",
+      "Extract, Transform, Load"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "NFR",
+    "meanings": [
+      "성능·보안·가용성처럼 기능 외 요구사항",
+      "Non-Functional Requirement"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "비기능 요구사항"
+    ],
+    "level": 3,
+    "aliases": [
+      "NFR",
+      "Non-Functional Requirement"
+    ],
+    "confusable": [
+      "FR",
+      "BR"
+    ]
+  },
+  {
+    "word": "FR",
+    "meanings": [
+      "시스템이 해야 할 기능 요구사항",
+      "Functional Requirement"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "기능 요구사항"
+    ],
+    "level": 3,
+    "aliases": [
+      "FR",
+      "Functional Requirement"
+    ],
+    "confusable": [
+      "NFR",
+      "BR"
+    ]
+  },
+  {
+    "word": "BR",
+    "meanings": [
+      "업무상 반드시 지켜야 할 규칙",
+      "Business Rule"
+    ],
+    "partOfSpeech": "아키텍처",
+    "near": [
+      "비즈니스 규칙",
+      "업무 규칙"
+    ],
+    "level": 3,
+    "aliases": [
+      "BR",
+      "Business Rule"
+    ],
+    "confusable": [
+      "FR",
+      "NFR"
+    ]
+  },
+  {
+    "word": "RBAC",
+    "meanings": [
+      "역할에 따라 권한을 주는 접근 제어",
+      "Role-Based Access Control"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "역할 기반 접근 제어"
+    ],
+    "level": 3,
+    "aliases": [
+      "RBAC",
+      "Role-Based Access Control"
+    ],
+    "confusable": [
+      "ABAC",
+      "Least privilege",
+      "SoD"
+    ]
+  },
+  {
+    "word": "ABAC",
+    "meanings": [
+      "속성(부서·시간 등) 조건으로 권한을 주는 방식",
+      "Attribute-Based Access Control"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "속성 기반 접근 제어"
+    ],
+    "level": 2,
+    "aliases": [
+      "ABAC",
+      "Attribute-Based Access Control"
+    ],
+    "confusable": [
+      "RBAC",
+      "Least privilege",
+      "SoD"
+    ]
+  },
+  {
+    "word": "Least privilege",
+    "meanings": [
+      "필요한 최소한의 권한만 주는 원칙",
+      "Principle of Least Privilege"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "최소 권한 원칙"
+    ],
+    "level": 3,
+    "aliases": [
+      "Least privilege",
+      "Principle of Least Privilege"
+    ],
+    "confusable": [
+      "RBAC",
+      "ABAC",
+      "SoD"
+    ]
+  },
+  {
+    "word": "AuthN",
+    "meanings": [
+      "누구인지 확인하는 것(로그인)",
+      "Authentication"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "인증"
+    ],
+    "level": 3,
+    "aliases": [
+      "AuthN",
+      "Authentication"
+    ],
+    "confusable": [
+      "AuthZ",
+      "SSO",
+      "MFA"
+    ]
+  },
+  {
+    "word": "AuthZ",
+    "meanings": [
+      "무엇을 할 수 있는지 허락하는 것",
+      "Authorization"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "인가",
+      "권한 부여"
+    ],
+    "level": 3,
+    "aliases": [
+      "AuthZ",
+      "Authorization"
+    ],
+    "confusable": [
+      "AuthN",
+      "SSO",
+      "MFA"
+    ]
+  },
+  {
+    "word": "SoD",
+    "meanings": [
+      "한 사람이 요청과 승인을 함께 못 하게 나누는 것",
+      "Separation of Duties"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "직무 분리"
+    ],
+    "level": 3,
+    "aliases": [
+      "SoD",
+      "Separation of Duties"
+    ],
+    "confusable": [
+      "RBAC",
+      "ABAC",
+      "Least privilege"
+    ]
+  },
+  {
+    "word": "Audit log",
+    "meanings": [
+      "누가 언제 무엇을 했는지 남기는 기록",
+      "Audit Log"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "감사 로그"
+    ],
+    "level": 3,
+    "aliases": [
+      "Audit log",
+      "Audit Log"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Approval gate",
+    "meanings": [
+      "실행 전 사람 승인을 받아야 넘어가는 관문",
+      "Approval Gate"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "승인 게이트"
+    ],
+    "level": 3,
+    "aliases": [
+      "Approval gate",
+      "Approval Gate"
+    ],
+    "confusable": [
+      "HITL",
+      "Escalation"
+    ]
+  },
+  {
+    "word": "OAuth",
+    "meanings": [
+      "비밀번호 없이 다른 서비스 권한을 위임받는 표준",
+      "Open Authorization"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "오어스"
+    ],
+    "level": 2,
+    "aliases": [
+      "OAuth",
+      "Open Authorization"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SSO",
+    "meanings": [
+      "한 번 로그인으로 여러 서비스를 쓰는 것",
+      "Single Sign-On"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "통합 로그인",
+      "싱글 사인온"
+    ],
+    "level": 2,
+    "aliases": [
+      "SSO",
+      "Single Sign-On"
+    ],
+    "confusable": [
+      "AuthN",
+      "AuthZ",
+      "MFA"
+    ]
+  },
+  {
+    "word": "JWT",
+    "meanings": [
+      "서명된 인증 정보를 담은 토큰",
+      "JSON Web Token"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "제이더블유티"
+    ],
+    "level": 2,
+    "aliases": [
+      "JWT",
+      "JSON Web Token"
+    ],
+    "confusable": [
+      "Session",
+      "Cookie"
+    ]
+  },
+  {
+    "word": "MFA",
+    "meanings": [
+      "두 가지 이상 수단으로 확인하는 인증",
+      "Multi-Factor Authentication"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "다중 인증",
+      "2단계 인증"
+    ],
+    "level": 2,
+    "aliases": [
+      "MFA",
+      "Multi-Factor Authentication"
+    ],
+    "confusable": [
+      "AuthN",
+      "AuthZ",
+      "SSO"
+    ]
+  },
+  {
+    "word": "PII",
+    "meanings": [
+      "개인을 알아볼 수 있는 정보",
+      "Personally Identifiable Information"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "개인식별정보",
+      "개인정보"
+    ],
+    "level": 3,
+    "aliases": [
+      "PII",
+      "Personally Identifiable Information"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Zero trust",
+    "meanings": [
+      "내부라도 믿지 않고 매번 검증하는 보안 모델",
+      "Zero Trust"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "제로 트러스트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Zero trust",
+      "Zero Trust"
+    ],
+    "confusable": [
+      "Firewall",
+      "VPN",
+      "Air gap"
+    ]
+  },
+  {
+    "word": "Air gap",
+    "meanings": [
+      "외부망과 물리적으로 끊은 폐쇄망",
+      "Air-gapped Network"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "폐쇄망",
+      "망분리",
+      "에어갭"
+    ],
+    "level": 2,
+    "aliases": [
+      "Air gap",
+      "Air-gapped Network"
+    ],
+    "confusable": [
+      "Firewall",
+      "VPN",
+      "Zero trust"
+    ]
+  },
+  {
+    "word": "SKU",
+    "meanings": [
+      "재고 관리 최소 단위(상품·옵션별 코드)",
+      "Stock Keeping Unit"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "재고 관리 단위",
+      "품목 코드"
+    ],
+    "level": 3,
+    "aliases": [
+      "SKU",
+      "Stock Keeping Unit"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "ERP",
+    "meanings": [
+      "재무·재고·구매 등을 통합 관리하는 전사 시스템",
+      "Enterprise Resource Planning"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "전사적 자원 관리"
+    ],
+    "level": 3,
+    "aliases": [
+      "ERP",
+      "Enterprise Resource Planning"
+    ],
+    "confusable": [
+      "OMS",
+      "WMS"
+    ]
+  },
+  {
+    "word": "OMS",
+    "meanings": [
+      "주문 접수부터 처리까지 관리하는 시스템",
+      "Order Management System"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "주문 관리 시스템"
+    ],
+    "level": 3,
+    "aliases": [
+      "OMS",
+      "Order Management System"
+    ],
+    "confusable": [
+      "ERP",
+      "WMS"
+    ]
+  },
+  {
+    "word": "WMS",
+    "meanings": [
+      "창고 입출고·재고 위치를 관리하는 시스템",
+      "Warehouse Management System"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "창고 관리 시스템"
+    ],
+    "level": 2,
+    "aliases": [
+      "WMS",
+      "Warehouse Management System"
+    ],
+    "confusable": [
+      "ERP",
+      "OMS"
+    ]
+  },
+  {
+    "word": "CS",
+    "meanings": [
+      "고객 문의·클레임 응대",
+      "Customer Service"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "고객 서비스",
+      "고객 응대"
+    ],
+    "level": 3,
+    "aliases": [
+      "CS",
+      "Customer Service"
+    ],
+    "confusable": [
+      "CX",
+      "CSAT"
+    ]
+  },
+  {
+    "word": "PO",
+    "meanings": [
+      "공급처에 내는 발주서",
+      "Purchase Order"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "발주서",
+      "구매 주문"
+    ],
+    "level": 3,
+    "aliases": [
+      "PO",
+      "Purchase Order"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "B2C",
+    "meanings": [
+      "기업이 소비자에게 파는 거래",
+      "Business to Consumer"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "기업 소비자 간"
+    ],
+    "level": 2,
+    "aliases": [
+      "B2C",
+      "Business to Consumer"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "B2B",
+    "meanings": [
+      "기업끼리의 거래",
+      "Business to Business"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "기업 간"
+    ],
+    "level": 2,
+    "aliases": [
+      "B2B",
+      "Business to Business"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Safety stock",
+    "meanings": [
+      "품절을 막으려 늘 남겨 두는 재고",
+      "Safety Stock"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "안전 재고",
+      "안전선"
+    ],
+    "level": 3,
+    "aliases": [
+      "Safety stock",
+      "Safety Stock"
+    ],
+    "confusable": [
+      "Backorder",
+      "Fulfillment"
+    ]
+  },
+  {
+    "word": "Backorder",
+    "meanings": [
+      "재고가 없어 나중에 보내기로 한 주문",
+      "Backorder"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "이월 주문",
+      "백오더"
+    ],
+    "level": 2,
+    "aliases": [
+      "Backorder"
+    ],
+    "confusable": [
+      "Safety stock",
+      "Fulfillment"
+    ]
+  },
+  {
+    "word": "Fulfillment",
+    "meanings": [
+      "주문 후 포장·출고·배송까지의 처리",
+      "Fulfillment"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "풀필먼트",
+      "주문 이행"
+    ],
+    "level": 2,
+    "aliases": [
+      "Fulfillment"
+    ],
+    "confusable": [
+      "Safety stock",
+      "Backorder"
+    ]
+  },
+  {
+    "word": "3PL",
+    "meanings": [
+      "물류를 외부 전문업체에 맡기는 것",
+      "Third-Party Logistics"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "삼자 물류"
+    ],
+    "level": 2,
+    "aliases": [
+      "3PL",
+      "Third-Party Logistics"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "RMA",
+    "meanings": [
+      "반품 승인 절차·번호",
+      "Return Merchandise Authorization"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "반품 승인"
+    ],
+    "level": 2,
+    "aliases": [
+      "RMA",
+      "Return Merchandise Authorization"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Chargeback",
+    "meanings": [
+      "카드사를 통한 결제 취소·환불 요구",
+      "Chargeback"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "차지백",
+      "지불 거절"
+    ],
+    "level": 2,
+    "aliases": [
+      "Chargeback"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "KPI",
+    "meanings": [
+      "핵심 성과 지표",
+      "Key Performance Indicator"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "핵심 성과 지표"
+    ],
+    "level": 3,
+    "aliases": [
+      "KPI",
+      "Key Performance Indicator"
+    ],
+    "confusable": [
+      "CSAT",
+      "ROI"
+    ]
+  },
+  {
+    "word": "ROI",
+    "meanings": [
+      "투자 대비 수익률",
+      "Return on Investment"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "투자 수익률"
+    ],
+    "level": 3,
+    "aliases": [
+      "ROI",
+      "Return on Investment"
+    ],
+    "confusable": [
+      "CSAT",
+      "KPI"
+    ]
+  },
+  {
+    "word": "CSAT",
+    "meanings": [
+      "고객 만족도 점수",
+      "Customer Satisfaction Score"
+    ],
+    "partOfSpeech": "커머스 운영",
+    "near": [
+      "고객 만족도"
+    ],
+    "level": 2,
+    "aliases": [
+      "CSAT",
+      "Customer Satisfaction Score"
+    ],
+    "confusable": [
+      "KPI",
+      "ROI",
+      "TA",
+      "VOC",
+      "CX",
+      "CS"
+    ]
+  },
+  {
+    "word": "React Native",
+    "meanings": [
+      "React로 iOS·안드로이드 앱을 함께 만드는 프레임워크",
+      "React Native"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "리액트 네이티브",
+      "RN"
+    ],
+    "level": 3,
+    "aliases": [
+      "React Native"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Expo",
+    "meanings": [
+      "React Native 앱 개발·빌드를 쉽게 해 주는 도구",
+      "Expo"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "엑스포"
+    ],
+    "level": 2,
+    "aliases": [
+      "Expo"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SPA",
+    "meanings": [
+      "한 페이지에서 화면만 바꿔 가는 웹앱",
+      "Single Page Application"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "단일 페이지 애플리케이션"
+    ],
+    "level": 2,
+    "aliases": [
+      "SPA",
+      "Single Page Application"
+    ],
+    "confusable": [
+      "SSR",
+      "CSR",
+      "PWA"
+    ]
+  },
+  {
+    "word": "SSR",
+    "meanings": [
+      "서버에서 화면을 그려 보내는 방식",
+      "Server-Side Rendering"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "서버 사이드 렌더링"
+    ],
+    "level": 2,
+    "aliases": [
+      "SSR",
+      "Server-Side Rendering"
+    ],
+    "confusable": [
+      "CSR",
+      "SPA",
+      "PWA"
+    ]
+  },
+  {
+    "word": "CSR",
+    "meanings": [
+      "브라우저에서 화면을 그리는 방식",
+      "Client-Side Rendering"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "클라이언트 사이드 렌더링"
+    ],
+    "level": 2,
+    "aliases": [
+      "CSR",
+      "Client-Side Rendering"
+    ],
+    "confusable": [
+      "SSR",
+      "SPA",
+      "PWA"
+    ]
+  },
+  {
+    "word": "PWA",
+    "meanings": [
+      "앱처럼 설치해 쓰는 웹앱",
+      "Progressive Web App"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "프로그레시브 웹 앱"
+    ],
+    "level": 2,
+    "aliases": [
+      "PWA",
+      "Progressive Web App"
+    ],
+    "confusable": [
+      "SSR",
+      "CSR",
+      "SPA"
+    ]
+  },
+  {
+    "word": "Deep link",
+    "meanings": [
+      "앱의 특정 화면으로 바로 여는 링크",
+      "Deep Link"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "딥링크"
+    ],
+    "level": 2,
+    "aliases": [
+      "Deep link",
+      "Deep Link"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "KeyboardAvoidingView",
+    "meanings": [
+      "키보드가 올라올 때 입력창이 가려지지 않게 밀어 올리는 RN 컴포넌트",
+      "KeyboardAvoidingView"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "키보드 회피",
+      "키보드 밀림 처리"
+    ],
+    "level": 2,
+    "aliases": [
+      "KeyboardAvoidingView"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Responsive",
+    "meanings": [
+      "화면 크기에 맞춰 배치가 바뀌는 설계",
+      "Responsive Design"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "반응형"
+    ],
+    "level": 2,
+    "aliases": [
+      "Responsive",
+      "Responsive Design"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Hybrid search",
+    "meanings": [
+      "키워드 검색과 벡터 검색을 함께 써 결과를 합치는 방식",
+      "Hybrid Search"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "하이브리드 검색",
+      "다중 검색"
+    ],
+    "level": 3,
+    "aliases": [
+      "Hybrid search",
+      "Hybrid Search"
+    ],
+    "confusable": [
+      "BM25",
+      "Reranker"
+    ]
+  },
+  {
+    "word": "BM25",
+    "meanings": [
+      "단어 빈도·희소성으로 문서 점수를 매기는 키워드 검색 알고리즘",
+      "Best Matching 25"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "비엠25",
+      "키워드 검색 점수"
+    ],
+    "level": 3,
+    "aliases": [
+      "BM25",
+      "Best Matching 25"
+    ],
+    "confusable": [
+      "Hybrid search",
+      "Reranker",
+      "Elasticsearch",
+      "Apache Solr"
+    ]
+  },
+  {
+    "word": "Reranker",
+    "meanings": [
+      "1차로 뽑은 후보를 질문과 다시 견줘 순위를 매기는 2차 모델",
+      "Reranker (Cross-encoder)"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "재랭킹",
+      "리랭커",
+      "재순위화"
+    ],
+    "level": 3,
+    "aliases": [
+      "Reranker",
+      "Reranker (Cross-encoder)"
+    ],
+    "confusable": [
+      "Hybrid search",
+      "BM25"
+    ]
+  },
+  {
+    "word": "Chunking",
+    "meanings": [
+      "긴 문서를 검색·임베딩 단위로 잘게 나누는 것",
+      "Chunking"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "청킹",
+      "문서 분할"
+    ],
+    "level": 3,
+    "aliases": [
+      "Chunking"
+    ],
+    "confusable": [
+      "Top-k",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "Top-k",
+    "meanings": [
+      "검색 결과 중 상위 k개만 추려 모델에 넘기는 것",
+      "Top-k Retrieval"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "상위 k개",
+      "탑케이"
+    ],
+    "level": 2,
+    "aliases": [
+      "Top-k",
+      "Top-k Retrieval",
+      "Topk",
+      "Top k"
+    ],
+    "confusable": [
+      "Chunking",
+      "Embedding"
+    ]
+  },
+  {
+    "word": "Faithfulness",
+    "meanings": [
+      "생성한 답이 근거 문서에 얼마나 충실한지의 척도",
+      "Faithfulness"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "충실도",
+      "근거 일치도"
+    ],
+    "level": 2,
+    "aliases": [
+      "Faithfulness"
+    ],
+    "confusable": [
+      "RAGAS",
+      "Golden set",
+      "Eval"
+    ]
+  },
+  {
+    "word": "Golden set",
+    "meanings": [
+      "정답을 미리 정해 둔 평가용 질문 묶음",
+      "Golden Set"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "골든셋",
+      "정답셋",
+      "평가셋"
+    ],
+    "level": 2,
+    "aliases": [
+      "Golden set",
+      "Golden Set"
+    ],
+    "confusable": [
+      "RAGAS",
+      "Faithfulness",
+      "Eval"
+    ]
+  },
+  {
+    "word": "RAGAS",
+    "meanings": [
+      "RAG 품질을 자동 지표로 재는 평가 프레임워크",
+      "RAG Assessment"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "라가스",
+      "RAG 평가"
+    ],
+    "level": 2,
+    "aliases": [
+      "RAGAS",
+      "RAG Assessment"
+    ],
+    "confusable": [
+      "Faithfulness",
+      "Golden set",
+      "Eval"
+    ]
+  },
+  {
+    "word": "pgvector",
+    "meanings": [
+      "PostgreSQL에 벡터 검색을 더해 주는 확장",
+      "pgvector"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "피지벡터"
+    ],
+    "level": 2,
+    "aliases": [
+      "pgvector"
+    ],
+    "confusable": [
+      "Milvus",
+      "Qdrant",
+      "Vector DB"
+    ]
+  },
+  {
+    "word": "Elasticsearch",
+    "meanings": [
+      "역색인 기반의 대표적인 검색·분석 엔진",
+      "Elasticsearch"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "엘라스틱서치",
+      "ES"
+    ],
+    "level": 2,
+    "aliases": [
+      "Elasticsearch",
+      "ES"
+    ],
+    "confusable": [
+      "Apache Solr",
+      "BM25"
+    ]
+  },
+  {
+    "word": "Apache Solr",
+    "meanings": [
+      "Lucene 기반의 오픈소스 검색 플랫폼",
+      "Apache Solr"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "솔라",
+      "솔라 검색엔진"
+    ],
+    "level": 2,
+    "aliases": [
+      "Apache Solr",
+      "Solr"
+    ],
+    "confusable": [
+      "Elasticsearch",
+      "BM25"
+    ]
+  },
+  {
+    "word": "Milvus",
+    "meanings": [
+      "대규모 벡터 검색에 쓰는 오픈소스 벡터 DB",
+      "Milvus"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "밀버스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Milvus"
+    ],
+    "confusable": [
+      "pgvector",
+      "Qdrant",
+      "Vector DB"
+    ]
+  },
+  {
+    "word": "Qdrant",
+    "meanings": [
+      "필터링에 강한 오픈소스 벡터 DB",
+      "Qdrant"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "큐드란트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Qdrant"
+    ],
+    "confusable": [
+      "pgvector",
+      "Milvus",
+      "Vector DB"
+    ]
+  },
+  {
+    "word": "Quantization",
+    "meanings": [
+      "가중치 정밀도를 낮춰(4·8비트) 모델을 가볍고 빠르게 만드는 것",
+      "Quantization"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "양자화",
+      "경량화"
+    ],
+    "level": 3,
+    "aliases": [
+      "Quantization"
+    ],
+    "confusable": [
+      "LoRA",
+      "Fine-tuning"
+    ]
+  },
+  {
+    "word": "LoRA",
+    "meanings": [
+      "전체가 아닌 작은 행렬만 학습하는 경량 파인튜닝 기법",
+      "Low-Rank Adaptation"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "로라",
+      "경량 파인튜닝"
+    ],
+    "level": 3,
+    "aliases": [
+      "LoRA",
+      "Low-Rank Adaptation"
+    ],
+    "confusable": [
+      "Quantization",
+      "Fine-tuning"
+    ]
+  },
+  {
+    "word": "Streaming",
+    "meanings": [
+      "생성되는 토큰을 기다리지 않고 바로바로 내보내는 것",
+      "Token Streaming"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "스트리밍",
+      "실시간 출력"
+    ],
+    "level": 3,
+    "aliases": [
+      "Streaming",
+      "Token Streaming"
+    ],
+    "confusable": [
+      "TTFT",
+      "Latency"
+    ]
+  },
+  {
+    "word": "TTFT",
+    "meanings": [
+      "요청부터 첫 토큰이 나올 때까지 걸리는 시간",
+      "Time To First Token"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "첫 토큰 지연",
+      "티티에프티"
+    ],
+    "level": 2,
+    "aliases": [
+      "TTFT",
+      "Time To First Token"
+    ],
+    "confusable": [
+      "Latency",
+      "Streaming"
+    ]
+  },
+  {
+    "word": "vLLM",
+    "meanings": [
+      "묶음 처리·메모리 최적화로 LLM을 빠르게 서빙하는 엔진",
+      "vLLM"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "브이엘엘엠"
+    ],
+    "level": 2,
+    "aliases": [
+      "vLLM"
+    ],
+    "confusable": [
+      "Gemma",
+      "Open-weight model"
+    ]
+  },
+  {
+    "word": "Open-weight model",
+    "meanings": [
+      "가중치를 공개해 내려받아 쓸 수 있는 모델",
+      "Open-weight Model"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "오픈웨이트",
+      "가중치 공개 모델"
+    ],
+    "level": 2,
+    "aliases": [
+      "Open-weight model",
+      "Open-weight Model",
+      "Open weight",
+      "오픈웨이트"
+    ],
+    "confusable": [
+      "vLLM",
+      "Gemma"
+    ]
+  },
+  {
+    "word": "Gemma",
+    "meanings": [
+      "구글이 공개한 경량 오픈웨이트 모델(Gemini 계열)",
+      "Gemma"
+    ],
+    "partOfSpeech": "LLM 서빙",
+    "near": [
+      "젬마"
+    ],
+    "level": 2,
+    "aliases": [
+      "Gemma"
+    ],
+    "confusable": [
+      "vLLM",
+      "Open-weight model"
+    ]
+  },
+  {
+    "word": "Intent classification",
+    "meanings": [
+      "사용자 발화가 어떤 용건인지 분류하는 것",
+      "Intent Classification"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "의도 분류",
+      "인텐트 분류"
+    ],
+    "level": 3,
+    "aliases": [
+      "Intent classification",
+      "Intent Classification"
+    ],
+    "confusable": [
+      "Slot filling",
+      "NER"
+    ]
+  },
+  {
+    "word": "Slot filling",
+    "meanings": [
+      "예약처럼 필요한 항목을 대화로 하나씩 채워 가는 방식",
+      "Slot Filling"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "슬롯 필링",
+      "항목 채우기"
+    ],
+    "level": 3,
+    "aliases": [
+      "Slot filling",
+      "Slot Filling"
+    ],
+    "confusable": [
+      "Intent classification",
+      "NER"
+    ]
+  },
+  {
+    "word": "NER",
+    "meanings": [
+      "문장에서 이름·날짜·금액 같은 개체를 뽑아내는 것",
+      "Named Entity Recognition"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "개체명 인식",
+      "엔티티 추출"
+    ],
+    "level": 2,
+    "aliases": [
+      "NER",
+      "Named Entity Recognition",
+      "Entity extraction",
+      "개체명 추출"
+    ],
+    "confusable": [
+      "Intent classification",
+      "Slot filling"
+    ]
+  },
+  {
+    "word": "NLU",
+    "meanings": [
+      "말의 의도와 내용을 이해하는 단계",
+      "Natural Language Understanding"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "자연어 이해"
+    ],
+    "level": 2,
+    "aliases": [
+      "NLU",
+      "Natural Language Understanding"
+    ],
+    "confusable": [
+      "STT",
+      "TTS",
+      "NLP",
+      "Rule-based"
+    ]
+  },
+  {
+    "word": "NLP",
+    "meanings": [
+      "사람 말을 컴퓨터가 다루는 기술 전반",
+      "Natural Language Processing"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "자연어 처리"
+    ],
+    "level": 2,
+    "aliases": [
+      "NLP",
+      "Natural Language Processing"
+    ],
+    "confusable": [
+      "NLU",
+      "Rule-based"
+    ]
+  },
+  {
+    "word": "Rule-based",
+    "meanings": [
+      "미리 정한 규칙대로 동작하게 만드는 방식",
+      "Rule-based System"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "룰베이스",
+      "규칙 기반"
+    ],
+    "level": 2,
+    "aliases": [
+      "Rule-based",
+      "Rule-based System",
+      "Rule base",
+      "룰베이스"
+    ],
+    "confusable": [
+      "NLP",
+      "NLU"
+    ]
+  },
+  {
+    "word": "Chatbot",
+    "meanings": [
+      "글로 대화하며 응대하는 봇",
+      "Chatbot"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "챗봇"
+    ],
+    "level": 2,
+    "aliases": [
+      "Chatbot"
+    ],
+    "confusable": [
+      "Callbot",
+      "Agent assist"
+    ]
+  },
+  {
+    "word": "Callbot",
+    "meanings": [
+      "전화 통화로 음성 응대하는 봇",
+      "Callbot"
+    ],
+    "partOfSpeech": "대화형 AI",
+    "near": [
+      "콜봇",
+      "음성봇"
+    ],
+    "level": 2,
+    "aliases": [
+      "Callbot"
+    ],
+    "confusable": [
+      "Chatbot",
+      "Agent assist"
+    ]
+  },
+  {
+    "word": "AICC",
+    "meanings": [
+      "AI를 접목해 상담을 자동화·보조하는 컨택센터",
+      "AI Contact Center"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "에이아이씨씨",
+      "AI 컨택센터"
+    ],
+    "level": 3,
+    "aliases": [
+      "AICC",
+      "AI Contact Center"
+    ],
+    "confusable": [
+      "IPCC",
+      "IVR"
+    ]
+  },
+  {
+    "word": "IPCC",
+    "meanings": [
+      "인터넷전화(VoIP) 기반으로 구축한 콜센터 시스템",
+      "IP Contact Center"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "아이피씨씨"
+    ],
+    "level": 3,
+    "aliases": [
+      "IPCC",
+      "IP Contact Center"
+    ],
+    "confusable": [
+      "AICC",
+      "IVR"
+    ]
+  },
+  {
+    "word": "STT",
+    "meanings": [
+      "음성을 글자로 받아 적는 음성인식",
+      "Speech-to-Text"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "음성인식",
+      "에스티티"
+    ],
+    "level": 3,
+    "aliases": [
+      "STT",
+      "Speech-to-Text"
+    ],
+    "confusable": [
+      "TTS",
+      "NLU"
+    ]
+  },
+  {
+    "word": "KMS",
+    "meanings": [
+      "상담에 쓸 지식·문서를 모아 관리·검색하는 시스템",
+      "Knowledge Management System"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "지식관리시스템",
+      "케이엠에스"
+    ],
+    "level": 3,
+    "aliases": [
+      "KMS",
+      "Knowledge Management System"
+    ],
+    "confusable": [
+      "CRM",
+      "VOC"
+    ]
+  },
+  {
+    "word": "Agent assist",
+    "meanings": [
+      "통화 중 상담원에게 답변·지식을 실시간 추천하는 기능",
+      "Agent Assist"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "상담어시스트",
+      "상담원 보조"
+    ],
+    "level": 3,
+    "aliases": [
+      "Agent assist",
+      "Agent Assist",
+      "상담어시스트",
+      "Agent Assistant"
+    ],
+    "confusable": [
+      "Chatbot",
+      "Callbot"
+    ]
+  },
+  {
+    "word": "TTS",
+    "meanings": [
+      "글자를 사람 목소리로 읽어 주는 음성합성",
+      "Text-to-Speech"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "음성합성",
+      "티티에스"
+    ],
+    "level": 2,
+    "aliases": [
+      "TTS",
+      "Text-to-Speech"
+    ],
+    "confusable": [
+      "STT",
+      "NLU"
+    ]
+  },
+  {
+    "word": "TA",
+    "meanings": [
+      "상담 녹취를 텍스트로 바꿔 유형·불만을 분석하는 것",
+      "Text Analytics"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "텍스트 분석",
+      "녹취 분석"
+    ],
+    "level": 2,
+    "aliases": [
+      "TA",
+      "Text Analytics"
+    ],
+    "confusable": [
+      "VOC",
+      "CSAT"
+    ]
+  },
+  {
+    "word": "VOC",
+    "meanings": [
+      "고객이 남긴 의견·불만을 모아 개선에 쓰는 것",
+      "Voice of Customer"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "고객의 소리",
+      "브이오씨"
+    ],
+    "level": 2,
+    "aliases": [
+      "VOC",
+      "Voice of Customer"
+    ],
+    "confusable": [
+      "KMS",
+      "CRM",
+      "TA",
+      "CSAT"
+    ]
+  },
+  {
+    "word": "IVR",
+    "meanings": [
+      "전화에서 안내 음성으로 메뉴를 고르게 하는 자동응답",
+      "Interactive Voice Response"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "자동응답",
+      "아이브이알",
+      "보이는 ARS"
+    ],
+    "level": 2,
+    "aliases": [
+      "IVR",
+      "Interactive Voice Response",
+      "Visual ARS",
+      "보이는 ARS",
+      "ARS"
+    ],
+    "confusable": [
+      "AICC",
+      "IPCC"
+    ]
+  },
+  {
+    "word": "CRM",
+    "meanings": [
+      "고객 정보·이력을 모아 관계를 관리하는 시스템",
+      "Customer Relationship Management"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "고객관계관리",
+      "씨알엠"
+    ],
+    "level": 2,
+    "aliases": [
+      "CRM",
+      "Customer Relationship Management"
+    ],
+    "confusable": [
+      "KMS",
+      "VOC"
+    ]
+  },
+  {
+    "word": "CX",
+    "meanings": [
+      "고객이 겪는 경험 전체의 질",
+      "Customer Experience"
+    ],
+    "partOfSpeech": "컨택센터",
+    "near": [
+      "고객 경험",
+      "씨엑스"
+    ],
+    "level": 2,
+    "aliases": [
+      "CX",
+      "Customer Experience"
+    ],
+    "confusable": [
+      "CSAT",
+      "CS"
+    ]
+  },
+  {
+    "word": "Server",
+    "meanings": [
+      "요청을 받아 처리해 주는 컴퓨터·프로그램",
+      "Server"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "서버"
+    ],
+    "level": 1,
+    "aliases": [
+      "Server"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Client",
+    "meanings": [
+      "서버에 요청을 보내는 쪽",
+      "Client"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "클라이언트"
+    ],
+    "level": 1,
+    "aliases": [
+      "Client"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Frontend",
+    "meanings": [
+      "사용자가 보는 화면 쪽 개발",
+      "Frontend"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "프론트엔드",
+      "프런트엔드"
+    ],
+    "level": 1,
+    "aliases": [
+      "Frontend"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Backend",
+    "meanings": [
+      "서버·데이터 처리 쪽 개발",
+      "Backend"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "백엔드"
+    ],
+    "level": 1,
+    "aliases": [
+      "Backend"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Full-stack",
+    "meanings": [
+      "프론트와 백엔드를 모두 다루는 개발",
+      "Full-stack"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "풀스택"
+    ],
+    "level": 1,
+    "aliases": [
+      "Full-stack"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Load balancing",
+    "meanings": [
+      "요청을 여러 서버에 고르게 나눠 보내는 것",
+      "Load Balancing"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "로드밸런싱",
+      "부하 분산"
+    ],
+    "level": 1,
+    "aliases": [
+      "Load balancing",
+      "Load Balancing",
+      "Load balancer",
+      "LB",
+      "로드밸런서",
+      "부하분산"
+    ],
+    "confusable": [
+      "Scale-out",
+      "Scale-up",
+      "Failover"
+    ]
+  },
+  {
+    "word": "Scale-out",
+    "meanings": [
+      "서버 대수를 늘려 처리량을 키우는 것",
+      "Scale-out (Horizontal Scaling)"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "수평 확장",
+      "스케일 아웃"
+    ],
+    "level": 1,
+    "aliases": [
+      "Scale-out",
+      "Scale-out (Horizontal Scaling)"
+    ],
+    "confusable": [
+      "Scale-up",
+      "Load balancing",
+      "Failover"
+    ]
+  },
+  {
+    "word": "Scale-up",
+    "meanings": [
+      "서버 한 대의 성능을 키우는 것",
+      "Scale-up (Vertical Scaling)"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "수직 확장",
+      "스케일 업"
+    ],
+    "level": 1,
+    "aliases": [
+      "Scale-up",
+      "Scale-up (Vertical Scaling)"
+    ],
+    "confusable": [
+      "Scale-out",
+      "Load balancing",
+      "Failover"
+    ]
+  },
+  {
+    "word": "Availability",
+    "meanings": [
+      "서비스가 중단 없이 쓸 수 있는 정도",
+      "Availability"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "가용성"
+    ],
+    "level": 1,
+    "aliases": [
+      "Availability"
+    ],
+    "confusable": [
+      "Scalability",
+      "Redundancy"
+    ]
+  },
+  {
+    "word": "Failover",
+    "meanings": [
+      "장애 시 예비 시스템으로 자동 전환",
+      "Failover"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "장애 조치",
+      "페일오버"
+    ],
+    "level": 1,
+    "aliases": [
+      "Failover"
+    ],
+    "confusable": [
+      "Scale-out",
+      "Scale-up",
+      "Load balancing"
+    ]
+  },
+  {
+    "word": "Redundancy",
+    "meanings": [
+      "장애 대비로 같은 구성을 여러 벌 두는 것",
+      "Redundancy"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "이중화",
+      "중복 구성"
+    ],
+    "level": 1,
+    "aliases": [
+      "Redundancy"
+    ],
+    "confusable": [
+      "Availability",
+      "Scalability"
+    ]
+  },
+  {
+    "word": "Backup",
+    "meanings": [
+      "데이터를 따로 복사해 보관하는 것",
+      "Backup"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "백업"
+    ],
+    "level": 1,
+    "aliases": [
+      "Backup"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Latency",
+    "meanings": [
+      "요청부터 응답까지 걸리는 지연 시간",
+      "Latency"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "지연 시간",
+      "레이턴시"
+    ],
+    "level": 1,
+    "aliases": [
+      "Latency"
+    ],
+    "confusable": [
+      "Throughput",
+      "Bandwidth",
+      "TTFT",
+      "Streaming"
+    ]
+  },
+  {
+    "word": "Throughput",
+    "meanings": [
+      "단위 시간당 처리량",
+      "Throughput"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "처리량",
+      "스루풋"
+    ],
+    "level": 1,
+    "aliases": [
+      "Throughput"
+    ],
+    "confusable": [
+      "Latency",
+      "Bandwidth"
+    ]
+  },
+  {
+    "word": "Bandwidth",
+    "meanings": [
+      "한 번에 보낼 수 있는 데이터 양(통신 폭)",
+      "Bandwidth"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "대역폭"
+    ],
+    "level": 1,
+    "aliases": [
+      "Bandwidth"
+    ],
+    "confusable": [
+      "Latency",
+      "Throughput"
+    ]
+  },
+  {
+    "word": "Scalability",
+    "meanings": [
+      "사용량이 늘어도 감당하도록 늘릴 수 있는 성질",
+      "Scalability"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "확장성"
+    ],
+    "level": 1,
+    "aliases": [
+      "Scalability"
+    ],
+    "confusable": [
+      "Availability",
+      "Redundancy"
+    ]
+  },
+  {
+    "word": "DB",
+    "meanings": [
+      "데이터를 체계적으로 저장·조회하는 저장소",
+      "Database"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "데이터베이스"
+    ],
+    "level": 1,
+    "aliases": [
+      "DB",
+      "Database",
+      "데이터베이스"
+    ],
+    "confusable": [
+      "RDBMS",
+      "NoSQL"
+    ]
+  },
+  {
+    "word": "RDBMS",
+    "meanings": [
+      "표(테이블) 구조로 관리하는 관계형 DB",
+      "Relational Database Management System"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "관계형 데이터베이스"
+    ],
+    "level": 1,
+    "aliases": [
+      "RDBMS",
+      "Relational Database Management System"
+    ],
+    "confusable": [
+      "NoSQL",
+      "DB"
+    ]
+  },
+  {
+    "word": "NoSQL",
+    "meanings": [
+      "표 구조가 아닌 방식의 DB(문서·키값 등)",
+      "Not only SQL"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "노에스큐엘",
+      "비관계형 DB"
+    ],
+    "level": 1,
+    "aliases": [
+      "NoSQL",
+      "Not only SQL"
+    ],
+    "confusable": [
+      "RDBMS",
+      "DB"
+    ]
+  },
+  {
+    "word": "SQL",
+    "meanings": [
+      "DB에 조회·수정을 요청하는 언어",
+      "Structured Query Language"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "에스큐엘",
+      "구조화 질의어"
+    ],
+    "level": 1,
+    "aliases": [
+      "SQL",
+      "Structured Query Language"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Query",
+    "meanings": [
+      "DB에 보내는 조회·수정 요청문",
+      "Query"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "쿼리",
+      "질의"
+    ],
+    "level": 1,
+    "aliases": [
+      "Query"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Index",
+    "meanings": [
+      "조회를 빠르게 하려고 만든 색인",
+      "Database Index"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "인덱스",
+      "색인"
+    ],
+    "level": 1,
+    "aliases": [
+      "Index",
+      "Database Index"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Schema",
+    "meanings": [
+      "데이터 구조(테이블·필드)의 설계도",
+      "Schema"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "스키마"
+    ],
+    "level": 1,
+    "aliases": [
+      "Schema"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "CRUD",
+    "meanings": [
+      "생성·조회·수정·삭제 기본 동작",
+      "Create, Read, Update, Delete"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "크루드",
+      "생성 조회 수정 삭제"
+    ],
+    "level": 1,
+    "aliases": [
+      "CRUD",
+      "Create, Read, Update, Delete"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "ORM",
+    "meanings": [
+      "코드의 객체와 DB 테이블을 자동으로 이어 주는 도구",
+      "Object-Relational Mapping"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "객체 관계 매핑"
+    ],
+    "level": 1,
+    "aliases": [
+      "ORM",
+      "Object-Relational Mapping"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "HTTP",
+    "meanings": [
+      "웹에서 요청·응답을 주고받는 규약",
+      "HyperText Transfer Protocol"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "에이치티티피"
+    ],
+    "level": 1,
+    "aliases": [
+      "HTTP",
+      "HyperText Transfer Protocol"
+    ],
+    "confusable": [
+      "TCP",
+      "UDP",
+      "IP"
+    ]
+  },
+  {
+    "word": "HTTPS",
+    "meanings": [
+      "암호화된 HTTP",
+      "HTTP Secure"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "보안 HTTP"
+    ],
+    "level": 1,
+    "aliases": [
+      "HTTPS",
+      "HTTP Secure"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SSL/TLS",
+    "meanings": [
+      "통신을 암호화하는 보안 규약",
+      "Secure Sockets Layer / Transport Layer Security"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "보안 소켓 계층",
+      "전송 계층 보안"
+    ],
+    "level": 1,
+    "aliases": [
+      "SSL/TLS",
+      "Secure Sockets Layer / Transport Layer Security",
+      "SSL",
+      "TLS"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "DNS",
+    "meanings": [
+      "도메인 이름을 IP 주소로 바꿔 주는 체계",
+      "Domain Name System"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "도메인 네임 시스템"
+    ],
+    "level": 1,
+    "aliases": [
+      "DNS",
+      "Domain Name System"
+    ],
+    "confusable": [
+      "IP",
+      "URL"
+    ]
+  },
+  {
+    "word": "IP",
+    "meanings": [
+      "인터넷에서 장비를 찾아가는 주소 규약",
+      "Internet Protocol"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "인터넷 프로토콜",
+      "IP 주소"
+    ],
+    "level": 1,
+    "aliases": [
+      "IP",
+      "Internet Protocol"
+    ],
+    "confusable": [
+      "TCP",
+      "UDP",
+      "HTTP",
+      "DNS",
+      "URL"
+    ]
+  },
+  {
+    "word": "TCP",
+    "meanings": [
+      "순서·도착을 보장하는 신뢰성 통신 규약",
+      "Transmission Control Protocol"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "티씨피"
+    ],
+    "level": 1,
+    "aliases": [
+      "TCP",
+      "Transmission Control Protocol"
+    ],
+    "confusable": [
+      "UDP",
+      "HTTP",
+      "IP"
+    ]
+  },
+  {
+    "word": "UDP",
+    "meanings": [
+      "빠르지만 도착을 보장하지 않는 통신 규약",
+      "User Datagram Protocol"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "유디피"
+    ],
+    "level": 1,
+    "aliases": [
+      "UDP",
+      "User Datagram Protocol"
+    ],
+    "confusable": [
+      "TCP",
+      "HTTP",
+      "IP"
+    ]
+  },
+  {
+    "word": "Port",
+    "meanings": [
+      "한 서버 안에서 서비스를 구분하는 번호",
+      "Port"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "포트"
+    ],
+    "level": 1,
+    "aliases": [
+      "Port"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "URL",
+    "meanings": [
+      "웹 자원의 주소",
+      "Uniform Resource Locator"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "웹 주소",
+      "유알엘"
+    ],
+    "level": 1,
+    "aliases": [
+      "URL",
+      "Uniform Resource Locator"
+    ],
+    "confusable": [
+      "DNS",
+      "IP"
+    ]
+  },
+  {
+    "word": "Proxy",
+    "meanings": [
+      "요청을 대신 전달해 주는 중계 서버",
+      "Proxy"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "프록시",
+      "중계 서버"
+    ],
+    "level": 1,
+    "aliases": [
+      "Proxy"
+    ],
+    "confusable": [
+      "Cache",
+      "CDN"
+    ]
+  },
+  {
+    "word": "Firewall",
+    "meanings": [
+      "허용되지 않은 접근을 막는 보안 장치",
+      "Firewall"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "방화벽"
+    ],
+    "level": 1,
+    "aliases": [
+      "Firewall"
+    ],
+    "confusable": [
+      "VPN",
+      "Zero trust",
+      "Air gap"
+    ]
+  },
+  {
+    "word": "VPN",
+    "meanings": [
+      "공용망 위에 만든 암호화 전용 통신로",
+      "Virtual Private Network"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "가상 사설망"
+    ],
+    "level": 1,
+    "aliases": [
+      "VPN",
+      "Virtual Private Network"
+    ],
+    "confusable": [
+      "Firewall",
+      "Zero trust",
+      "Air gap"
+    ]
+  },
+  {
+    "word": "Session",
+    "meanings": [
+      "로그인 상태 등을 서버가 기억하는 것",
+      "Session"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "세션"
+    ],
+    "level": 1,
+    "aliases": [
+      "Session"
+    ],
+    "confusable": [
+      "Cookie",
+      "JWT"
+    ]
+  },
+  {
+    "word": "Cookie",
+    "meanings": [
+      "브라우저에 저장하는 작은 데이터",
+      "Cookie"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "쿠키"
+    ],
+    "level": 1,
+    "aliases": [
+      "Cookie"
+    ],
+    "confusable": [
+      "Session",
+      "JWT"
+    ]
+  },
+  {
+    "word": "JSON",
+    "meanings": [
+      "키-값 형태의 가벼운 데이터 형식",
+      "JavaScript Object Notation"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "제이슨"
+    ],
+    "level": 1,
+    "aliases": [
+      "JSON",
+      "JavaScript Object Notation"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "OS",
+    "meanings": [
+      "하드웨어를 관리하는 기본 소프트웨어",
+      "Operating System"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "운영체제"
+    ],
+    "level": 1,
+    "aliases": [
+      "OS",
+      "Operating System"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "CPU",
+    "meanings": [
+      "연산을 처리하는 중앙 처리 장치",
+      "Central Processing Unit"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "중앙처리장치"
+    ],
+    "level": 1,
+    "aliases": [
+      "CPU",
+      "Central Processing Unit"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "RAM",
+    "meanings": [
+      "실행 중 데이터를 두는 주기억장치",
+      "Random Access Memory"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "램",
+      "메모리"
+    ],
+    "level": 1,
+    "aliases": [
+      "RAM",
+      "Random Access Memory"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Process",
+    "meanings": [
+      "실행 중인 프로그램 하나",
+      "Process"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "프로세스"
+    ],
+    "level": 1,
+    "aliases": [
+      "Process"
+    ],
+    "confusable": [
+      "Thread"
+    ]
+  },
+  {
+    "word": "Thread",
+    "meanings": [
+      "프로세스 안에서 동시에 도는 실행 흐름",
+      "Thread"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "스레드",
+      "쓰레드"
+    ],
+    "level": 1,
+    "aliases": [
+      "Thread"
+    ],
+    "confusable": [
+      "Process"
+    ]
+  },
+  {
+    "word": "VM",
+    "meanings": [
+      "소프트웨어로 만든 가상 컴퓨터",
+      "Virtual Machine"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "가상 머신"
+    ],
+    "level": 1,
+    "aliases": [
+      "VM",
+      "Virtual Machine"
+    ],
+    "confusable": [
+      "Container",
+      "Docker",
+      "Kubernetes"
+    ]
+  },
+  {
+    "word": "Container",
+    "meanings": [
+      "앱과 실행환경을 묶어 어디서나 똑같이 돌리는 단위",
+      "Container"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "컨테이너"
+    ],
+    "level": 1,
+    "aliases": [
+      "Container"
+    ],
+    "confusable": [
+      "VM",
+      "Docker",
+      "Kubernetes"
+    ]
+  },
+  {
+    "word": "Docker",
+    "meanings": [
+      "컨테이너를 만들고 실행하는 대표 도구",
+      "Docker"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "도커"
+    ],
+    "level": 1,
+    "aliases": [
+      "Docker"
+    ],
+    "confusable": [
+      "VM",
+      "Container",
+      "Kubernetes"
+    ]
+  },
+  {
+    "word": "Kubernetes",
+    "meanings": [
+      "컨테이너 여러 개를 배치·관리하는 플랫폼",
+      "Kubernetes (K8s)"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "쿠버네티스",
+      "K8s"
+    ],
+    "level": 1,
+    "aliases": [
+      "Kubernetes",
+      "Kubernetes (K8s)",
+      "K8s",
+      "k8s",
+      "쿠버네티스"
+    ],
+    "confusable": [
+      "VM",
+      "Container",
+      "Docker"
+    ]
+  },
+  {
+    "word": "Cloud",
+    "meanings": [
+      "인터넷으로 빌려 쓰는 컴퓨팅 자원",
+      "Cloud Computing"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "클라우드"
+    ],
+    "level": 1,
+    "aliases": [
+      "Cloud",
+      "Cloud Computing"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SaaS",
+    "meanings": [
+      "설치 없이 인터넷으로 쓰는 소프트웨어",
+      "Software as a Service"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "사스",
+      "서비스형 소프트웨어"
+    ],
+    "level": 1,
+    "aliases": [
+      "SaaS",
+      "Software as a Service"
+    ],
+    "confusable": [
+      "PaaS",
+      "IaaS"
+    ]
+  },
+  {
+    "word": "PaaS",
+    "meanings": [
+      "개발·실행 환경을 빌려 주는 서비스",
+      "Platform as a Service"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "파스",
+      "서비스형 플랫폼"
+    ],
+    "level": 1,
+    "aliases": [
+      "PaaS",
+      "Platform as a Service"
+    ],
+    "confusable": [
+      "SaaS",
+      "IaaS"
+    ]
+  },
+  {
+    "word": "IaaS",
+    "meanings": [
+      "서버·저장소 같은 인프라를 빌려 주는 서비스",
+      "Infrastructure as a Service"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "이아스",
+      "서비스형 인프라"
+    ],
+    "level": 1,
+    "aliases": [
+      "IaaS",
+      "Infrastructure as a Service"
+    ],
+    "confusable": [
+      "SaaS",
+      "PaaS"
+    ]
+  },
+  {
+    "word": "Serverless",
+    "meanings": [
+      "서버 관리 없이 코드만 올려 실행하는 방식",
+      "Serverless"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "서버리스"
+    ],
+    "level": 1,
+    "aliases": [
+      "Serverless"
+    ],
+    "confusable": [
+      "MSA",
+      "Monolith"
+    ]
+  },
+  {
+    "word": "Git",
+    "meanings": [
+      "코드 변경 이력을 관리하는 버전 관리 도구",
+      "Git"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "깃",
+      "버전 관리"
+    ],
+    "level": 1,
+    "aliases": [
+      "Git"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Repository",
+    "meanings": [
+      "코드와 이력을 모아 둔 저장소",
+      "Repository"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "저장소",
+      "레포",
+      "리포지토리"
+    ],
+    "level": 1,
+    "aliases": [
+      "Repository"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Commit",
+    "meanings": [
+      "변경 내용을 이력에 한 단위로 기록하는 것",
+      "Commit"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "커밋"
+    ],
+    "level": 1,
+    "aliases": [
+      "Commit"
+    ],
+    "confusable": [
+      "Branch",
+      "Merge",
+      "PR"
+    ]
+  },
+  {
+    "word": "Branch",
+    "meanings": [
+      "작업을 나눠 진행하는 코드 갈래",
+      "Branch"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "브랜치"
+    ],
+    "level": 1,
+    "aliases": [
+      "Branch"
+    ],
+    "confusable": [
+      "Commit",
+      "Merge",
+      "PR"
+    ]
+  },
+  {
+    "word": "Merge",
+    "meanings": [
+      "갈래(브랜치)를 하나로 합치는 것",
+      "Merge"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "병합",
+      "머지"
+    ],
+    "level": 1,
+    "aliases": [
+      "Merge"
+    ],
+    "confusable": [
+      "Commit",
+      "Branch",
+      "PR"
+    ]
+  },
+  {
+    "word": "Deploy",
+    "meanings": [
+      "만든 프로그램을 실제 서비스 환경에 올리는 것",
+      "Deployment"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "배포",
+      "디플로이"
+    ],
+    "level": 1,
+    "aliases": [
+      "Deploy",
+      "Deployment",
+      "배포"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Debugging",
+    "meanings": [
+      "버그를 찾아 고치는 작업",
+      "Debugging"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "디버깅"
+    ],
+    "level": 1,
+    "aliases": [
+      "Debugging"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Refactoring",
+    "meanings": [
+      "동작은 그대로 두고 코드 구조를 개선하는 것",
+      "Refactoring"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "리팩토링",
+      "리팩터링"
+    ],
+    "level": 1,
+    "aliases": [
+      "Refactoring"
+    ],
+    "confusable": [
+      "Technical debt",
+      "Legacy"
+    ]
+  },
+  {
+    "word": "Technical debt",
+    "meanings": [
+      "급하게 만든 탓에 나중에 치러야 할 개선 비용",
+      "Technical Debt"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "기술 부채"
+    ],
+    "level": 1,
+    "aliases": [
+      "Technical debt",
+      "Technical Debt"
+    ],
+    "confusable": [
+      "Refactoring",
+      "Legacy"
+    ]
+  },
+  {
+    "word": "Legacy",
+    "meanings": [
+      "오래되어 바꾸기 어려운 기존 시스템",
+      "Legacy System"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "레거시"
+    ],
+    "level": 1,
+    "aliases": [
+      "Legacy",
+      "Legacy System"
+    ],
+    "confusable": [
+      "Refactoring",
+      "Technical debt"
+    ]
+  },
+  {
+    "word": "Framework",
+    "meanings": [
+      "틀이 정해져 있어 그 안에 코드를 채우는 개발 뼈대",
+      "Framework"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "프레임워크"
+    ],
+    "level": 1,
+    "aliases": [
+      "Framework"
+    ],
+    "confusable": [
+      "Library",
+      "SDK"
+    ]
+  },
+  {
+    "word": "Library",
+    "meanings": [
+      "필요할 때 가져다 쓰는 코드 모음",
+      "Library"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "라이브러리"
+    ],
+    "level": 1,
+    "aliases": [
+      "Library"
+    ],
+    "confusable": [
+      "Framework",
+      "SDK"
+    ]
+  },
+  {
+    "word": "SDK",
+    "meanings": [
+      "특정 플랫폼 개발용 도구 모음",
+      "Software Development Kit"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "소프트웨어 개발 키트"
+    ],
+    "level": 1,
+    "aliases": [
+      "SDK",
+      "Software Development Kit"
+    ],
+    "confusable": [
+      "Framework",
+      "Library"
+    ]
+  },
+  {
+    "word": "IDE",
+    "meanings": [
+      "코드 작성·실행·디버깅을 한곳에서 하는 도구",
+      "Integrated Development Environment"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "통합 개발 환경"
+    ],
+    "level": 1,
+    "aliases": [
+      "IDE",
+      "Integrated Development Environment"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "CLI",
+    "meanings": [
+      "명령어로 조작하는 방식",
+      "Command Line Interface"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "명령줄 인터페이스"
+    ],
+    "level": 1,
+    "aliases": [
+      "CLI",
+      "Command Line Interface"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "GUI",
+    "meanings": [
+      "그림·버튼으로 조작하는 화면 방식",
+      "Graphical User Interface"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "그래픽 사용자 인터페이스"
+    ],
+    "level": 1,
+    "aliases": [
+      "GUI",
+      "Graphical User Interface"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "UI/UX",
+    "meanings": [
+      "화면 구성 / 사용 경험",
+      "User Interface / User Experience"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "사용자 인터페이스 사용자 경험"
+    ],
+    "level": 1,
+    "aliases": [
+      "UI/UX",
+      "User Interface / User Experience",
+      "UI UX"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Middleware",
+    "meanings": [
+      "프로그램 사이에서 연결·중계하는 소프트웨어",
+      "Middleware"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "미들웨어"
+    ],
+    "level": 1,
+    "aliases": [
+      "Middleware"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Open source",
+    "meanings": [
+      "소스코드가 공개되어 누구나 쓰고 고칠 수 있는 것",
+      "Open Source"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "오픈소스"
+    ],
+    "level": 1,
+    "aliases": [
+      "Open source",
+      "Open Source"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Agile",
+    "meanings": [
+      "짧게 나눠 만들고 자주 고치는 개발 방식",
+      "Agile"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "애자일"
+    ],
+    "level": 1,
+    "aliases": [
+      "Agile"
+    ],
+    "confusable": [
+      "Scrum",
+      "Sprint"
+    ]
+  },
+  {
+    "word": "Scrum",
+    "meanings": [
+      "스프린트 단위로 일하는 애자일 방법",
+      "Scrum"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "스크럼"
+    ],
+    "level": 1,
+    "aliases": [
+      "Scrum"
+    ],
+    "confusable": [
+      "Agile",
+      "Sprint"
+    ]
+  },
+  {
+    "word": "Sprint",
+    "meanings": [
+      "1~4주 단위의 짧은 개발 주기",
+      "Sprint"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "스프린트"
+    ],
+    "level": 1,
+    "aliases": [
+      "Sprint"
+    ],
+    "confusable": [
+      "Agile",
+      "Scrum"
+    ]
+  },
+  {
+    "word": "MVP",
+    "meanings": [
+      "핵심 기능만 담은 최소 제품",
+      "Minimum Viable Product"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "최소 기능 제품"
+    ],
+    "level": 1,
+    "aliases": [
+      "MVP",
+      "Minimum Viable Product"
+    ],
+    "confusable": [
+      "PoC",
+      "UAT"
+    ]
+  },
+  {
+    "word": "PoC",
+    "meanings": [
+      "개념이 실제로 되는지 확인하는 검증",
+      "Proof of Concept"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "개념 증명"
+    ],
+    "level": 1,
+    "aliases": [
+      "PoC",
+      "Proof of Concept"
+    ],
+    "confusable": [
+      "MVP",
+      "UAT"
+    ]
+  },
+  {
+    "word": "QA",
+    "meanings": [
+      "품질을 검증·보증하는 활동",
+      "Quality Assurance"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "품질 보증"
+    ],
+    "level": 1,
+    "aliases": [
+      "QA",
+      "Quality Assurance"
+    ],
+    "confusable": [
+      "UAT",
+      "Regression test",
+      "Smoke test",
+      "E2E test"
+    ]
+  },
+  {
+    "word": "UAT",
+    "meanings": [
+      "사용자가 직접 확인하는 인수 테스트",
+      "User Acceptance Test"
+    ],
+    "partOfSpeech": "기초",
+    "near": [
+      "사용자 인수 테스트"
+    ],
+    "level": 1,
+    "aliases": [
+      "UAT",
+      "User Acceptance Test"
+    ],
+    "confusable": [
+      "MVP",
+      "PoC",
+      "QA",
+      "Regression test",
+      "Smoke test",
+      "E2E test"
+    ]
+  }
+]

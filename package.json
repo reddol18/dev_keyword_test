@@ -4,6 +4,7 @@
   "main": "index.ts",
   "dependencies": {
     "@huggingface/tokenizers": "^0.2.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.23",
     "expo-asset": "^57.0.17",
     "expo-status-bar": "~57.0.1",
