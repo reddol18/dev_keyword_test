@@ -230,7 +230,7 @@ IT 용어는 띄어쓰기·하이픈 표기가 제각각이다. 뜻→용어 방
 |---|---|
 | 모델 로딩 | 2.1초 (앱 시작 시 1회) |
 | 추론 | 40~80ms / 문항 |
-| 모델 크기 | 106MB (int8 양자화) |
+| 모델 크기 | 106MB (int8 양자화) · APK 안에서는 86.9MB |
 
 폰에서 나온 유사도 값이 PC에서 파이썬으로 계산한 값과
 **소수점 4자리까지 일치**했다. int8 양자화가 ARM에서 정확히 동작한다는 뜻이다.
@@ -341,11 +341,18 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 ## 알려진 한계
 
-- **APK 285MB** — 모델이 111MB를 차지한다. 배포하려면 모델 원격 다운로드나
-  더 작은 모델이 필요하다
-- **반의어 구분 불가** — 위에 쓴 대로. 유의어 목록으로 보완하고 있다
+각 항목은 이슈로 열어 두었다.
+
+- **APK 285MB** — 모델(86.9MB)보다 **ONNX 런타임(128.6MB)이 더 크고**, 그 중
+  x86·x86_64가 106.5MB다. 실기기에는 안 쓰는 것이라 ABI 스플릿만으로 크게 줄어든다
+  → [#1](https://github.com/reddol18/simple-english-word-test/issues/1)
+- **반의어 구분 불가** — 임베딩 모델 전반의 한계다. 임계값 0.85와 `near` 목록으로
+  막고 있지만 완전하지는 않다
+  → [#3](https://github.com/reddol18/simple-english-word-test/issues/3)
 - **진도는 하루치만** — 오늘 맞힌 횟수만 남는다. 장기 복습 주기(SRS)는 없다
+  → [#2](https://github.com/reddol18/simple-english-word-test/issues/2)
 - **Android만 확인** — iOS는 빌드해보지 않았다
+  → [#4](https://github.com/reddol18/simple-english-word-test/issues/4)
 
 ---
 
