@@ -332,7 +332,28 @@ assets/model/
 파일을 지우면 정상 등록된다.
 ([관련 이슈](https://github.com/microsoft/onnxruntime/issues/29004))
 
-### 2. `VersionNumber` — Gradle 9에서 제거된 API
+### 2. 단어만 고치면 APK 에 반영되지 않는다
+
+`data/*.json` 만 고치고 빌드하면 **`BUILD SUCCESSFUL` 이 떠도 APK 안에는
+옛 단어가 그대로 들어간다.** Gradle 이 이 JSON 을 JS 번들 태스크의 입력으로
+추적하지 않아 "변경 없음"으로 보고 번들 생성을 건너뛰기 때문이다.
+
+빌드가 비정상적으로 빨리 끝나면(1분 내외) 이것을 의심할 것. 확인은
+APK 안의 번들을 직접 열어 보는 게 확실하다.
+
+```sh
+tar -xf app-release.apk assets/index.android.bundle
+grep -c "새로 넣은 용어" assets/index.android.bundle
+```
+
+번들을 강제로 다시 만들면 해결된다.
+
+```sh
+./gradlew createBundleReleaseJsAndAssets --rerun-tasks
+./gradlew assembleRelease
+```
+
+### 3. `VersionNumber` — Gradle 9에서 제거된 API
 
 `build.gradle`이 `org.gradle.util.VersionNumber`를 쓰는데 Gradle 9에서 빠졌다.
 RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
