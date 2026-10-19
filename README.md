@@ -1,4 +1,4 @@
-# 단어장 — 온디바이스 AI 채점 IT 용어 앱
+# 용어먹는하마 — 온디바이스 AI 채점 IT 용어 앱
 
 뜻을 **직접 입력**하고, **복수정답**을 인정하고, 애매한 답은 "비슷했어요"로 알려주는
 오프라인 암기 앱.
@@ -8,24 +8,27 @@
 
 React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
+> 이름은 단기기억을 관장하는 **해마**(hippocampus)에서 Hippo 를 따왔다.
+> IT 용어를 먹어 치우는 하마라는 뜻이다.
+
 ---
 
 ## 화면
 
-| 시작 — 범위를 고른다 | 목록 — 전체를 훑어본다 |
-|---|---|
-| <img src="docs/screenshots/01-start.png" width="260"> | <img src="docs/screenshots/05-list.png" width="260"> |
-| 단어장·난이도·분야·방식·문항 수.<br>조건에 맞는 개수가 아래에 계속 보인다 | 분야별로 묶이고 헤더가 고정된다.<br>★는 면접 우선 등급 |
+| 런칭 | 시작 — 범위를 고른다 | 목록 — 전체를 훑어본다 |
+|---|---|---|
+| <img src="docs/screenshots/00-splash.png" width="260"> | <img src="docs/screenshots/01-start.png" width="260"> | <img src="docs/screenshots/05-list.png" width="260"> |
+| 이 동안 임베딩 모델을 올린다.<br>그래서 시작 화면은 보통<br>**AI 채점 준비됨**으로 뜬다 | 단어장·난이도·분야·방식·문항 수.<br>조건에 맞는 개수가 아래에 계속 보인다 | 분야별로 묶이고 헤더가 고정된다.<br>★는 면접 우선 등급 |
 
 | 객관식 — 헷갈리는 것끼리 묶어 낸다 | 채점 |
 |---|---|
 | <img src="docs/screenshots/02-choice.png" width="260"> | <img src="docs/screenshots/03-correct.png" width="260"> |
-| `OAuth`의 오답 보기가 **SSO·ABAC·RBAC**.<br>같은 분야에서 실제로 헷갈리는 용어들이다 | 정답은 초록.<br>한국어 뜻과 영문 풀네임을 함께 보여준다 |
+| `PII`의 오답 보기가 **인가·JWT·HITL**.<br>같은 분야에서 실제로 헷갈리는 용어들이다 | `Pub/Sub`의 오답 보기는<br>**Event-driven·Queue·Webhook**.<br>정답은 초록, 풀네임도 함께 보여준다 |
 
 | 오답 | 결과 · 오답노트 |
 |---|---|
 | <img src="docs/screenshots/06-wrong.png" width="260"> | <img src="docs/screenshots/04-result.png" width="260"> |
-| 내가 고른 것은 빨강, 정답은 초록.<br>둘을 동시에 보여준다 | 내가 **뭐라고 답했는지 그대로**.<br>정답과 나란히 둔다 |
+| `Vector DB`의 보기가 전부 벡터 DB 설명이다.<br>내가 고른 것은 빨강, 정답은 초록 | 내가 **뭐라고 답했는지 그대로**.<br>정답과 나란히 둔다 |
 
 ### 주관식 채점 — 직접 입력했을 때
 
@@ -86,7 +89,8 @@ JSON은 손으로 고치지 않는다. `data/build_it_terms.py`가 생성하며,
 5. 끝나면 **결과와 오답노트**가 나온다
 
 > 우상단 **● AI 채점** 표시가 초록이면 모델이 준비된 상태다.
-> 로딩 중(약 2초)에도 규칙 기반 채점으로 앱을 쓸 수 있다.
+> 모델 로딩(약 2초)은 런칭 화면이 가려 주므로 보통은 준비된 채로 시작한다.
+> 로딩이 늦어도 규칙 기반 채점으로 앱을 쓸 수 있다.
 
 ### 출제 방식 4종
 
@@ -292,6 +296,7 @@ JS 번들과 모델이 APK에 포함되어 **네트워크 없이 단독 실행**
 
 ```
 src/
+  SplashScreen.tsx  런칭 화면 (네이티브 스플래시 뒤를 이어받는다)
   StartScreen.tsx   단어장·난이도·분야·방식·문항 수 선택
   QuizScreen.tsx    시험 화면
   ResultScreen.tsx  결과 · 오답노트
@@ -364,7 +369,7 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 각 항목은 이슈로 열어 두었다.
 
-- **APK 285MB** — 모델(86.9MB)보다 **ONNX 런타임(128.6MB)이 더 크고**, 그 중
+- **APK 288MB** — 모델(86.9MB)보다 **ONNX 런타임(128.6MB)이 더 크고**, 그 중
   x86·x86_64가 106.5MB다. 실기기에는 안 쓰는 것이라 ABI 스플릿만으로 크게 줄어든다
   → [#1](https://github.com/reddol18/dev_keyword_test/issues/1)
 - **반의어 구분 불가** — 임베딩 모델 전반의 한계다. 임계값 0.85와 `near` 목록으로
