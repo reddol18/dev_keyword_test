@@ -445,7 +445,9 @@
       "Grounding",
       "Embedding",
       "LoRA",
-      "Quantization"
+      "Quantization",
+      "Data drift",
+      "Eval"
     ]
   },
   {
@@ -546,7 +548,9 @@
     "confusable": [
       "RAGAS",
       "Faithfulness",
-      "Golden set"
+      "Golden set",
+      "Data drift",
+      "Fine-tuning"
     ]
   },
   {
@@ -2039,7 +2043,9 @@
     ],
     "confusable": [
       "OMS",
-      "WMS"
+      "WMS",
+      "MES",
+      "SCM"
     ]
   },
   {
@@ -2079,7 +2085,9 @@
     ],
     "confusable": [
       "ERP",
-      "OMS"
+      "OMS",
+      "Location",
+      "Putaway"
     ]
   },
   {
@@ -3148,7 +3156,9 @@
     ],
     "confusable": [
       "TTS",
-      "NLU"
+      "NLU",
+      "OCR",
+      "Annotation"
     ]
   },
   {
@@ -3169,7 +3179,9 @@
     ],
     "confusable": [
       "CRM",
-      "VOC"
+      "VOC",
+      "Groupware",
+      "EP"
     ]
   },
   {
@@ -3326,6 +3338,1118 @@
       "CSAT",
       "CS"
     ]
+  },
+  {
+    "word": "MES",
+    "meanings": [
+      "공장 현장의 생산 지시·실적·품질을 관리하는 제조실행시스템",
+      "Manufacturing Execution System"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "제조실행시스템",
+      "생산관리시스템"
+    ],
+    "level": 3,
+    "aliases": [
+      "MES",
+      "Manufacturing Execution System"
+    ],
+    "confusable": [
+      "ERP",
+      "SCM"
+    ]
+  },
+  {
+    "word": "SAP",
+    "meanings": [
+      "대기업 기간계에서 사실상 표준인 독일 ERP 제품군",
+      "SAP ERP"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "SAP ERP",
+      "S/4HANA"
+    ],
+    "level": 3,
+    "aliases": [
+      "SAP",
+      "SAP ERP",
+      "S/4HANA"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "SCM",
+    "meanings": [
+      "원자재 조달부터 생산·배송까지 공급망 전체를 관리",
+      "Supply Chain Management"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "공급망 관리"
+    ],
+    "level": 2,
+    "aliases": [
+      "SCM",
+      "Supply Chain Management"
+    ],
+    "confusable": [
+      "MES",
+      "ERP"
+    ]
+  },
+  {
+    "word": "PLC",
+    "meanings": [
+      "설비를 제어하는 산업용 컴퓨터",
+      "Programmable Logic Controller"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "설비 제어기",
+      "시퀀서"
+    ],
+    "level": 2,
+    "aliases": [
+      "PLC",
+      "Programmable Logic Controller"
+    ],
+    "confusable": [
+      "SCADA",
+      "HMI"
+    ]
+  },
+  {
+    "word": "SCADA",
+    "meanings": [
+      "여러 설비 데이터를 모아 원격으로 감시·제어하는 시스템",
+      "Supervisory Control and Data Acquisition"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "원격 감시 제어"
+    ],
+    "level": 2,
+    "aliases": [
+      "SCADA",
+      "Supervisory Control and Data Acquisition"
+    ],
+    "confusable": [
+      "HMI",
+      "PLC"
+    ]
+  },
+  {
+    "word": "HMI",
+    "meanings": [
+      "작업자가 설비를 보고 조작하는 화면",
+      "Human Machine Interface"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "설비 조작 화면",
+      "사람-기계 인터페이스"
+    ],
+    "level": 2,
+    "aliases": [
+      "HMI",
+      "Human Machine Interface"
+    ],
+    "confusable": [
+      "SCADA",
+      "PLC"
+    ]
+  },
+  {
+    "word": "OPC UA",
+    "meanings": [
+      "제조사가 달라도 설비 데이터를 주고받게 하는 산업 표준 통신 규격",
+      "OPC Unified Architecture"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "산업 통신 표준"
+    ],
+    "level": 2,
+    "aliases": [
+      "OPC UA",
+      "OPC Unified Architecture",
+      "OPCUA",
+      "OPC-UA"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Modbus",
+    "meanings": [
+      "오래되고 단순해 지금도 널리 쓰는 산업용 통신 프로토콜",
+      "Modbus"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "산업용 프로토콜"
+    ],
+    "level": 2,
+    "aliases": [
+      "Modbus"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "IIoT",
+    "meanings": [
+      "공장 설비·센서를 네트워크에 연결해 데이터를 모으는 산업용 사물인터넷",
+      "Industrial Internet of Things"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "산업용 IoT"
+    ],
+    "level": 2,
+    "aliases": [
+      "IIoT",
+      "Industrial Internet of Things"
+    ],
+    "confusable": [
+      "Digital twin",
+      "Edge inference"
+    ]
+  },
+  {
+    "word": "Digital twin",
+    "meanings": [
+      "현실의 설비·공정을 가상 공간에 똑같이 복제한 모델",
+      "Digital Twin"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "디지털 트윈",
+      "가상 복제"
+    ],
+    "level": 2,
+    "aliases": [
+      "Digital twin",
+      "Digital Twin"
+    ],
+    "confusable": [
+      "IIoT",
+      "Edge inference"
+    ]
+  },
+  {
+    "word": "OEE",
+    "meanings": [
+      "가동률×성능×품질로 계산하는 설비종합효율",
+      "Overall Equipment Effectiveness"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "설비종합효율"
+    ],
+    "level": 2,
+    "aliases": [
+      "OEE",
+      "Overall Equipment Effectiveness"
+    ],
+    "confusable": [
+      "Lot",
+      "BOM"
+    ]
+  },
+  {
+    "word": "BOM",
+    "meanings": [
+      "제품 하나를 만드는 데 필요한 부품·자재 목록",
+      "Bill of Materials"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "자재명세서"
+    ],
+    "level": 2,
+    "aliases": [
+      "BOM",
+      "Bill of Materials"
+    ],
+    "confusable": [
+      "OEE",
+      "Lot"
+    ]
+  },
+  {
+    "word": "Lot",
+    "meanings": [
+      "같은 조건으로 생산·입고된 묶음 단위. 추적·리콜의 기준",
+      "Lot"
+    ],
+    "partOfSpeech": "제조·스마트팩토리",
+    "near": [
+      "로트",
+      "배치 번호"
+    ],
+    "level": 2,
+    "aliases": [
+      "Lot"
+    ],
+    "confusable": [
+      "OEE",
+      "BOM"
+    ]
+  },
+  {
+    "word": "Putaway",
+    "meanings": [
+      "입고된 물건을 정해진 보관 위치에 놓는 적치 작업",
+      "Putaway"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "적치"
+    ],
+    "level": 2,
+    "aliases": [
+      "Putaway"
+    ],
+    "confusable": [
+      "Picking",
+      "Cycle count",
+      "WMS",
+      "Location"
+    ]
+  },
+  {
+    "word": "Picking",
+    "meanings": [
+      "출고할 물건을 보관 위치에서 꺼내는 작업",
+      "Picking"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "피킹",
+      "집품"
+    ],
+    "level": 2,
+    "aliases": [
+      "Picking"
+    ],
+    "confusable": [
+      "Putaway",
+      "Cycle count"
+    ]
+  },
+  {
+    "word": "Cycle count",
+    "meanings": [
+      "창고 전체를 멈추지 않고 구역별로 돌아가며 하는 순환 재고조사",
+      "Cycle Count"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "순환 재고조사",
+      "재고 실사"
+    ],
+    "level": 3,
+    "aliases": [
+      "Cycle count",
+      "Cycle Count"
+    ],
+    "confusable": [
+      "Putaway",
+      "Picking"
+    ]
+  },
+  {
+    "word": "ASN",
+    "meanings": [
+      "물건이 도착하기 전에 보내는 사전 출하 통지",
+      "Advanced Shipping Notice"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "사전 출하 통지"
+    ],
+    "level": 2,
+    "aliases": [
+      "ASN",
+      "Advanced Shipping Notice"
+    ],
+    "confusable": [
+      "RFID",
+      "PDA"
+    ]
+  },
+  {
+    "word": "RFID",
+    "meanings": [
+      "무선 태그로 물건을 접촉 없이 인식하는 기술",
+      "Radio Frequency Identification"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "무선 태그",
+      "전자 태그"
+    ],
+    "level": 2,
+    "aliases": [
+      "RFID",
+      "Radio Frequency Identification"
+    ],
+    "confusable": [
+      "PDA",
+      "ASN"
+    ]
+  },
+  {
+    "word": "PDA",
+    "meanings": [
+      "현장 작업자가 바코드를 찍고 입력하는 휴대 단말",
+      "Personal Digital Assistant"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "핸디 터미널",
+      "바코드 스캐너"
+    ],
+    "level": 2,
+    "aliases": [
+      "PDA",
+      "Personal Digital Assistant"
+    ],
+    "confusable": [
+      "RFID",
+      "ASN"
+    ]
+  },
+  {
+    "word": "Location",
+    "meanings": [
+      "창고 안 보관 위치 주소(구역-랙-단-칸)",
+      "Storage Location"
+    ],
+    "partOfSpeech": "물류 현장",
+    "near": [
+      "로케이션",
+      "보관 위치"
+    ],
+    "level": 2,
+    "aliases": [
+      "Location",
+      "Storage Location"
+    ],
+    "confusable": [
+      "WMS",
+      "Putaway"
+    ]
+  },
+  {
+    "word": "Object detection",
+    "meanings": [
+      "이미지에서 물체의 위치와 종류를 찾는 작업",
+      "Object Detection"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "객체 탐지",
+      "물체 인식"
+    ],
+    "level": 3,
+    "aliases": [
+      "Object detection",
+      "Object Detection",
+      "Detection",
+      "객체탐지"
+    ],
+    "confusable": [
+      "MOT",
+      "Re-ID"
+    ]
+  },
+  {
+    "word": "Bounding box",
+    "meanings": [
+      "탐지된 물체를 둘러싼 사각형 좌표",
+      "Bounding Box"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "경계 상자",
+      "바운딩 박스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Bounding box",
+      "Bounding Box"
+    ],
+    "confusable": [
+      "IoU",
+      "mAP"
+    ]
+  },
+  {
+    "word": "MOT",
+    "meanings": [
+      "영상에서 여러 물체를 프레임마다 이어서 추적",
+      "Multi-Object Tracking"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "다중 객체 추적",
+      "트래킹"
+    ],
+    "level": 3,
+    "aliases": [
+      "MOT",
+      "Multi-Object Tracking"
+    ],
+    "confusable": [
+      "Object detection",
+      "Re-ID"
+    ]
+  },
+  {
+    "word": "Re-ID",
+    "meanings": [
+      "카메라가 바뀌어도 같은 사람·물체임을 다시 알아보는 기술",
+      "Re-Identification"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "재식별"
+    ],
+    "level": 3,
+    "aliases": [
+      "Re-ID",
+      "Re-Identification",
+      "ReID",
+      "Re ID",
+      "Reidentification"
+    ],
+    "confusable": [
+      "Object detection",
+      "MOT"
+    ]
+  },
+  {
+    "word": "OCR",
+    "meanings": [
+      "이미지 속 글자를 텍스트로 읽어내는 기술",
+      "Optical Character Recognition"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "광학 문자 인식",
+      "문자 인식"
+    ],
+    "level": 2,
+    "aliases": [
+      "OCR",
+      "Optical Character Recognition"
+    ],
+    "confusable": [
+      "STT",
+      "Annotation"
+    ]
+  },
+  {
+    "word": "IoU",
+    "meanings": [
+      "예측 박스와 정답 박스가 겹치는 비율",
+      "Intersection over Union"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "겹침 비율"
+    ],
+    "level": 2,
+    "aliases": [
+      "IoU",
+      "Intersection over Union"
+    ],
+    "confusable": [
+      "mAP",
+      "Bounding box"
+    ]
+  },
+  {
+    "word": "mAP",
+    "meanings": [
+      "객체 탐지 정확도를 나타내는 대표 지표",
+      "mean Average Precision"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "평균 정밀도"
+    ],
+    "level": 2,
+    "aliases": [
+      "mAP",
+      "mean Average Precision",
+      "MAP",
+      "mean AP"
+    ],
+    "confusable": [
+      "IoU",
+      "Bounding box"
+    ]
+  },
+  {
+    "word": "Annotation",
+    "meanings": [
+      "학습용 데이터에 정답을 표시하는 작업",
+      "Annotation"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "라벨링",
+      "어노테이션"
+    ],
+    "level": 2,
+    "aliases": [
+      "Annotation"
+    ],
+    "confusable": [
+      "OCR",
+      "STT"
+    ]
+  },
+  {
+    "word": "Edge inference",
+    "meanings": [
+      "클라우드로 보내지 않고 현장 장비에서 바로 추론",
+      "Edge Inference"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "엣지 추론",
+      "엣지 AI"
+    ],
+    "level": 3,
+    "aliases": [
+      "Edge inference",
+      "Edge Inference",
+      "Edge AI",
+      "엣지 추론"
+    ],
+    "confusable": [
+      "Digital twin",
+      "IIoT"
+    ]
+  },
+  {
+    "word": "RTSP",
+    "meanings": [
+      "CCTV 영상을 실시간으로 받아오는 표준 프로토콜",
+      "Real Time Streaming Protocol"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "영상 스트리밍 프로토콜"
+    ],
+    "level": 2,
+    "aliases": [
+      "RTSP",
+      "Real Time Streaming Protocol"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "NVR",
+    "meanings": [
+      "IP 카메라 영상을 저장하는 네트워크 녹화기",
+      "Network Video Recorder"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "영상 녹화기"
+    ],
+    "level": 2,
+    "aliases": [
+      "NVR",
+      "Network Video Recorder"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Data drift",
+    "meanings": [
+      "현장 환경이 바뀌어 입력 데이터가 달라지고 모델 정확도가 떨어지는 현상",
+      "Data Drift"
+    ],
+    "partOfSpeech": "Vision AI",
+    "near": [
+      "데이터 드리프트",
+      "분포 변화"
+    ],
+    "level": 3,
+    "aliases": [
+      "Data drift",
+      "Data Drift"
+    ],
+    "confusable": [
+      "Fine-tuning",
+      "Eval"
+    ]
+  },
+  {
+    "word": "EAI",
+    "meanings": [
+      "기업 내 여러 시스템을 하나로 연결하는 통합 방식",
+      "Enterprise Application Integration"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "시스템 통합"
+    ],
+    "level": 2,
+    "aliases": [
+      "EAI",
+      "Enterprise Application Integration"
+    ],
+    "confusable": [
+      "ESB",
+      "Gateway"
+    ]
+  },
+  {
+    "word": "ESB",
+    "meanings": [
+      "시스템 사이 메시지를 중계하는 공용 버스",
+      "Enterprise Service Bus"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "서비스 버스"
+    ],
+    "level": 2,
+    "aliases": [
+      "ESB",
+      "Enterprise Service Bus"
+    ],
+    "confusable": [
+      "EAI",
+      "Gateway"
+    ]
+  },
+  {
+    "word": "RFC / BAPI",
+    "meanings": [
+      "외부에서 SAP 기능을 호출하는 함수 인터페이스",
+      "Remote Function Call / Business API"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "SAP 함수 호출"
+    ],
+    "level": 3,
+    "aliases": [
+      "RFC / BAPI",
+      "Remote Function Call / Business API",
+      "RFC",
+      "BAPI"
+    ],
+    "confusable": [
+      "IDoc",
+      "OData"
+    ]
+  },
+  {
+    "word": "IDoc",
+    "meanings": [
+      "SAP가 다른 시스템과 주고받는 표준 전자문서 형식",
+      "Intermediate Document"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "SAP 전자문서"
+    ],
+    "level": 2,
+    "aliases": [
+      "IDoc",
+      "Intermediate Document"
+    ],
+    "confusable": [
+      "RFC / BAPI",
+      "OData"
+    ]
+  },
+  {
+    "word": "OData",
+    "meanings": [
+      "REST 방식으로 데이터를 조회·수정하는 표준. SAP가 많이 씀",
+      "Open Data Protocol"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "오데이터"
+    ],
+    "level": 2,
+    "aliases": [
+      "OData",
+      "Open Data Protocol"
+    ],
+    "confusable": [
+      "RFC / BAPI",
+      "IDoc"
+    ]
+  },
+  {
+    "word": "Gateway",
+    "meanings": [
+      "외부와 내부 시스템 사이의 출입구. 인증·변환·중계를 맡음",
+      "Gateway"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "게이트웨이",
+      "API Gateway"
+    ],
+    "level": 2,
+    "aliases": [
+      "Gateway"
+    ],
+    "confusable": [
+      "EAI",
+      "ESB"
+    ]
+  },
+  {
+    "word": "Groupware",
+    "meanings": [
+      "메일·전자결재·게시판 같은 사내 협업 시스템",
+      "Groupware"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "그룹웨어",
+      "전자결재"
+    ],
+    "level": 2,
+    "aliases": [
+      "Groupware"
+    ],
+    "confusable": [
+      "EP",
+      "KMS"
+    ]
+  },
+  {
+    "word": "EP",
+    "meanings": [
+      "여러 사내 시스템을 한 화면에서 쓰게 묶은 기업 포털",
+      "Enterprise Portal"
+    ],
+    "partOfSpeech": "기간계 연동",
+    "near": [
+      "기업 포털"
+    ],
+    "level": 2,
+    "aliases": [
+      "EP",
+      "Enterprise Portal"
+    ],
+    "confusable": [
+      "Groupware",
+      "KMS"
+    ]
+  },
+  {
+    "word": "SI",
+    "meanings": [
+      "고객 요구에 맞춰 시스템을 새로 구축하는 사업",
+      "System Integration"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "시스템 구축"
+    ],
+    "level": 3,
+    "aliases": [
+      "SI",
+      "System Integration"
+    ],
+    "confusable": [
+      "SM",
+      "ITO"
+    ]
+  },
+  {
+    "word": "SM",
+    "meanings": [
+      "구축된 시스템을 운영·유지보수하는 사업",
+      "System Management"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "운영 유지보수"
+    ],
+    "level": 3,
+    "aliases": [
+      "SM",
+      "System Management"
+    ],
+    "confusable": [
+      "SI",
+      "ITO"
+    ]
+  },
+  {
+    "word": "ITO",
+    "meanings": [
+      "기업의 IT 운영 전체를 외부에 맡기는 것",
+      "IT Outsourcing"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "IT 아웃소싱"
+    ],
+    "level": 2,
+    "aliases": [
+      "ITO",
+      "IT Outsourcing"
+    ],
+    "confusable": [
+      "SI",
+      "SM"
+    ]
+  },
+  {
+    "word": "FDE",
+    "meanings": [
+      "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발팀에 전달하는 엔지니어",
+      "Forward Deployed Engineer"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "현장 투입 엔지니어"
+    ],
+    "level": 3,
+    "aliases": [
+      "FDE",
+      "Forward Deployed Engineer"
+    ],
+    "confusable": [
+      "PL",
+      "PM"
+    ]
+  },
+  {
+    "word": "PL",
+    "meanings": [
+      "개발 파트를 이끄는 실무 리더",
+      "Project Leader"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "프로젝트 리더",
+      "파트 리더"
+    ],
+    "level": 3,
+    "aliases": [
+      "PL",
+      "Project Leader"
+    ],
+    "confusable": [
+      "PM",
+      "FDE"
+    ]
+  },
+  {
+    "word": "PM",
+    "meanings": [
+      "일정·예산·범위·인력을 책임지는 프로젝트 관리자",
+      "Project Manager"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "프로젝트 매니저"
+    ],
+    "level": 3,
+    "aliases": [
+      "PM",
+      "Project Manager"
+    ],
+    "confusable": [
+      "PL",
+      "FDE"
+    ]
+  },
+  {
+    "word": "RFP",
+    "meanings": [
+      "발주처가 원하는 내용을 적어 제안을 요청하는 문서",
+      "Request for Proposal"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "제안요청서"
+    ],
+    "level": 3,
+    "aliases": [
+      "RFP",
+      "Request for Proposal"
+    ],
+    "confusable": [
+      "SOW",
+      "WBS"
+    ]
+  },
+  {
+    "word": "SOW",
+    "meanings": [
+      "무엇을 어디까지 할지 적은 과업 범위 기술서",
+      "Statement of Work"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "과업지시서",
+      "과업 범위"
+    ],
+    "level": 2,
+    "aliases": [
+      "SOW",
+      "Statement of Work"
+    ],
+    "confusable": [
+      "RFP",
+      "WBS"
+    ]
+  },
+  {
+    "word": "WBS",
+    "meanings": [
+      "전체 작업을 관리 가능한 단위로 쪼갠 구조",
+      "Work Breakdown Structure"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "작업 분해 구조"
+    ],
+    "level": 2,
+    "aliases": [
+      "WBS",
+      "Work Breakdown Structure"
+    ],
+    "confusable": [
+      "RFP",
+      "SOW"
+    ]
+  },
+  {
+    "word": "As-Is / To-Be",
+    "meanings": [
+      "현재 업무 모습과 목표 업무 모습. 차이가 곧 개발 범위",
+      "As-Is / To-Be"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "현행 / 목표 모델"
+    ],
+    "level": 2,
+    "aliases": [
+      "As-Is / To-Be",
+      "As-Is",
+      "To-Be",
+      "AsIs ToBe",
+      "As Is To Be"
+    ],
+    "confusable": [
+      "Change request",
+      "Scope creep"
+    ]
+  },
+  {
+    "word": "Change request",
+    "meanings": [
+      "계약 후 범위·사양을 바꾸자는 공식 요청",
+      "Change Request"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "변경 요청",
+      "CR"
+    ],
+    "level": 3,
+    "aliases": [
+      "Change request",
+      "Change Request",
+      "CR",
+      "변경요청"
+    ],
+    "confusable": [
+      "Scope creep",
+      "As-Is / To-Be"
+    ]
+  },
+  {
+    "word": "Scope creep",
+    "meanings": [
+      "합의 없이 요구가 조금씩 늘어나 범위가 커지는 현상",
+      "Scope Creep"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "범위 확산"
+    ],
+    "level": 3,
+    "aliases": [
+      "Scope creep",
+      "Scope Creep"
+    ],
+    "confusable": [
+      "Change request",
+      "As-Is / To-Be"
+    ]
+  },
+  {
+    "word": "Stakeholder",
+    "meanings": [
+      "프로젝트 결과에 이해관계가 있는 사람·조직",
+      "Stakeholder"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "이해관계자"
+    ],
+    "level": 2,
+    "aliases": [
+      "Stakeholder"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Consortium",
+    "meanings": [
+      "여러 기관이 역할을 나눠 함께 수행하는 과제 구조",
+      "Consortium"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "컨소시엄",
+      "공동 수행"
+    ],
+    "level": 2,
+    "aliases": [
+      "Consortium"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "Customization",
+    "meanings": [
+      "제품을 고객별 요구에 맞춰 고쳐 붙이는 개발",
+      "Customization"
+    ],
+    "partOfSpeech": "SI·프로젝트",
+    "near": [
+      "커스터마이징",
+      "맞춤 개발"
+    ],
+    "level": 3,
+    "aliases": [
+      "Customization"
+    ],
+    "confusable": []
   },
   {
     "word": "Server",

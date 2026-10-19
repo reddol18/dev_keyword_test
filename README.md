@@ -43,7 +43,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
 | 단어장 | 수록 | 구성 |
 |---|---|---|
-| **IT 개발 용어** | 246개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 / 기초 |
+| **IT 개발 용어** | 301개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 /<br>제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 / 기초 |
 | **IT 문서 영단어** | 80개 | 문서 읽기 / 에러·로그 / 리뷰·협업 / 릴리스·운영 |
 
 용어는 한국어 뜻과 영문 풀네임을 함께 담는다. 둘 다 정답으로 인정한다.
@@ -305,7 +305,7 @@ src/
   theme.ts          공통 스타일
   types.ts          Word, Grade, QuizMode, Question, Answer
 data/
-  it_terms.json     IT 개발 용어 246개   ← build_it_terms.py 가 생성
+  it_terms.json     IT 개발 용어 301개   ← build_it_terms.py 가 생성
   it_words.json     IT 문서 영단어 80개  ← build_it_words.py 가 생성
   quiz_cli.mjs      채점·출제 로직 CLI 점검용
 assets/model/
@@ -345,14 +345,14 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 - **APK 285MB** — 모델(86.9MB)보다 **ONNX 런타임(128.6MB)이 더 크고**, 그 중
   x86·x86_64가 106.5MB다. 실기기에는 안 쓰는 것이라 ABI 스플릿만으로 크게 줄어든다
-  → [#1](https://github.com/reddol18/simple-english-word-test/issues/1)
+  → [#1](https://github.com/reddol18/dev_keyword_test/issues/1)
 - **반의어 구분 불가** — 임베딩 모델 전반의 한계다. 임계값 0.85와 `near` 목록으로
   막고 있지만 완전하지는 않다
-  → [#3](https://github.com/reddol18/simple-english-word-test/issues/3)
+  → [#3](https://github.com/reddol18/dev_keyword_test/issues/3)
 - **진도는 하루치만** — 오늘 맞힌 횟수만 남는다. 장기 복습 주기(SRS)는 없다
-  → [#2](https://github.com/reddol18/simple-english-word-test/issues/2)
+  → [#2](https://github.com/reddol18/dev_keyword_test/issues/2)
 - **Android만 확인** — iOS는 빌드해보지 않았다
-  → [#4](https://github.com/reddol18/simple-english-word-test/issues/4)
+  → [#4](https://github.com/reddol18/dev_keyword_test/issues/4)
 
 ---
 

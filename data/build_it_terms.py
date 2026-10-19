@@ -206,6 +206,76 @@ EICN = [
     ("컨택센터", "CX", "Customer Experience", "고객이 겪는 경험 전체의 질", ["고객 경험", "씨엑스"], 0),
 ]
 
+# ── 제조·물류·Vision AI 보강 (TCCINS 10/20 면접 대비) ───────────────────────
+# 회사 영역: 제조·물류 현장의 AI CCTV(Vision), SAP/MES 기간계 연동, SI·SM
+# 주의: 여섯째 값은 레벨이 아니라 '면접 우선' 플래그다(1이면 level 3, 0이면 level 2).
+TCCINS = [
+    # [제조·스마트팩토리] 공장 도메인 — 모르면 요구사항 회의가 안 된다
+    ("제조·스마트팩토리", "MES", "Manufacturing Execution System", "공장 현장의 생산 지시·실적·품질을 관리하는 제조실행시스템", ["제조실행시스템", "생산관리시스템"], 1),
+    ("제조·스마트팩토리", "SAP", "SAP ERP", "대기업 기간계에서 사실상 표준인 독일 ERP 제품군", ["SAP ERP", "S/4HANA"], 1),
+    ("제조·스마트팩토리", "SCM", "Supply Chain Management", "원자재 조달부터 생산·배송까지 공급망 전체를 관리", ["공급망 관리"], 0),
+    ("제조·스마트팩토리", "PLC", "Programmable Logic Controller", "설비를 제어하는 산업용 컴퓨터", ["설비 제어기", "시퀀서"], 0),
+    ("제조·스마트팩토리", "SCADA", "Supervisory Control and Data Acquisition", "여러 설비 데이터를 모아 원격으로 감시·제어하는 시스템", ["원격 감시 제어"], 0),
+    ("제조·스마트팩토리", "HMI", "Human Machine Interface", "작업자가 설비를 보고 조작하는 화면", ["설비 조작 화면", "사람-기계 인터페이스"], 0),
+    ("제조·스마트팩토리", "OPC UA", "OPC Unified Architecture", "제조사가 달라도 설비 데이터를 주고받게 하는 산업 표준 통신 규격", ["산업 통신 표준"], 0),
+    ("제조·스마트팩토리", "Modbus", "Modbus", "오래되고 단순해 지금도 널리 쓰는 산업용 통신 프로토콜", ["산업용 프로토콜"], 0),
+    ("제조·스마트팩토리", "IIoT", "Industrial Internet of Things", "공장 설비·센서를 네트워크에 연결해 데이터를 모으는 산업용 사물인터넷", ["산업용 IoT"], 0),
+    ("제조·스마트팩토리", "Digital twin", "Digital Twin", "현실의 설비·공정을 가상 공간에 똑같이 복제한 모델", ["디지털 트윈", "가상 복제"], 0),
+    ("제조·스마트팩토리", "OEE", "Overall Equipment Effectiveness", "가동률×성능×품질로 계산하는 설비종합효율", ["설비종합효율"], 0),
+    ("제조·스마트팩토리", "BOM", "Bill of Materials", "제품 하나를 만드는 데 필요한 부품·자재 목록", ["자재명세서"], 0),
+    ("제조·스마트팩토리", "Lot", "Lot", "같은 조건으로 생산·입고된 묶음 단위. 추적·리콜의 기준", ["로트", "배치 번호"], 0),
+
+    # [물류 현장] 창고에서 실제로 쓰는 말 — WMS(기존)와 같이 묶인다
+    ("물류 현장", "Putaway", "Putaway", "입고된 물건을 정해진 보관 위치에 놓는 적치 작업", ["적치"], 0),
+    ("물류 현장", "Picking", "Picking", "출고할 물건을 보관 위치에서 꺼내는 작업", ["피킹", "집품"], 0),
+    ("물류 현장", "Cycle count", "Cycle Count", "창고 전체를 멈추지 않고 구역별로 돌아가며 하는 순환 재고조사", ["순환 재고조사", "재고 실사"], 1),
+    ("물류 현장", "ASN", "Advanced Shipping Notice", "물건이 도착하기 전에 보내는 사전 출하 통지", ["사전 출하 통지"], 0),
+    ("물류 현장", "RFID", "Radio Frequency Identification", "무선 태그로 물건을 접촉 없이 인식하는 기술", ["무선 태그", "전자 태그"], 0),
+    ("물류 현장", "PDA", "Personal Digital Assistant", "현장 작업자가 바코드를 찍고 입력하는 휴대 단말", ["핸디 터미널", "바코드 스캐너"], 0),
+    ("물류 현장", "Location", "Storage Location", "창고 안 보관 위치 주소(구역-랙-단-칸)", ["로케이션", "보관 위치"], 0),
+
+    # [Vision AI] AI CCTV 가 회사 주력 — 이 분야가 면접의 중심이다
+    ("Vision AI", "Object detection", "Object Detection", "이미지에서 물체의 위치와 종류를 찾는 작업", ["객체 탐지", "물체 인식"], 1),
+    ("Vision AI", "Bounding box", "Bounding Box", "탐지된 물체를 둘러싼 사각형 좌표", ["경계 상자", "바운딩 박스"], 0),
+    ("Vision AI", "MOT", "Multi-Object Tracking", "영상에서 여러 물체를 프레임마다 이어서 추적", ["다중 객체 추적", "트래킹"], 1),
+    ("Vision AI", "Re-ID", "Re-Identification", "카메라가 바뀌어도 같은 사람·물체임을 다시 알아보는 기술", ["재식별"], 1),
+    ("Vision AI", "OCR", "Optical Character Recognition", "이미지 속 글자를 텍스트로 읽어내는 기술", ["광학 문자 인식", "문자 인식"], 0),
+    ("Vision AI", "IoU", "Intersection over Union", "예측 박스와 정답 박스가 겹치는 비율", ["겹침 비율"], 0),
+    ("Vision AI", "mAP", "mean Average Precision", "객체 탐지 정확도를 나타내는 대표 지표", ["평균 정밀도"], 0),
+    ("Vision AI", "Annotation", "Annotation", "학습용 데이터에 정답을 표시하는 작업", ["라벨링", "어노테이션"], 0),
+    ("Vision AI", "Edge inference", "Edge Inference", "클라우드로 보내지 않고 현장 장비에서 바로 추론", ["엣지 추론", "엣지 AI"], 1),
+    ("Vision AI", "RTSP", "Real Time Streaming Protocol", "CCTV 영상을 실시간으로 받아오는 표준 프로토콜", ["영상 스트리밍 프로토콜"], 0),
+    ("Vision AI", "NVR", "Network Video Recorder", "IP 카메라 영상을 저장하는 네트워크 녹화기", ["영상 녹화기"], 0),
+    ("Vision AI", "Data drift", "Data Drift", "현장 환경이 바뀌어 입력 데이터가 달라지고 모델 정확도가 떨어지는 현상", ["데이터 드리프트", "분포 변화"], 1),
+
+    # [기간계 연동] SAP 붙이는 일이 업무의 큰 축
+    ("기간계 연동", "EAI", "Enterprise Application Integration", "기업 내 여러 시스템을 하나로 연결하는 통합 방식", ["시스템 통합"], 0),
+    ("기간계 연동", "ESB", "Enterprise Service Bus", "시스템 사이 메시지를 중계하는 공용 버스", ["서비스 버스"], 0),
+    ("기간계 연동", "RFC / BAPI", "Remote Function Call / Business API", "외부에서 SAP 기능을 호출하는 함수 인터페이스", ["SAP 함수 호출"], 1),
+    ("기간계 연동", "IDoc", "Intermediate Document", "SAP가 다른 시스템과 주고받는 표준 전자문서 형식", ["SAP 전자문서"], 0),
+    ("기간계 연동", "OData", "Open Data Protocol", "REST 방식으로 데이터를 조회·수정하는 표준. SAP가 많이 씀", ["오데이터"], 0),
+    ("기간계 연동", "Gateway", "Gateway", "외부와 내부 시스템 사이의 출입구. 인증·변환·중계를 맡음", ["게이트웨이", "API Gateway"], 0),
+    ("기간계 연동", "Groupware", "Groupware", "메일·전자결재·게시판 같은 사내 협업 시스템", ["그룹웨어", "전자결재"], 0),
+    ("기간계 연동", "EP", "Enterprise Portal", "여러 사내 시스템을 한 화면에서 쓰게 묶은 기업 포털", ["기업 포털"], 0),
+
+    # [SI·프로젝트] 계약·범위 말이 안 통하면 일이 안 된다
+    ("SI·프로젝트", "SI", "System Integration", "고객 요구에 맞춰 시스템을 새로 구축하는 사업", ["시스템 구축"], 1),
+    ("SI·프로젝트", "SM", "System Management", "구축된 시스템을 운영·유지보수하는 사업", ["운영 유지보수"], 1),
+    ("SI·프로젝트", "ITO", "IT Outsourcing", "기업의 IT 운영 전체를 외부에 맡기는 것", ["IT 아웃소싱"], 0),
+    ("SI·프로젝트", "FDE", "Forward Deployed Engineer", "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발팀에 전달하는 엔지니어", ["현장 투입 엔지니어"], 1),
+    ("SI·프로젝트", "PL", "Project Leader", "개발 파트를 이끄는 실무 리더", ["프로젝트 리더", "파트 리더"], 1),
+    ("SI·프로젝트", "PM", "Project Manager", "일정·예산·범위·인력을 책임지는 프로젝트 관리자", ["프로젝트 매니저"], 1),
+    ("SI·프로젝트", "RFP", "Request for Proposal", "발주처가 원하는 내용을 적어 제안을 요청하는 문서", ["제안요청서"], 1),
+    ("SI·프로젝트", "SOW", "Statement of Work", "무엇을 어디까지 할지 적은 과업 범위 기술서", ["과업지시서", "과업 범위"], 0),
+    ("SI·프로젝트", "WBS", "Work Breakdown Structure", "전체 작업을 관리 가능한 단위로 쪼갠 구조", ["작업 분해 구조"], 0),
+    ("SI·프로젝트", "As-Is / To-Be", "As-Is / To-Be", "현재 업무 모습과 목표 업무 모습. 차이가 곧 개발 범위", ["현행 / 목표 모델"], 0),
+    ("SI·프로젝트", "Change request", "Change Request", "계약 후 범위·사양을 바꾸자는 공식 요청", ["변경 요청", "CR"], 1),
+    ("SI·프로젝트", "Scope creep", "Scope Creep", "합의 없이 요구가 조금씩 늘어나 범위가 커지는 현상", ["범위 확산"], 1),
+    ("SI·프로젝트", "Stakeholder", "Stakeholder", "프로젝트 결과에 이해관계가 있는 사람·조직", ["이해관계자"], 0),
+    ("SI·프로젝트", "Consortium", "Consortium", "여러 기관이 역할을 나눠 함께 수행하는 과제 구조", ["컨소시엄", "공동 수행"], 0),
+    ("SI·프로젝트", "Customization", "Customization", "제품을 고객별 요구에 맞춰 고쳐 붙이는 개발", ["커스터마이징", "맞춤 개발"], 1),
+]
+
 
 # ── 0. 기초 (면접장에서 '쉬운데 안 떠오르는' 용어 — 로드밸런싱 사례) ─────────
 B = "기초"
@@ -310,6 +380,17 @@ ALIASES = {
     "Open-weight model": ["Open weight", "오픈웨이트"],
     "Rule-based": ["Rule base", "룰베이스"],
     "Top-k": ["Topk", "Top k"],
+    # 제조·물류·Vision 보강
+    "RFC / BAPI": ["RFC", "BAPI"],
+    "As-Is / To-Be": ["As-Is", "To-Be", "AsIs ToBe", "As Is To Be"],
+    "OPC UA": ["OPCUA", "OPC-UA"],
+    "Re-ID": ["ReID", "Re ID", "Reidentification"],
+    "Change request": ["CR", "변경요청"],
+    "Object detection": ["Detection", "객체탐지"],
+    "mAP": ["MAP", "mean AP"],
+    "IoU": ["Intersection over Union"],
+    "SAP": ["S/4HANA", "SAP ERP"],
+    "Edge inference": ["Edge AI", "엣지 추론"],
 }
 
 # 헷갈리는 묶음 — 객관식 오답은 우선 여기서, 없으면 같은 분야에서 고른다.
@@ -348,15 +429,47 @@ CONFUSABLE = [
     ["Elasticsearch", "Apache Solr", "BM25"],
     ["TA", "VOC", "CSAT"],                          # 녹취분석 / 고객의견 / 만족도
     ["CX", "CSAT", "CS"],
+    # ── 제조·물류·Vision 보강 ──
+    ["MES", "ERP", "SCM"],                          # 현장 실행 / 전사 자원 / 공급망
+    ["SCADA", "HMI", "PLC"],                        # 감시 시스템 / 조작 화면 / 제어기
+    ["Putaway", "Picking", "Cycle count"],          # 넣기 / 꺼내기 / 세기
+    ["RFID", "PDA", "ASN"],                         # 무선 태그 / 바코드 단말 / 사전 통지
+    ["IoU", "mAP", "Bounding box"],                 # 겹침 비율 / 전체 지표 / 좌표
+    ["Object detection", "MOT", "Re-ID"],           # 찾기 / 이어 추적 / 카메라 넘어 재식별
+    ["OCR", "STT", "Annotation"],                   # 이미지→글 / 음성→글 / 정답 표시
+    ["EAI", "ESB", "Gateway"],                      # 통합 개념 / 중계 버스 / 출입구
+    ["RFC / BAPI", "IDoc", "OData"],                # SAP 연동 방식 셋
+    ["SI", "SM", "ITO"],                            # 구축 / 운영 / 통째 위탁
+    ["PL", "PM", "FDE"],                            # 개발 리더 / 일정·예산 / 현장 투입
+    ["RFP", "SOW", "WBS"],                          # 제안요청 / 과업범위 / 작업분해
+    ["Change request", "Scope creep", "As-Is / To-Be"],   # 공식 변경 / 무단 확산 / 범위 산정
+    ["Digital twin", "IIoT", "Edge inference"],     # 가상 복제 / 설비 연결 / 현장 추론
+    ["OEE", "Lot", "BOM"],                          # 효율 지표 / 생산 묶음 / 자재 목록
+    ["Data drift", "Fine-tuning", "Eval"],          # 성능 저하 원인 / 재학습 / 측정
+    ["WMS", "Location", "Putaway"],                 # 창고 시스템 / 보관 주소 / 적치
+    ["Groupware", "EP", "KMS"],                     # 협업 / 포털 / 지식
 ]
 
 
 def main():
     global T
     # 기초는 level 1. Load balancer 는 기초의 Load balancing 과 겹치므로 아키텍처에서 뺀다.
-    T = [r for r in T if r[1] != "Load balancer"] + EICN \
+    T = [r for r in T if r[1] != "Load balancer"] + EICN + TCCINS \
         + [(c, w, f, k, n, 0) for c, w, f, k, n in BASIC]
     lv = {w: 1 for _, w, *_ in BASIC}
+
+    # 같은 용어가 두 번 들어오면 출제·채점이 꼬인다. 묶음을 합칠 때 가장 흔한 사고라 막아 둔다.
+    seen = {}
+    for cat, w, *_ in T:
+        assert w not in seen, f"용어 중복: {w} ({seen[w]} / {cat})"
+        seen[w] = cat
+
+    # 첫 뜻이 겹치면 객관식에서 정답이 둘이 된다.
+    first = {}
+    for cat, w, _f, ko, *_ in T:
+        assert ko not in first, f"첫 뜻 중복: {ko!r} — {first[ko]} / {w}"
+        first[ko] = w
+
     words = {r[1] for r in T}
     conf = {}
     for g in CONFUSABLE:
