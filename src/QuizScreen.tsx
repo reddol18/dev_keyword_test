@@ -10,7 +10,8 @@ import type { Answer, Question } from './types';
 import { MODE_LABEL, isChoiceMode } from './types';
 import type { StartConfig } from './StartScreen';
 import ResultScreen from './ResultScreen';
-import { loadToday, recordCorrect } from './progress';
+import type { Card } from './srs';
+import { loadCards, nextCard, recordResult } from './srs';
 import { C, S } from './theme';
 
 export default function QuizScreen({
@@ -24,9 +25,9 @@ export default function QuizScreen({
     () => applyFilter(getDeck(config.deckId), config.filter),
     [config],
   );
-  // 오늘 맞힌 기록. 읽기 전에는 빈 값이라 가중치 없이 출제된다.
+  // 간격 반복 기록. 읽기 전에는 빈 값이라 고르게 출제된다.
   // 기록은 ref 에도 둬서 '다시 풀기' 때 최신 값을 쓴다.
-  const correctToday = useRef<Record<string, number>>({});
+  const cards = useRef<Record<string, Card>>({});
   const [questions, setQuestions] = useState<Question[]>([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState('');
@@ -36,15 +37,15 @@ export default function QuizScreen({
   const [grading, setGrading] = useState(false);
 
   // 기록을 읽은 뒤 첫 문제를 만든다. 저장소 읽기는 보통 수십 ms라
-  // 체감되지 않지만, 실패해도 가중치 없이 그대로 출제된다.
+  // 체감되지 않지만, 실패해도 고르게 섞어 그대로 출제된다.
   useEffect(() => {
     let alive = true;
-    loadToday()
-      .then((c) => { if (alive) correctToday.current = c; })
-      .catch((e) => console.warn('[progress] 로딩 실패, 가중치 없이 출제:', e))
+    loadCards()
+      .then((c) => { if (alive) cards.current = c; })
+      .catch((e) => console.warn('[srs] 로딩 실패, 고르게 출제:', e))
       .finally(() => {
         if (alive) {
-          setQuestions(buildQuiz(pool, config.modes, config.count, correctToday.current));
+          setQuestions(buildQuiz(pool, config.modes, config.count, cards.current));
         }
       });
     return () => { alive = false; };
@@ -67,12 +68,14 @@ export default function QuizScreen({
     setJudged(result);
     setGrading(false);
 
-    // 맞힌 것만 센다. "비슷했어요"는 아직 정확히 모르는 것이라 세지 않는다.
-    if (result.grade === 'correct') {
-      const w = q.word.word;
-      correctToday.current[w] = (correctToday.current[w] ?? 0) + 1;
-      recordCorrect(w).catch(() => {});   // 저장 실패가 학습을 막지 않게
-    }
+    // 세 결과를 모두 기록한다. 틀린 것도 남겨야 간격이 하루로 돌아간다.
+    // 맞힌 것만 세던 이전 구조에서는 틀린 단어가 다시 안 나올 수 있었다.
+    //
+    // ref 를 먼저 갱신하는 이유: '다시 풀기'가 방금 푼 문제를 피해야 하는데,
+    // 저장은 비동기라 그때까지 기다릴 수 없다. 계산은 nextCard 한 곳에서만 한다.
+    const w = q.word.word;
+    cards.current[w] = nextCard(cards.current[w], result.grade);
+    recordResult(w, result.grade).catch(() => {});   // 저장 실패가 학습을 막지 않게
   };
 
   const next = () => {
@@ -82,8 +85,8 @@ export default function QuizScreen({
   };
 
   const restart = () => {
-    // 방금 맞힌 것도 반영되도록 ref 의 최신 기록을 쓴다
-    setQuestions(buildQuiz(pool, config.modes, config.count, correctToday.current));
+    // 방금 푼 것도 반영되도록 ref 의 최신 기록을 쓴다
+    setQuestions(buildQuiz(pool, config.modes, config.count, cards.current));
     setIndex(0);
     setInput('');
     setAnswers([]);
