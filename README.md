@@ -305,7 +305,12 @@ cd android && ./gradlew assembleRelease
 adb install android/app/build/outputs/apk/release/app-release.apk
 ```
 
-JS 번들과 모델이 APK에 포함되어 **네트워크 없이 단독 실행**된다.
+JS 번들과 모델이 APK에 포함되어 **네트워크 없이 단독 실행**된다. 181MB.
+
+ARM 기기용으로만 빌드한다 (`arm64-v8a`, `armeabi-v7a`). x86 계열을 넣으면
+106.8MB 가 더 붙는데 실기기에서 쓰이지 않는다. 설정은 `app.json` 의
+`expo-build-properties` → `buildArchs` 에 있다 — `android/gradle.properties`
+를 직접 고치면 `expo prebuild` 가 덮어쓴다.
 
 > 개발 빌드(`assembleDebug`)는 Metro 서버가 있어야 실행된다.
 > 오프라인 동작을 확인하려면 release로 빌드할 것.
@@ -389,9 +394,12 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 각 항목은 이슈로 열어 두었다.
 
-- **APK 288MB** — 모델(86.9MB)보다 **ONNX 런타임(128.6MB)이 더 크고**, 그 중
-  x86·x86_64가 106.5MB다. 실기기에는 안 쓰는 것이라 ABI 스플릿만으로 크게 줄어든다
-  → [#1](https://github.com/reddol18/dev_keyword_test/issues/1)
+- **APK 181MB** — x86 계열을 빼서 288MB 에서 줄였다
+  ([#1](https://github.com/reddol18/dev_keyword_test/issues/1), 닫음).
+  남은 181MB 의 절반은 모델 한 장(86.9MB)이다. 받아 쓰는 int8 파일이
+  `model_qint8_avx512_vnni.onnx` — **x86 명령어용으로 양자화된 것**을 ARM 에서
+  돌리고 있는데, 저장소에 ARM 용 변형이 없다. 직접 재양자화해야 하고 채점
+  유사도를 다시 재야 한다 → [#8](https://github.com/reddol18/dev_keyword_test/issues/8)
 - **반의어 구분 불가** — 임베딩 모델 전반의 한계다. 임계값 0.85가 이걸 전제로 잡힌
   값이라 낮추면 안 된다. 다만 IT 용어는 뜻이 서술형이라 실측상 오채점은 없었다
   ([측정 결과](https://github.com/reddol18/dev_keyword_test/issues/3#issuecomment-6332184571))
