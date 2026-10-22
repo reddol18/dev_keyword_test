@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import {
-  Pressable, SectionList, StyleSheet, Text, TextInput, View,
+  Pressable, ScrollView, SectionList, StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import type { DeckId } from './decks';
-import { DECKS, getDeck, levelsOf } from './decks';
+import { DECKS, fieldsOf, getDeck, levelsOf } from './decks';
 import type { Word } from './types';
+import { deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 const LEVEL_LABEL: Record<number, string> = { 1: '기초', 2: '일반', 3: '면접 우선' };
@@ -19,9 +20,11 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
   const [deckId, setDeckId] = useState<DeckId>('it-terms');
   const [query, setQuery] = useState('');
   const [levels, setLevels] = useState<number[]>([]);
+  const [fields, setFields] = useState<string[]>([]);
 
   const deck = getDeck(deckId);
   const availableLevels = useMemo(() => levelsOf(deck), [deck]);
+  const availableFields = useMemo(() => fieldsOf(deck), [deck]);
 
   const sections = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -37,12 +40,13 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
     for (const w of deck.words) {
       if (!hit(w)) continue;
       if (levels.length > 0 && (w.level == null || !levels.includes(w.level))) continue;
+      if (fields.length > 0 && !fields.includes(w.partOfSpeech)) continue;
       const list = byField.get(w.partOfSpeech);
       if (list) list.push(w);
       else byField.set(w.partOfSpeech, [w]);
     }
     return [...byField.entries()].map(([title, data]) => ({ title, data }));
-  }, [deck, query, levels]);
+  }, [deck, query, levels, fields]);
 
   const total = useMemo(
     () => sections.reduce((n, s) => n + s.data.length, 0),
@@ -52,9 +56,15 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
   const toggleLevel = (lv: number) =>
     setLevels(levels.includes(lv) ? levels.filter((x) => x !== lv) : [...levels, lv]);
 
+  const toggleField = (f: string) =>
+    setFields(fields.includes(f) ? fields.filter((x) => x !== f) : [...fields, f]);
+
   const pickDeck = (id: DeckId) => {
     setDeckId(id);
-    setLevels([]);   // 덱마다 레벨 구성이 달라 초기화한다
+    // 덱마다 레벨·분야 구성이 달라 초기화한다.
+    // 안 그러면 이전 덱의 분야가 남아 결과가 0개가 된다.
+    setLevels([]);
+    setFields([]);
   };
 
   return (
@@ -75,7 +85,7 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
               style={[l.deckBtn, deckId === d.id && l.deckBtnOn]}
             >
               <Text style={[l.deckText, deckId === d.id && l.deckTextOn]}>
-                {d.name}
+                {deckIcon(d.id)} {d.name}
               </Text>
             </Pressable>
           ))}
@@ -101,12 +111,41 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
                 style={[l.chip, levels.includes(lv) && S.chipOn]}
               >
                 <Text style={[S.chipText, levels.includes(lv) && S.chipTextOn]}>
-                  {LEVEL_LABEL[lv] ?? `레벨 ${lv}`}
+                  {levelIcon(lv)} {LEVEL_LABEL[lv] ?? `레벨 ${lv}`}
                 </Text>
               </Pressable>
             ))}
           </View>
         )}
+
+        {/* 분야는 16개라 세로로 쌓으면 머리가 목록보다 커진다. 가로 한 줄로 민다.
+            헤더의 좌우 패딩(20)을 음수 마진으로 상쇄해 화면 끝까지 흐르게 한다 —
+            그래야 잘린 칩이 보여서 더 밀 수 있다는 게 드러난다. */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          style={l.fieldScroll}
+          contentContainerStyle={l.fieldRow}
+        >
+          <Pressable
+            onPress={() => setFields([])}
+            style={[l.chip, fields.length === 0 && S.chipOn]}
+          >
+            <Text style={[S.chipText, fields.length === 0 && S.chipTextOn]}>전체</Text>
+          </Pressable>
+          {availableFields.map((f) => (
+            <Pressable
+              key={f}
+              onPress={() => toggleField(f)}
+              style={[l.chip, fields.includes(f) && S.chipOn]}
+            >
+              <Text style={[S.chipText, fields.includes(f) && S.chipTextOn]}>
+                {fieldIcon(f)} {f}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
       </View>
 
       <SectionList
@@ -123,7 +162,7 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
         renderSectionHeader={({ section }) => (
           <View style={l.sectionHead}>
             <Text style={l.sectionText}>
-              {section.title}
+              {fieldIcon(section.title)}  {section.title}
               <Text style={l.sectionCount}>  {section.data.length}</Text>
             </Text>
           </View>
@@ -173,6 +212,10 @@ const l = StyleSheet.create({
     paddingHorizontal: 12, paddingVertical: 7, borderRadius: 999,
     borderWidth: 1, borderColor: C.line, backgroundColor: '#fff',
   },
+  // 헤더 패딩을 상쇄해 화면 끝까지 흐르게 한다
+  fieldScroll: { marginHorizontal: -20 },
+  // 가로 스크롤이라 줄바꿈하지 않는다. 좌우 여백은 헤더 패딩과 맞춘다.
+  fieldRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 20 },
 
   sectionHead: {
     backgroundColor: C.card, paddingHorizontal: 20, paddingVertical: 7,
