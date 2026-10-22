@@ -29,7 +29,7 @@ export default function ResultScreen({
 
       {missed.length > 0 && (
         <View style={{ gap: 10 }}>
-          <Text style={S.h2}>오답노트</Text>
+          <Text style={S.h2}>📝 오답노트</Text>
           {missed.map((a, i) => (
             <View
               key={i}
@@ -37,7 +37,7 @@ export default function ResultScreen({
             >
               <View style={r.head}>
                 <Text style={r.word}>{a.word.word}</Text>
-                {a.grade === 'close' && <Text style={r.badge}>비슷했어요</Text>}
+                {a.grade === 'close' && <Text style={r.badge}>🟡 비슷했어요</Text>}
               </View>
               <Text style={r.mode}>{MODE_LABEL[a.mode]}</Text>
               {/* 내가 뭐라고 썼는지 그대로 보여준다 */}

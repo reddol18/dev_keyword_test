@@ -4,6 +4,7 @@ import type { DeckId, Filter } from './decks';
 import { DECKS, applyFilter, fieldsOf, getDeck, levelsOf } from './decks';
 import type { QuizMode } from './types';
 import { ALL_MODES, MODE_LABEL } from './types';
+import { SECTION, deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 const LEVEL_LABEL: Record<number, string> = {
@@ -75,7 +76,7 @@ export default function StartScreen({
         </Pressable>
       </View>
 
-      <Section title="단어장">
+      <Section title="단어장" icon={SECTION.deck}>
         {DECKS.map((d) => (
           <Pressable
             key={d.id}
@@ -89,7 +90,7 @@ export default function StartScreen({
             ]}
           >
             <Text style={{ fontSize: 16, fontWeight: '700', color: C.text }}>
-              {d.name}
+              {deckIcon(d.id)}  {d.name}
               <Text style={{ fontWeight: '400', color: C.faint }}>
                 {'  '}{d.words.length}개
               </Text>
@@ -100,13 +101,13 @@ export default function StartScreen({
       </Section>
 
       {availableLevels.length > 0 && (
-        <Section title="난이도" hint="안 고르면 전체">
+        <Section title="난이도" hint="안 고르면 전체" icon={SECTION.level}>
           <View style={S.chipRow}>
             {availableLevels.map((lv) => (
               <Chip
                 key={lv}
                 on={levels.includes(lv)}
-                label={LEVEL_LABEL[lv] ?? `레벨 ${lv}`}
+                label={`${levelIcon(lv)} ${LEVEL_LABEL[lv] ?? `레벨 ${lv}`}`}
                 onPress={() => toggle(levels, lv, setLevels)}
               />
             ))}
@@ -114,20 +115,20 @@ export default function StartScreen({
         </Section>
       )}
 
-      <Section title="분야" hint="안 고르면 전체">
+      <Section title="분야" hint="안 고르면 전체" icon={SECTION.field}>
         <View style={S.chipRow}>
           {availableFields.map((f) => (
             <Chip
               key={f}
               on={fields.includes(f)}
-              label={f}
+              label={`${fieldIcon(f)} ${f}`}
               onPress={() => toggle(fields, f, setFields)}
             />
           ))}
         </View>
       </Section>
 
-      <Section title="출제 방식">
+      <Section title="출제 방식" icon={SECTION.mode}>
         <View style={S.chipRow}>
           {ALL_MODES.map((m) => (
             <Chip
@@ -145,7 +146,7 @@ export default function StartScreen({
         )}
       </Section>
 
-      <Section title="문항 수">
+      <Section title="문항 수" icon={SECTION.count}>
         <View style={S.chipRow}>
           {COUNTS.map((n) => (
             <Chip
@@ -183,12 +184,12 @@ export default function StartScreen({
 }
 
 function Section({
-  title, hint, children,
-}: { title: string; hint?: string; children: React.ReactNode }) {
+  title, hint, icon, children,
+}: { title: string; hint?: string; icon?: string; children: React.ReactNode }) {
   return (
     <View style={{ gap: 8 }}>
       <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8 }}>
-        <Text style={S.h2}>{title}</Text>
+        <Text style={S.h2}>{icon ? `${icon} ${title}` : title}</Text>
         {hint && <Text style={{ fontSize: 12, color: C.faint }}>{hint}</Text>}
       </View>
       {children}

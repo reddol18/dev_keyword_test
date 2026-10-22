@@ -12,6 +12,7 @@ import type { StartConfig } from './StartScreen';
 import ResultScreen from './ResultScreen';
 import type { Card } from './srs';
 import { loadCards, nextCard, recordResult } from './srs';
+import { fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 export default function QuizScreen({
@@ -133,8 +134,8 @@ export default function QuizScreen({
 
         <View style={q2.card}>
           <Text style={q2.meta}>
-            {q.word.partOfSpeech}
-            {q.word.level != null ? `  ·  L${q.word.level}` : ''}
+            {fieldIcon(q.word.partOfSpeech)}  {q.word.partOfSpeech}
+            {q.word.level != null ? `  ·  ${levelIcon(q.word.level)} L${q.word.level}` : ''}
           </Text>
           <Text style={isChoiceMode(q.mode) || q.prompt.length > 20
             ? q2.promptSmall : q2.prompt}>
@@ -192,8 +193,8 @@ export default function QuizScreen({
               judged.grade === 'correct' ? q2.ok
               : judged.grade === 'close' ? q2.closeText : q2.no
             }>
-              {judged.grade === 'correct' ? '정답입니다'
-               : judged.grade === 'close' ? '비슷했어요' : '오답입니다'}
+              {judged.grade === 'correct' ? '✅ 정답입니다'
+               : judged.grade === 'close' ? '🟡 비슷했어요' : '❌ 오답입니다'}
             </Text>
             {judged.grade === 'close' && (
               <Text style={q2.closeHint}>뜻은 통하지만 정확한 답은 아닙니다</Text>
