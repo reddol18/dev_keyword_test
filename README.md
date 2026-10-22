@@ -396,10 +396,11 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 - **APK 181MB** — x86 계열을 빼서 288MB 에서 줄였다
   ([#1](https://github.com/reddol18/dev_keyword_test/issues/1), 닫음).
-  남은 181MB 의 절반은 모델 한 장(86.9MB)이다. 받아 쓰는 int8 파일이
-  `model_qint8_avx512_vnni.onnx` — **x86 명령어용으로 양자화된 것**을 ARM 에서
-  돌리고 있는데, 저장소에 ARM 용 변형이 없다. 직접 재양자화해야 하고 채점
-  유사도를 다시 재야 한다 → [#8](https://github.com/reddol18/dev_keyword_test/issues/8)
+  남은 181MB 의 절반은 모델 한 장(86.9MB)이다. 파라미터 110M × int8 = 105MB
+  라 **이 모델로는 하한**이고, 더 줄이려면 층이 적은 모델로 바꿔야 한다
+  (ALBERT 계열이면 약 11MB → APK 105MB). 다만 채점 임계값 0.85 를 다시
+  잡아야 해서 용량 작업이 아니라 채점 모델 교체 작업이 된다
+  → [#8](https://github.com/reddol18/dev_keyword_test/issues/8)
 - **반의어 구분 불가** — 임베딩 모델 전반의 한계다. 임계값 0.85가 이걸 전제로 잡힌
   값이라 낮추면 안 된다. 다만 IT 용어는 뜻이 서술형이라 실측상 오채점은 없었다
   ([측정 결과](https://github.com/reddol18/dev_keyword_test/issues/3#issuecomment-6332184571))
