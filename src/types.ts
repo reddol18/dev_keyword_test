@@ -59,6 +59,16 @@ export function isChoiceMode(mode: QuizMode): boolean {
   return mode.startsWith('choice-');
 }
 
+/**
+ * 용어를 맞히는 방향인가 (뜻을 보여주고 용어를 묻는다).
+ *
+ * 오답노트에서 정답을 어느 쪽으로 보여줄지 가르는 데 쓴다. 이 방향인데
+ * 뜻을 보여주면, 이미 문제로 준 문장을 정답이라고 다시 내놓는 꼴이 된다.
+ */
+export function asksForTerm(mode: QuizMode): boolean {
+  return mode.endsWith('-to-term');
+}
+
 /** 한 문제. 출제 방식에 따라 지문과 정답이 달라진다. */
 export type Question = {
   word: Word;
