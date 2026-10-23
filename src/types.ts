@@ -71,6 +71,15 @@ export type Question = {
   answerIndex?: number;
 };
 
+/**
+ * '모르겠어요' 로 넘긴 문제의 `input` 값.
+ *
+ * 빈 문자열을 쓰면 오답노트의 "내 답:" 뒤가 비어 보이고, 찍어서 틀린 것과
+ * 구분되지 않는다. 사용자가 이 문자열을 직접 입력할 수는 없다 —
+ * 채점은 normalize 를 거치지만 이 값은 commit 을 타지 않는다.
+ */
+export const SKIPPED = '\u0000skipped';
+
 /** 한 문제에 대한 채점 결과 (오답노트에 그대로 쓰인다) */
 export type Answer = {
   word: Word;
@@ -79,3 +88,8 @@ export type Answer = {
   input: string;
   grade: Grade;
 };
+
+/** '모르겠어요' 로 넘긴 문제인가 */
+export function isSkipped(answer: Answer): boolean {
+  return answer.input === SKIPPED;
+}

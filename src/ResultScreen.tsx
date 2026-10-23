@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { Answer } from './types';
-import { MODE_LABEL } from './types';
+import { MODE_LABEL, isSkipped } from './types';
 import { C, S } from './theme';
 
 export default function ResultScreen({
@@ -38,12 +38,15 @@ export default function ResultScreen({
               <View style={r.head}>
                 <Text style={r.word}>{a.word.word}</Text>
                 {a.grade === 'close' && <Text style={r.badge}>🟡 비슷했어요</Text>}
+                {isSkipped(a) && <Text style={r.badgeSkip}>🤔 모르겠어요</Text>}
               </View>
               <Text style={r.mode}>{MODE_LABEL[a.mode]}</Text>
               {/* 내가 뭐라고 썼는지 그대로 보여준다 */}
-              <Text style={a.grade === 'close' ? r.mineClose : r.mine}>
-                내 답: {a.input}
-              </Text>
+              {!isSkipped(a) && (
+                <Text style={a.grade === 'close' ? r.mineClose : r.mine}>
+                  내 답: {a.input}
+                </Text>
+              )}
               <Text style={r.answer}>정답: {a.word.meanings.join(' · ')}</Text>
             </View>
           ))}
@@ -75,6 +78,12 @@ const r = StyleSheet.create({
   word: { fontSize: 19, fontWeight: '700', color: C.text },
   badge: {
     fontSize: 12, color: C.closeText, backgroundColor: C.closeChip,
+    paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999,
+    overflow: 'hidden',
+  },
+  // 몰라서 넘긴 것. 찍어서 틀린 것과 구분하면 복습할 때 도움이 된다.
+  badgeSkip: {
+    fontSize: 12, color: C.sub, backgroundColor: C.card,
     paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999,
     overflow: 'hidden',
   },

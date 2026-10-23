@@ -7,7 +7,7 @@ import { applyFilter, getDeck } from './decks';
 import { gradeByMode } from './grading';
 import { buildQuiz, hintOf } from './quiz';
 import type { Answer, Question } from './types';
-import { MODE_LABEL, isChoiceMode } from './types';
+import { MODE_LABEL, SKIPPED, isChoiceMode } from './types';
 import type { StartConfig } from './StartScreen';
 import ResultScreen from './ResultScreen';
 import type { Card } from './srs';
@@ -56,6 +56,23 @@ export default function QuizScreen({
   // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
   const finished = questions.length > 0 && index >= questions.length;
 
+  /**
+   * 채점 결과를 기록한다.
+   *
+   * 세 결과를 모두 기록한다. 틀린 것도 남겨야 간격이 하루로 돌아간다.
+   * 맞힌 것만 세던 이전 구조에서는 틀린 단어가 다시 안 나올 수 있었다.
+   *
+   * ref 를 먼저 갱신하는 이유: '다시 풀기'가 방금 푼 문제를 피해야 하는데,
+   * 저장은 비동기라 그때까지 기다릴 수 없다. 계산은 nextCard 한 곳에서만 한다.
+   */
+  const keep = (result: Answer) => {
+    setAnswers((prev) => [...prev, result]);
+    setJudged(result);
+    const w = result.word.word;
+    cards.current[w] = nextCard(cards.current[w], result.grade);
+    recordResult(w, result.grade).catch(() => {});   // 저장 실패가 학습을 막지 않게
+  };
+
   const commit = async (raw: string) => {
     if (!raw.trim() || judged || grading) return;
     setGrading(true);
@@ -65,18 +82,25 @@ export default function QuizScreen({
       input: raw,            // 입력 원문을 그대로 보관 → 오답노트에서 쓴다
       grade: await gradeByMode(raw, q.word, q.mode),
     };
-    setAnswers((prev) => [...prev, result]);
-    setJudged(result);
     setGrading(false);
+    keep(result);
+  };
 
-    // 세 결과를 모두 기록한다. 틀린 것도 남겨야 간격이 하루로 돌아간다.
-    // 맞힌 것만 세던 이전 구조에서는 틀린 단어가 다시 안 나올 수 있었다.
-    //
-    // ref 를 먼저 갱신하는 이유: '다시 풀기'가 방금 푼 문제를 피해야 하는데,
-    // 저장은 비동기라 그때까지 기다릴 수 없다. 계산은 nextCard 한 곳에서만 한다.
-    const w = q.word.word;
-    cards.current[w] = nextCard(cards.current[w], result.grade);
-    recordResult(w, result.grade).catch(() => {});   // 저장 실패가 학습을 막지 않게
+  /**
+   * 모르겠어요.
+   *
+   * 오답으로 기록한다 — 간격이 하루로 돌아가고, streak 0 이라
+   * priorityOf 가 Relearn 으로 올려 '다시 풀기' 에서 바로 또 나온다
+   * (src/srs.ts 의 Priority 참조). 새 등급을 만들지 않은 이유는
+   * 채점 경로 네 개와 결과 화면까지 번지는데, 간격은 오답과 같아야 해서
+   * 얻는 게 표시뿐이기 때문이다.
+   *
+   * 찍어서 맞히면 streak 가 올라가 due 가 1→3→7일로 늘어난다.
+   * 모르는 단어가 점점 안 나오게 되므로, 찍기보다 이 버튼이 낫다.
+   */
+  const giveUp = () => {
+    if (judged || grading) return;
+    keep({ word: q.word, mode: q.mode, input: SKIPPED, grade: 'wrong' });
   };
 
   const next = () => {
@@ -194,7 +218,9 @@ export default function QuizScreen({
               : judged.grade === 'close' ? q2.closeText : q2.no
             }>
               {judged.grade === 'correct' ? '✅ 정답입니다'
-               : judged.grade === 'close' ? '🟡 비슷했어요' : '❌ 오답입니다'}
+               : judged.grade === 'close' ? '🟡 비슷했어요'
+               : judged.input === SKIPPED ? '🤔 다음에 또 나옵니다'
+               : '❌ 오답입니다'}
             </Text>
             {judged.grade === 'close' && (
               <Text style={q2.closeHint}>뜻은 통하지만 정확한 답은 아닙니다</Text>
@@ -207,15 +233,28 @@ export default function QuizScreen({
               </Text>
             </Pressable>
           </View>
-        ) : !isChoiceMode(q.mode) ? (
-          <Pressable
-            style={[S.button, (!input.trim() || grading) && S.buttonOff]}
-            onPress={() => commit(input)}
-            disabled={!input.trim() || grading}
-          >
-            <Text style={S.buttonText}>{grading ? '채점 중…' : '확인'}</Text>
-          </Pressable>
-        ) : null}
+        ) : (
+          <View style={{ gap: 10 }}>
+            {!isChoiceMode(q.mode) && (
+              <Pressable
+                style={[S.button, (!input.trim() || grading) && S.buttonOff]}
+                onPress={() => commit(input)}
+                disabled={!input.trim() || grading}
+              >
+                <Text style={S.buttonText}>{grading ? '채점 중…' : '확인'}</Text>
+              </Pressable>
+            )}
+            {/* 확인 옆이 아니라 아래에 둔다. 옆에 두면 급할 때 잘못 누른다. */}
+            <Pressable
+              style={q2.giveUp}
+              onPress={giveUp}
+              disabled={grading}
+              hitSlop={6}
+            >
+              <Text style={q2.giveUpText}>🤔 모르겠어요</Text>
+            </Pressable>
+          </View>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -259,6 +298,11 @@ const q2 = StyleSheet.create({
   choiceOk: { borderColor: C.ok, backgroundColor: C.okBg },
   choiceNo: { borderColor: C.no, backgroundColor: C.noBg },
   choiceText: { fontSize: 16, color: C.text, lineHeight: 22 },
+
+  // 테두리 없는 보조 버튼. 확인보다 눈에 덜 띄어야 한다 —
+  // 모르겠어요가 기본 선택처럼 보이면 생각하기 전에 누른다.
+  giveUp: { paddingVertical: 12, alignItems: 'center' },
+  giveUpText: { color: C.sub, fontSize: 15 },
 
   feedback: { gap: 8, alignItems: 'center' },
   ok: { color: C.ok, fontSize: 20, fontWeight: '700' },

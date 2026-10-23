@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import type { DeckId, Filter } from './decks';
 import { DECKS, applyFilter, fieldsOf, getDeck, levelsOf } from './decks';
 import type { QuizMode } from './types';
 import { ALL_MODES, MODE_LABEL } from './types';
-import { SECTION, deckIcon, fieldIcon, levelIcon } from './icons';
+import type { Card } from './srs';
+import { countDue, countNew, loadCards } from './srs';
+import { SECTION, SRS, deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 const LEVEL_LABEL: Record<number, string> = {
@@ -37,13 +39,40 @@ export default function StartScreen({
   const [modes, setModes] = useState<QuizMode[]>(ALL_MODES);
   const [count, setCount] = useState(10);
 
+  /**
+   * 간격 반복 기록. 복습·처음 개수를 세는 데만 쓴다.
+   *
+   * `loadCards` 는 캐시된 객체를 그대로 돌려주고 QuizScreen 은 그걸
+   * 제자리에서 고친다(`cards.current[w] = ...`). 참조가 같으면 리렌더가
+   * 걸리지 않으므로 **얕게 복사해서** 넣는다.
+   */
+  const [cards, setCards] = useState<Record<string, Card>>({});
+
+  // 이 화면은 문제를 풀러 갈 때 통째로 unmount 된다(App.tsx 의 config 분기).
+  // 돌아오면 다시 mount 되므로 이 effect 가 다시 돌아 숫자가 갱신된다.
+  useEffect(() => {
+    let alive = true;
+    loadCards()
+      // 참조가 같아도 리렌더가 걸리도록 얕게 복사한다
+      .then((c) => { if (alive) setCards({ ...c }); })
+      .catch(() => {});   // 못 읽으면 복습 줄을 숨긴다 — 학습을 막지 않는다
+    return () => { alive = false; };
+  }, []);
+
   const deck = getDeck(deckId);
   const availableLevels = useMemo(() => levelsOf(deck), [deck]);
   const availableFields = useMemo(() => fieldsOf(deck), [deck]);
-  const matched = useMemo(
-    () => applyFilter(deck, { levels, fields }).length,
+  const pool = useMemo(
+    () => applyFilter(deck, { levels, fields }),
     [deck, levels, fields],
   );
+  const matched = pool.length;
+
+  // 필터·덱이 바뀌면 그 범위 안에서만 다시 센다
+  const { due, fresh } = useMemo(() => {
+    const names = pool.map((w) => w.word);
+    return { due: countDue(cards, names), fresh: countNew(cards, names) };
+  }, [pool, cards]);
 
   // 덱을 바꾸면 이전 덱의 분야·레벨이 남아 0개가 되는 일이 없도록 초기화한다
   const pickDeck = (id: DeckId) => {
@@ -171,6 +200,17 @@ export default function StartScreen({
         조건에 맞는 단어 {matched}개
         {matched > 0 && matched < count ? ` — ${matched}문제만 출제됩니다` : ''}
       </Text>
+      {/*
+        복습 0개면 그 자리를 비운다 — '복습 0개'는 정보가 아니다.
+        둘 다 0이면(기록이 없거나 다 외운 범위) 줄 자체를 안 그린다.
+      */}
+      {(due > 0 || fresh > 0) && (
+        <Text style={[S.sub, { textAlign: 'center', fontSize: 13 }]}>
+          {due > 0 ? `${SRS.due} 복습 ${due}개` : ''}
+          {due > 0 && fresh > 0 ? '  ·  ' : ''}
+          {fresh > 0 ? `${SRS.fresh} 처음 ${fresh}개` : ''}
+        </Text>
+      )}
       <Pressable
         style={[S.button, !canStart && S.buttonOff]}
         disabled={!canStart}

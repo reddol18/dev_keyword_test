@@ -60,3 +60,9 @@ export const SECTION = {
   mode: '✍️',
   count: '🔢',
 } as const;
+
+/** 간격 반복 상태 — 복습할 것 / 처음 보는 것 */
+export const SRS = {
+  due: '🔁',
+  fresh: '🌱',
+} as const;
