@@ -166,7 +166,9 @@ const r = StyleSheet.create({
     borderTopWidth: 1, borderTopColor: C.line,
   },
   fieldRow: { flexDirection: 'row', gap: 8 },
-  fieldLabel: { width: 62, fontSize: 13, color: C.faint },
+  // '헷갈리는 것'(6자)이 한 줄에 들어가야 한다. 좁으면 라벨이 접혀
+  // 값과 높이가 어긋난다.
+  fieldLabel: { width: 76, fontSize: 13, color: C.faint },
   fieldValue: { flex: 1, fontSize: 14, color: C.text, lineHeight: 20 },
   ghost: { backgroundColor: '#fff', borderWidth: 1.5, borderColor: C.blue },
 });

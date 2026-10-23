@@ -17,18 +17,23 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
 | 런칭 | 시작 — 범위를 고른다 | 목록 — 전체를 훑어본다 |
 |---|---|---|
-| <img src="docs/screenshots/00-splash.png" width="260"> | <img src="docs/screenshots/01-start.png" width="260"> | <img src="docs/screenshots/05-list.png" width="260"> |
-| 이 동안 임베딩 모델을 올린다.<br>그래서 시작 화면은 보통<br>**AI 채점 준비됨**으로 뜬다 | 단어장·난이도·분야·방식·문항 수.<br>조건에 맞는 개수가 아래에 계속 보인다 | 분야별로 묶이고 헤더가 고정된다.<br>★는 면접 우선 등급 |
+| <img src="docs/screenshots/00-splash.png" width="260"> | <img src="docs/screenshots/10-start-srs.png" width="260"> | <img src="docs/screenshots/05-list.png" width="260"> |
+| 이 동안 임베딩 모델을 올린다.<br>주관식이 있는 덱에서는<br>**AI 채점 준비됨**으로 뜬다 | 단어장·난이도·분야·방식·문항 수.<br>아래에 **🔁 복습 / 🌱 처음** 개수가<br>범위에 맞춰 계속 보인다 | 분야별로 묶이고 헤더가 고정된다.<br>★는 면접 우선 등급 |
 
 | 객관식 — 헷갈리는 것끼리 묶어 낸다 | 채점 |
 |---|---|
 | <img src="docs/screenshots/02-choice.png" width="260"> | <img src="docs/screenshots/03-correct.png" width="260"> |
 | `PII`의 오답 보기가 **인가·JWT·HITL**.<br>같은 분야에서 실제로 헷갈리는 용어들이다 | `Pub/Sub`의 오답 보기는<br>**Event-driven·Queue·Webhook**.<br>정답은 초록, 풀네임도 함께 보여준다 |
 
-| 오답 | 결과 · 오답노트 |
+| 오답 | 모르면 넘긴다 |
 |---|---|
-| <img src="docs/screenshots/06-wrong.png" width="260"> | <img src="docs/screenshots/04-result.png" width="260"> |
-| `Vector DB`의 보기가 전부 벡터 DB 설명이다.<br>내가 고른 것은 빨강, 정답은 초록 | 내가 **뭐라고 답했는지 그대로**.<br>정답과 나란히 둔다 |
+| <img src="docs/screenshots/06-wrong.png" width="260"> | <img src="docs/screenshots/12-quiz-giveup.png" width="260"> |
+| `Vector DB`의 보기가 전부 벡터 DB 설명이다.<br>내가 고른 것은 빨강, 정답은 초록 | 찍으면 25%로 맞고, 맞으면 간격이 늘어<br>**모르는 단어가 안 나오게 된다**.<br>**🤔 모르겠어요**는 내일 다시 꺼낸다 |
+
+| 결과 · 오답노트 | 터치하면 펼쳐진다 |
+|---|---|
+| <img src="docs/screenshots/14-result-folded.png" width="260"> | <img src="docs/screenshots/15-result-expanded.png" width="260"> |
+| 정답은 **물어본 방향으로** 보여준다.<br>`뜻→용어`면 뜻이 아니라 **용어**가 정답란에 | 분야·난이도와 인정 표기, 비슷한 말,<br>헷갈리는 것까지. 틀린 걸 다시 볼 때<br>제일 필요한 자리다 |
 
 ### 주관식 채점 — 직접 입력했을 때
 
@@ -105,6 +110,10 @@ JSON은 손으로 고치지 않는다. `data/build_it_terms.py`가 생성하며,
 
 **뜻→용어** 방향을 따로 둔 이유: 용어를 보면 아는데 막상 말로 설명할 때
 떠오르지 않는 경우가 있다. 양방향으로 물어야 실제로 외웠는지 확인된다.
+
+| IT 개발 용어 — 객관식만 | IT 문서 영단어 — 넷 전부 |
+|---|---|
+| <img src="docs/screenshots/11-modes-terms.png" width="260"> | <img src="docs/screenshots/16-modes-words.png" width="260"> |
 
 **IT 용어 덱에 주관식이 없는 이유**는 뜻이 서술형 문장이라서다. 301개의
 첫 번째 뜻이 중간값 22자, 15자 이상이 93%, 최대 40자다.
