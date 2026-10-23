@@ -3,7 +3,7 @@ import {
   KeyboardAvoidingView, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
-import { applyFilter, getDeck } from './decks';
+import { allowedModes, applyFilter, getDeck } from './decks';
 import { gradeByMode } from './grading';
 import { buildQuiz, hintOf } from './quiz';
 import type { Answer, Question } from './types';
@@ -26,6 +26,14 @@ export default function QuizScreen({
     () => applyFilter(getDeck(config.deckId), config.filter),
     [config],
   );
+  // 덱이 지원하지 않는 방식은 걸러낸다. 설정 화면이 막아 주지만
+  // config 가 다른 경로로 들어올 수 있으므로 여기서도 본다.
+  // 전부 걸러지면 덱의 방식으로 되돌린다 — 빈 목록이면 문제가 안 만들어진다.
+  const modes = useMemo(() => {
+    const deck = getDeck(config.deckId);
+    const kept = allowedModes(deck, config.modes);
+    return kept.length > 0 ? kept : deck.modes;
+  }, [config]);
   // 간격 반복 기록. 읽기 전에는 빈 값이라 고르게 출제된다.
   // 기록은 ref 에도 둬서 '다시 풀기' 때 최신 값을 쓴다.
   const cards = useRef<Record<string, Card>>({});
@@ -46,11 +54,11 @@ export default function QuizScreen({
       .catch((e) => console.warn('[srs] 로딩 실패, 고르게 출제:', e))
       .finally(() => {
         if (alive) {
-          setQuestions(buildQuiz(pool, config.modes, config.count, cards.current));
+          setQuestions(buildQuiz(pool, modes, config.count, cards.current));
         }
       });
     return () => { alive = false; };
-  }, [pool, config.modes, config.count]);
+  }, [pool, modes, config.count]);
 
   const q = questions[index];
   // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
@@ -111,7 +119,7 @@ export default function QuizScreen({
 
   const restart = () => {
     // 방금 푼 것도 반영되도록 ref 의 최신 기록을 쓴다
-    setQuestions(buildQuiz(pool, config.modes, config.count, cards.current));
+    setQuestions(buildQuiz(pool, modes, config.count, cards.current));
     setIndex(0);
     setInput('');
     setAnswers([]);
@@ -151,9 +159,14 @@ export default function QuizScreen({
           <Text style={q2.progress}>
             {index + 1} / {questions.length}
           </Text>
-          <Text style={modelReady ? q2.aiOn : q2.aiOff}>
-            {modelReady ? '● AI 채점' : '○ 로딩 중'}
-          </Text>
+          {/* 이 문제가 모델로 채점되는 방식일 때만 알린다 */}
+          {q.mode === 'type-term-to-meaning' ? (
+            <Text style={modelReady ? q2.aiOn : q2.aiOff}>
+              {modelReady ? '● AI 채점' : '○ 로딩 중'}
+            </Text>
+          ) : (
+            <Text style={q2.aiOff} />
+          )}
         </View>
 
         <View style={q2.card}>

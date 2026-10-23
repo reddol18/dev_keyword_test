@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import type { DeckId, Filter } from './decks';
 import { DECKS, applyFilter, fieldsOf, getDeck, levelsOf } from './decks';
 import type { QuizMode } from './types';
-import { ALL_MODES, MODE_LABEL } from './types';
+import { MODE_LABEL } from './types';
 import type { Card } from './srs';
 import { countDue, countNew, loadCards } from './srs';
 import { SECTION, SRS, deckIcon, fieldIcon, levelIcon } from './icons';
@@ -36,7 +36,8 @@ export default function StartScreen({
   const [deckId, setDeckId] = useState<DeckId>('it-terms');
   const [levels, setLevels] = useState<number[]>([]);
   const [fields, setFields] = useState<string[]>([]);
-  const [modes, setModes] = useState<QuizMode[]>(ALL_MODES);
+  // 기본값은 처음 덱이 지원하는 방식 전부
+  const [modes, setModes] = useState<QuizMode[]>(DECKS[0].modes);
   const [count, setCount] = useState(10);
 
   /**
@@ -74,17 +75,23 @@ export default function StartScreen({
     return { due: countDue(cards, names), fresh: countNew(cards, names) };
   }, [pool, cards]);
 
-  // 덱을 바꾸면 이전 덱의 분야·레벨이 남아 0개가 되는 일이 없도록 초기화한다
+  // 덱을 바꾸면 이전 덱의 분야·레벨이 남아 0개가 되는 일이 없도록 초기화한다.
+  // 출제 방식도 마찬가지다 — 덱마다 쓸 수 있는 방식이 다르다.
   const pickDeck = (id: DeckId) => {
     setDeckId(id);
     setLevels([]);
     setFields([]);
+    setModes(getDeck(id).modes);
   };
 
   const toggle = <T,>(list: T[], v: T, set: (x: T[]) => void) =>
     set(list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
 
   const canStart = matched > 0 && modes.length > 0;
+
+  // 모델을 쓰는 건 '주관식 · 용어→뜻' 하나뿐이다 (gradeAsync). 뜻→용어는
+  // aliases 정확 일치로만 채점하고, 객관식 둘은 문자열 비교다.
+  const usesModel = deck.modes.includes('type-term-to-meaning');
 
   return (
     <View style={S.flex}>
@@ -96,9 +103,15 @@ export default function StartScreen({
       <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
         <View style={{ gap: 4, flex: 1 }}>
           <Text style={S.h1}>무엇을 외울까요</Text>
-          <Text style={S.sub}>
-            {modelReady ? '● AI 채점 준비됨' : '○ 모델 로딩 중 — 지금 시작해도 됩니다'}
-          </Text>
+          {/*
+            AI 채점은 주관식에서만 쓰인다. 객관식뿐인 덱에서는 이 표시가
+            뜻을 잃으므로 숨긴다 — 안 쓰는 기능을 준비됐다고 알릴 이유가 없다.
+          */}
+          {usesModel && (
+            <Text style={S.sub}>
+              {modelReady ? '● AI 채점 준비됨' : '○ 모델 로딩 중 — 지금 시작해도 됩니다'}
+            </Text>
+          )}
         </View>
         <Pressable onPress={onOpenList} hitSlop={10} style={S.chip}>
           <Text style={S.chipText}>목록 보기</Text>
@@ -159,7 +172,7 @@ export default function StartScreen({
 
       <Section title="출제 방식" icon={SECTION.mode}>
         <View style={S.chipRow}>
-          {ALL_MODES.map((m) => (
+          {deck.modes.map((m) => (
             <Chip
               key={m}
               on={modes.includes(m)}
