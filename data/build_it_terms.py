@@ -5,7 +5,11 @@
   meanings      : [한국어 뜻, 영문 풀네임]  ← 정답으로 인정
   partOfSpeech  : 분야 (앱의 품사 칸을 분야 표시로 재사용)
   near          : 비슷하게 답해도 맞게 쳐 줄 표현
-면접 대비 요약본(it_terms_review.md)도 함께 만든다. ★ = 위시켓 IRE 면접 우선.
+면접 대비 요약본(it_terms_review.md)도 함께 만든다.
+
+★(여섯째 값)은 '면접 우선' 플래그다 — level 3 으로 들어가 앱의 '면접 우선'
+난이도가 된다. 면접마다 묶음을 따로 두지만(EICN·TCCINS·DOCFLOW) ★ 자체는
+어느 면접인지 구분하지 않는다. 지금 우선 볼 것이라는 뜻 하나로 쓴다.
 """
 import json, os
 
@@ -277,6 +281,116 @@ TCCINS = [
 ]
 
 
+# ── 문서 AI·K8s·LLM 게이트웨이 보강 (10/30 면접 대비) ───────────────────────
+# 출처: records_poc 세션 10/28 은행 LLM 게이트웨이 실습, 10/29 공문서 OCR 플랫폼(docflow)
+# 회사: AI 데이터·비정형 문서 플랫폼 (금융·보험 고객)
+# JD 핵심 OCR·벡터DB·LangGraph / 우대 K8s·멀티 LLM 게이트웨이·Java
+# 주의: 여섯째 값은 레벨이 아니라 '면접 우선' 플래그다(1이면 level 3, 0이면 level 2).
+DOCFLOW = [
+    # ── 쿠버네티스·인프라 (10/28 은행 게이트웨이 실습) ───────────────────
+    ("쿠버네티스·인프라", "Pod", "Kubernetes Pod", "쿠버네티스가 배포·확장하는 최소 단위(컨테이너 1개 이상 묶음)", ["파드", "포드"], 1),
+    ("쿠버네티스·인프라", "Namespace", "Kubernetes Namespace", "클러스터 안을 나누는 논리 구역(테넌트·용도별 격리 단위)", ["네임스페이스"], 1),
+    ("쿠버네티스·인프라", "Node", "Kubernetes Node", "Pod가 실제로 올라가 도는 서버(물리·가상 머신)", ["노드", "워커 노드"], 0),
+    ("쿠버네티스·인프라", "Deployment", "Kubernetes Deployment", "Pod 개수·버전·교체 방식을 선언해 관리하는 객체", ["디플로이먼트"], 0),
+    ("쿠버네티스·인프라", "Headless Service", "Headless Service", "IP 하나로 묶지 않고 Pod 각각의 주소를 DNS로 돌려주는 서비스", ["헤드리스 서비스"], 0),
+    ("쿠버네티스·인프라", "NetworkPolicy", "Kubernetes NetworkPolicy", "Pod 사이·외부와의 통신을 허용 목록으로 제한하는 규칙", ["네트워크 정책", "넷폴"], 1),
+    ("쿠버네티스·인프라", "Default deny", "Default Deny", "모든 통신을 먼저 막고 필요한 것만 여는 방식", ["기본 차단", "디폴트 디나이"], 1),
+    ("쿠버네티스·인프라", "Egress / Ingress", "Egress / Ingress", "밖으로 나가는 통신 / 안으로 들어오는 통신", ["이그레스", "인그레스", "송신 수신"], 0),
+    ("쿠버네티스·인프라", "ResourceQuota", "Kubernetes ResourceQuota", "네임스페이스가 쓸 수 있는 CPU·메모리 총량 한도", ["리소스 쿼터", "자원 할당량"], 1),
+    ("쿠버네티스·인프라", "LimitRange", "Kubernetes LimitRange", "Pod 하나의 기본·최대 자원 값을 정하는 규칙", ["리밋 레인지"], 0),
+    ("쿠버네티스·인프라", "Requests / Limits", "Resource Requests / Limits", "스케줄링 때 예약하는 자원 / 넘으면 제한·종료되는 상한", ["리퀘스트 리밋", "요청량 상한"], 1),
+    ("쿠버네티스·인프라", "OOMKilled", "Out-Of-Memory Killed", "메모리 상한을 넘어 컨테이너가 강제 종료된 상태", ["메모리 초과 종료", "OOM"], 0),
+    ("쿠버네티스·인프라", "CrashLoopBackOff", "CrashLoopBackOff", "컨테이너가 시작하자마자 계속 죽어 재시작 간격이 늘어나는 상태", ["크래시루프"], 0),
+    ("쿠버네티스·인프라", "Readiness probe", "Readiness Probe", "준비된 Pod에만 트래픽을 보내도록 상태를 묻는 검사", ["레디니스 프로브", "준비 상태 검사"], 1),
+    ("쿠버네티스·인프라", "Liveness probe", "Liveness Probe", "멈춘 컨테이너를 찾아 재시작시키는 검사", ["라이브니스 프로브", "생존 검사"], 0),
+    ("쿠버네티스·인프라", "Graceful shutdown", "Graceful Shutdown (preStop)", "종료 신호 후 하던 일을 마치고 내려가게 하는 것(preStop·유예 시간)", ["우아한 종료", "그레이스풀 셧다운"], 1),
+    ("쿠버네티스·인프라", "HPA", "Horizontal Pod Autoscaler", "CPU 등 지표에 따라 Pod 개수를 자동으로 늘리고 줄이는 기능", ["수평 오토스케일러", "파드 오토스케일링"], 1),
+    ("쿠버네티스·인프라", "KEDA", "Kubernetes Event-Driven Autoscaling", "대기열 길이 같은 외부 이벤트로 Pod 수를 조절(0개까지)하는 도구", ["케다", "이벤트 기반 오토스케일링"], 1),
+    ("쿠버네티스·인프라", "Cluster Autoscaler", "Cluster Autoscaler", "Pod가 들어갈 자리가 없으면 노드(서버) 자체를 늘리는 기능", ["클러스터 오토스케일러", "노드 오토스케일링"], 1),
+    ("쿠버네티스·인프라", "Karpenter", "Karpenter", "AWS용 노드 자동 확장 도구(필요한 사양의 노드를 바로 띄움)", ["카펜터"], 0),
+    ("쿠버네티스·인프라", "Overprovisioning", "Overprovisioning", "빈 자리를 미리 잡아 둬 확장 대기 시간을 줄이는 것", ["오버프로비저닝", "여유 자원 확보"], 0),
+    ("쿠버네티스·인프라", "PVC", "PersistentVolumeClaim", "Pod가 재시작돼도 남는 저장공간을 요청하는 객체", ["퍼시스턴트 볼륨 클레임", "영구 볼륨"], 0),
+    ("쿠버네티스·인프라", "ServiceAccount", "Kubernetes ServiceAccount", "Pod(프로그램)에 주는 쿠버네티스 신원", ["서비스 어카운트", "서비스 계정"], 1),
+    ("쿠버네티스·인프라", "TokenReview", "Kubernetes TokenReview", "받은 토큰이 진짜인지 API 서버에 물어 확인하는 API", ["토큰 리뷰", "토큰 검증"], 1),
+    ("쿠버네티스·인프라", "Projected token", "Projected ServiceAccount Token", "용도(audience)와 만료가 정해진 짧은 수명 토큰을 Pod에 넣어 주는 것", ["바운드 토큰", "프로젝티드 토큰"], 0),
+    ("쿠버네티스·인프라", "port-forward", "kubectl port-forward", "내 PC 포트를 클러스터 안 Pod로 잇는 임시 통로(네트워크 정책을 우회)", ["포트포워드", "포트 포워딩"], 0),
+    ("쿠버네티스·인프라", "k3s", "k3s", "가벼운 쿠버네티스 배포판(단일 바이너리, 개발·엣지용)", ["케이쓰리에스", "경량 쿠버네티스"], 0),
+    ("쿠버네티스·인프라", "containerd", "containerd", "도커 밑에서 실제로 컨테이너를 실행하는 런타임(k8s 기본)", ["컨테이너디", "컨테이너 런타임"], 0),
+    ("쿠버네티스·인프라", "Multi-tenancy", "Multi-tenancy", "한 시스템을 여러 고객(테넌트)이 서로 격리된 채 함께 쓰는 구조", ["멀티테넌시", "다중 테넌트"], 1),
+    ("쿠버네티스·인프라", "Service mesh", "Service Mesh (Istio·Linkerd)", "서비스 간 통신에 암호화·인증·관측을 대신 붙여 주는 계층", ["서비스 메시", "링커디", "이스티오"], 1),
+
+    # ── 보안·권한 (기존 분야에 추가) ─────────────────────────────────────
+    ("보안·권한", "mTLS", "Mutual TLS", "서버와 클라이언트가 서로 인증서로 신원을 확인하는 암호화 통신", ["상호 TLS", "양방향 TLS"], 1),
+    ("보안·권한", "Bearer token", "Bearer Token", "가진 사람이면 누구나 쓸 수 있는 토큰(가로채면 재사용 위험)", ["베어러 토큰", "소지자 토큰"], 1),
+    ("보안·권한", "Replay attack", "Replay Attack", "가로챈 요청·토큰을 그대로 다시 보내는 공격", ["재전송 공격", "리플레이 공격"], 0),
+    ("보안·권한", "Proof-of-possession", "Proof-of-Possession", "토큰만이 아니라 개인키를 가졌음을 매번 증명하게 하는 방식", ["소유 증명", "PoP"], 0),
+    ("보안·권한", "Header spoofing", "Header Spoofing", "신원 헤더(X-Bank 등)를 위조해 다른 사용자인 척하는 것", ["헤더 위조", "헤더 스푸핑"], 1),
+    ("보안·권한", "AES-GCM", "AES Galois/Counter Mode", "암호화와 위변조 검사를 함께 하는 대칭키 암호 방식", ["에이이에스 지씨엠", "인증 암호화"], 0),
+    ("보안·권한", "PII masking", "PII Masking", "개인정보를 외부로 보내기 전 자리표시자로 가리는 것", ["개인정보 마스킹", "비식별화"], 1),
+    ("보안·권한", "Luhn check", "Luhn Algorithm", "카드번호가 형식상 유효한지 검사하는 체크섬", ["룬 알고리즘", "카드번호 검증"], 0),
+
+    # ── LLM 게이트웨이 (10/28) ───────────────────────────────────────────
+    ("LLM 게이트웨이", "LLM gateway", "LLM Gateway", "여러 LLM 앞에서 라우팅·한도·비용·마스킹을 한곳에서 처리하는 관문", ["LLM 게이트웨이", "모델 게이트웨이"], 1),
+    ("LLM 게이트웨이", "Model routing", "Model Routing", "요청 종류·정책에 따라 어느 모델(사내 sLLM/외부 GPT)로 보낼지 정하는 것", ["모델 라우팅"], 1),
+    ("LLM 게이트웨이", "Token bucket", "Token Bucket", "일정 속도로 채워지는 토큰만큼만 요청을 보내는 속도 제한 방식", ["토큰 버킷"], 1),
+    ("LLM 게이트웨이", "Weighted round robin", "Weighted Round Robin", "가중치 비율대로 돌아가며 차례를 주는 공정 분배 방식", ["가중 라운드 로빈", "WRR"], 0),
+    ("LLM 게이트웨이", "Backpressure", "Backpressure", "뒤가 밀리면 앞에서 받는 양을 줄이게 하는 흐름 제어", ["배압", "백프레셔"], 1),
+    ("LLM 게이트웨이", "Load shedding", "Load Shedding", "과부하 때 일부 요청을 일찍 거절해 전체를 지키는 것", ["부하 차단", "로드 셰딩"], 0),
+    ("LLM 게이트웨이", "Bulkhead", "Bulkhead Pattern", "자원을 칸막이처럼 나눠 한쪽 장애가 번지지 않게 하는 패턴", ["벌크헤드", "격벽 패턴"], 0),
+    ("LLM 게이트웨이", "Budget cap", "Budget Cap", "하루·테넌트별 LLM 사용 금액 한도(예약 후 실제 비용으로 정산)", ["예산 한도", "비용 상한"], 1),
+    ("LLM 게이트웨이", "429 / Retry-After", "HTTP 429 Too Many Requests", "한도 초과 응답과, 얼마 뒤 다시 보내라는 대기 시간 헤더", ["투머치리퀘스트", "재시도 대기"], 0),
+    ("LLM 게이트웨이", "Deadline", "Request Deadline", "이 시각이 지나면 처리하지 않고 버리는 요청 마감 시간", ["데드라인", "처리 마감"], 0),
+    ("LLM 게이트웨이", "Redis Streams", "Redis Streams", "Redis의 추가 전용 로그형 메시지 대기열(소비자 그룹·재처리 지원)", ["레디스 스트림"], 1),
+    ("LLM 게이트웨이", "Consumer group", "Consumer Group", "여러 소비자가 대기열 메시지를 나눠 받고 처리 완료를 표시하는 묶음", ["컨슈머 그룹", "소비자 그룹"], 1),
+    ("LLM 게이트웨이", "Pending reclaim", "Pending Entries Reclaim (XPENDING/XCLAIM)", "받아 놓고 처리 못 한 메시지를 다른 소비자가 가져가 다시 처리", ["재할당", "미처리 메시지 회수"], 0),
+    ("LLM 게이트웨이", "At-least-once", "At-least-once Delivery", "메시지가 최소 한 번은 처리됨을 보장(중복 가능 → 멱등 처리 필요)", ["최소 한 번 전달"], 0),
+    ("LLM 게이트웨이", "Virtual thread", "Java Virtual Thread", "JVM이 가볍게 만드는 스레드(대기 많은 I/O 작업을 수만 개 동시 처리)", ["가상 스레드", "버추얼 스레드"], 1),
+    ("LLM 게이트웨이", "DI", "Dependency Injection", "객체가 쓸 의존 객체를 밖에서 넣어 주는 설계(스프링 핵심)", ["의존성 주입"], 0),
+    ("LLM 게이트웨이", "Prefix cache", "Prompt Prefix (KV) Cache", "같은 앞부분 지시문의 계산 결과를 재사용해 추론을 빠르게 하는 것", ["프리픽스 캐시", "KV 캐시"], 0),
+
+    # ── 문서 AI·LangGraph (10/29 docflow) ───────────────────────────────
+    ("문서 AI·LangGraph", "LangGraph", "LangGraph", "LLM 작업을 상태를 가진 그래프(노드·엣지·순환)로 짜는 라이브러리", ["랭그래프"], 1),
+    ("문서 AI·LangGraph", "StateGraph", "LangGraph StateGraph", "공유 상태(State)를 노드들이 읽고 고쳐 가는 그래프 정의", ["스테이트 그래프", "상태 그래프"], 1),
+    ("문서 AI·LangGraph", "Conditional edge", "Conditional Edge", "상태를 보고 다음 노드를 고르는 분기 엣지", ["조건부 엣지", "분기"], 1),
+    ("문서 AI·LangGraph", "Checkpointer", "LangGraph Checkpointer", "노드가 끝날 때마다 상태를 DB에 저장해 멈춤·재개·복구를 가능하게 하는 것", ["체크포인터", "체크포인트 저장"], 1),
+    ("문서 AI·LangGraph", "Thread ID", "LangGraph thread_id", "체크포인트를 묶는 실행 단위 식별자(대화·작업 1건)", ["스레드 아이디", "실행 ID"], 0),
+    ("문서 AI·LangGraph", "interrupt", "LangGraph interrupt() / Command(resume)", "흐름을 멈추고 사람 입력을 기다렸다가 그 값으로 이어 가는 기능", ["인터럽트", "일시정지 재개"], 1),
+    ("문서 AI·LangGraph", "Send", "LangGraph Send API", "항목마다 같은 노드를 병렬로 실행하는 팬아웃(map-reduce)", ["센드", "팬아웃", "맵리듀스"], 1),
+    ("문서 AI·LangGraph", "Reducer", "State Reducer", "병렬 노드 결과를 상태에 합치는 규칙 함수", ["리듀서", "병합 함수"], 0),
+    ("문서 AI·LangGraph", "Subgraph", "Subgraph", "그래프 안에 노드로 넣은 또 하나의 그래프", ["서브그래프", "하위 그래프"], 0),
+    ("문서 AI·LangGraph", "Durable execution", "Durable Execution", "중간에 죽어도 저장된 지점부터 이어서 실행되는 성질", ["내구 실행", "듀러블 실행"], 0),
+    ("문서 AI·LangGraph", "PaddleOCR", "PaddleOCR", "바이두의 오픈소스 OCR(글자 상자 검출 + 인식, 한국어 지원, 로컬 실행)", ["패들OCR"], 1),
+    ("문서 AI·LangGraph", "Text detection / recognition", "Text Detection / Text Recognition", "OCR 2단계: 글자 영역 찾기 / 그 영역의 글자 읽기", ["텍스트 검출 인식", "디텍션 레코그니션"], 0),
+    ("문서 AI·LangGraph", "CER", "Character Error Rate", "정답 글자 대비 틀린 글자 비율(OCR 품질 지표, 낮을수록 좋음)", ["글자 오류율"], 1),
+    ("문서 AI·LangGraph", "HTR", "Handwritten Text Recognition", "손글씨 인식(인쇄체 OCR보다 어려움)", ["손글씨 인식", "필기 인식"], 1),
+    ("문서 AI·LangGraph", "TrOCR", "Transformer-based OCR", "이미지 인코더 + 글자 디코더로 된 트랜스포머 OCR 모델", ["트로커", "손글씨 OCR 모델"], 0),
+    ("문서 AI·LangGraph", "VLM", "Vision-Language Model", "이미지와 글을 함께 이해하는 모델(GPT 비전 등)", ["비전 언어 모델", "비전 LLM"], 1),
+    ("문서 AI·LangGraph", "KIE", "Key Information Extraction", "문서에서 정해진 칸(번호·날짜·수신·제목 등) 값을 뽑는 작업", ["핵심 정보 추출", "필드 추출"], 1),
+    ("문서 AI·LangGraph", "Document splitting", "Document Boundary Detection", "스캔 묶음에서 문서가 새로 시작하는 쪽을 찾아 나누는 것", ["문서 경계 판별", "문서 분할"], 1),
+    ("문서 AI·LangGraph", "Logprobs", "Token Log Probabilities", "모델이 낸 토큰마다의 확률(로그값). 확신도 계산에 사용", ["로그 확률", "토큰 확률"], 1),
+    ("문서 AI·LangGraph", "Calibration", "Confidence Calibration", "확신도가 실제 정답률과 맞도록 기준을 맞추는 것(높은 확신도의 오답 문제)", ["보정", "캘리브레이션"], 1),
+    ("문서 AI·LangGraph", "STP", "Straight-Through Processing", "사람 손을 거치지 않고 끝까지 자동 처리되는 비율(금융·보험 핵심 지표)", ["자동 처리율", "무인 처리"], 1),
+    ("문서 AI·LangGraph", "Review flag", "Human Review Flag", "자신 없는 칸에 '검토 필요'를 달아 사람이 그 칸만 보게 하는 것", ["검토 필요 표시", "검토 플래그"], 1),
+    ("문서 AI·LangGraph", "Precision / Recall", "Precision / Recall", "짚은 것 중 맞은 비율 / 실제 정답 중 찾아낸 비율", ["정밀도 재현율"], 1),
+    ("문서 AI·LangGraph", "Ground truth", "Ground Truth", "채점 기준이 되는 사람이 확인한 정답", ["정답셋", "그라운드 트루스"], 1),
+    ("문서 AI·LangGraph", "Data leakage", "Train/Test Data Leakage", "평가 데이터가 모델 학습에 들어가 점수가 부풀려지는 것", ["데이터 누출", "데이터 누수"], 1),
+
+    # ── RAG·검색 (기존 분야에 추가) ──────────────────────────────────────
+    ("RAG·검색", "RRF", "Reciprocal Rank Fusion", "여러 검색 결과를 순위의 역수 합으로 섞는 방법(벡터 + 키워드 합치기)", ["상호 순위 융합"], 1),
+    ("RAG·검색", "Cosine similarity", "Cosine Similarity", "두 벡터의 방향이 얼마나 같은지로 의미 유사도를 재는 값", ["코사인 유사도"], 0),
+    ("RAG·검색", "Metadata filtering", "Metadata (Payload) Filtering", "벡터 검색 때 연도·테넌트 같은 속성으로 먼저 걸러 내는 것", ["메타데이터 필터", "페이로드 필터"], 1),
+    ("RAG·검색", "Upsert", "Update + Insert", "있으면 고치고 없으면 넣는 저장 방식", ["업서트"], 0),
+    ("RAG·검색", "Citation", "Source Citation", "답변에 근거 문서를 표시하는 것(환각 확인용)", ["출처 표시", "인용"], 1),
+
+    # ── 모바일·프론트 (기존 분야에 추가) ─────────────────────────────────
+    ("모바일·프론트", "Next.js", "Next.js", "React 기반 풀스택 웹 프레임워크(라우팅·서버 렌더링 포함)", ["넥스트JS", "넥스트"], 1),
+    ("모바일·프론트", "App Router", "Next.js App Router", "폴더 구조로 화면 경로를 정하는 Next.js 라우팅 방식", ["앱 라우터"], 0),
+    ("모바일·프론트", "RSC", "React Server Components", "서버에서만 렌더링되어 JS를 보내지 않는 React 컴포넌트", ["리액트 서버 컴포넌트", "서버 컴포넌트"], 1),
+    ("모바일·프론트", "Rewrites", "Next.js Rewrites", "주소는 그대로 두고 요청만 다른 서버로 넘기는 설정", ["리라이트", "프록시", "CORS 회피 프록시"], 0),
+    ("모바일·프론트", "CORS", "Cross-Origin Resource Sharing", "다른 출처의 API를 브라우저가 부를 수 있게 허용하는 규칙", ["교차 출처 리소스 공유", "코스"], 1),
+]
+
+
 # ── 0. 기초 (면접장에서 '쉬운데 안 떠오르는' 용어 — 로드밸런싱 사례) ─────────
 B = "기초"
 BASIC = [
@@ -448,13 +562,48 @@ CONFUSABLE = [
     ["Data drift", "Fine-tuning", "Eval"],          # 성능 저하 원인 / 재학습 / 측정
     ["WMS", "Location", "Putaway"],                 # 창고 시스템 / 보관 주소 / 적치
     ["Groupware", "EP", "KMS"],                     # 협업 / 포털 / 지식
+    # ── 쿠버네티스·게이트웨이·문서 AI 보강 (10/30) ──
+    ["Pod", "Node", "Deployment", "Namespace"],     # 최소 단위 / 서버 / 관리 객체 / 구역
+    ["Readiness probe", "Liveness probe", "Graceful shutdown"],   # 트래픽 / 재시작 / 종료
+    ["HPA", "Cluster Autoscaler", "KEDA", "Karpenter"],           # 무엇을 늘리는가가 다르다
+    ["Requests / Limits", "ResourceQuota", "LimitRange"],         # Pod / 네임스페이스 / 기본값
+    ["OOMKilled", "CrashLoopBackOff", "Overprovisioning"],
+    ["NetworkPolicy", "Default deny", "Egress / Ingress"],
+    ["ServiceAccount", "TokenReview", "Projected token"],         # 신원 / 검증 / 발급
+    ["mTLS", "Bearer token", "Proof-of-possession"],              # 상호 인증 / 소지 / 소유 증명
+    ["Replay attack", "Header spoofing", "Prompt injection"],
+    ["PII masking", "AES-GCM", "Luhn check"],                     # 가리기 / 암호화 / 검증
+    ["Multi-tenancy", "Namespace", "Service mesh"],
+    ["k3s", "containerd", "Headless Service"],
+    ["LLM gateway", "Model routing", "Budget cap"],
+    ["Token bucket", "Weighted round robin", "Load shedding"],    # 속도 / 분배 / 거절
+    ["Backpressure", "Bulkhead", "Deadline"],
+    ["Redis Streams", "Consumer group", "Pending reclaim"],
+    ["At-least-once", "Idempotency", "Retry / Backoff"],          # 중복 전제 / 중복 방어 / 재시도
+    ["Virtual thread", "DI", "Prefix cache"],
+    ["429 / Retry-After", "Rate limit", "Backpressure"],           # 응답 / 한도 / 흐름 제어
+    ["LangGraph", "StateGraph", "Subgraph"],
+    ["Conditional edge", "Send", "Reducer"],                      # 분기 / 팬아웃 / 병합
+    ["Checkpointer", "Thread ID", "Durable execution"],
+    ["interrupt", "HITL", "Review flag"],                         # 멈춤 / 구조 / 표시
+    ["PaddleOCR", "TrOCR", "VLM"],                                # 인쇄체 / 손글씨 / 멀티모달
+    ["Text detection / recognition", "KIE", "Document splitting"],
+    ["CER", "Precision / Recall", "STP"],                         # 글자 / 추출 / 자동화 지표
+    ["Logprobs", "Calibration", "Confidence"],
+    ["Ground truth", "Data leakage", "Golden set"],
+    ["HTR", "OCR", "Annotation"],
+    ["RRF", "Hybrid search", "Reranker"],                         # 합치는 법 / 구조 / 재순위
+    ["Cosine similarity", "Embedding", "Top-k"],
+    ["Metadata filtering", "Upsert", "Citation"],
+    ["Next.js", "App Router", "RSC"],
+    ["Rewrites", "CORS", "Proxy"],                                # 서버 우회 / 브라우저 규칙 / 중계
 ]
 
 
 def main():
     global T
     # 기초는 level 1. Load balancer 는 기초의 Load balancing 과 겹치므로 아키텍처에서 뺀다.
-    T = [r for r in T if r[1] != "Load balancer"] + EICN + TCCINS \
+    T = [r for r in T if r[1] != "Load balancer"] + EICN + TCCINS + DOCFLOW \
         + [(c, w, f, k, n, 0) for c, w, f, k, n in BASIC]
     lv = {w: 1 for _, w, *_ in BASIC}
 
@@ -490,9 +639,18 @@ def main():
     json.dump(deck, open(os.path.join(HERE, "it_terms.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
 
-    out = [f"# IT 개발 용어 — 면접 대비 ({len(T)}개)\n",
-           "★ = 면접 우선. 앱 덱: `it_terms.json`\n",
-           "RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터는 이아이씨엔(AICC) 대비로 추가.\n"]
+    # 줄바꿈은 아래 "\n".join 이 넣는다. 여기서 \n 을 또 붙이면 빈 줄이 생긴다.
+    out = [f"# IT 개발 용어 — 면접 대비 ({len(T)}개)",
+           "",
+           "★ = 면접 우선(앱의 level 3). 앱 덱: `it_terms.json`",
+           "",
+           "분야별로 어느 면접을 보며 넣었는지:",
+           "",
+           "- RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 — 이아이씨엔(AICC)",
+           "- 제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 — TCCINS",
+           "- 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph — 10/30 문서 AI 플랫폼",
+           "",
+           "★ 는 면접을 구분하지 않는다. 덱에서는 '지금 우선 볼 것' 이라는 뜻 하나로만 쓴다."]
     cats = []
     for c, *_ in T:
         if c not in cats:

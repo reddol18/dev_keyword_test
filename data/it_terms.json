@@ -154,7 +154,9 @@
     ],
     "confusable": [
       "Escalation",
-      "Approval gate"
+      "Approval gate",
+      "interrupt",
+      "Review flag"
     ]
   },
   {
@@ -271,7 +273,10 @@
       "Confidence",
       "Confidence Score"
     ],
-    "confusable": []
+    "confusable": [
+      "Logprobs",
+      "Calibration"
+    ]
   },
   {
     "word": "Orchestration",
@@ -400,7 +405,8 @@
       "Token",
       "Context window",
       "Chunking",
-      "Top-k"
+      "Top-k",
+      "Cosine similarity"
     ]
   },
   {
@@ -571,7 +577,9 @@
     ],
     "confusable": [
       "Hallucination",
-      "Guardrail"
+      "Guardrail",
+      "Replay attack",
+      "Header spoofing"
     ]
   },
   {
@@ -1253,7 +1261,10 @@
     "aliases": [
       "Idempotency"
     ],
-    "confusable": []
+    "confusable": [
+      "At-least-once",
+      "Retry / Backoff"
+    ]
   },
   {
     "word": "Retry / Backoff",
@@ -1274,7 +1285,10 @@
       "Backoff",
       "Exponential backoff"
     ],
-    "confusable": []
+    "confusable": [
+      "At-least-once",
+      "Idempotency"
+    ]
   },
   {
     "word": "Rate limit",
@@ -1292,7 +1306,10 @@
       "Rate limit",
       "Rate Limiting"
     ],
-    "confusable": []
+    "confusable": [
+      "429 / Retry-After",
+      "Backpressure"
+    ]
   },
   {
     "word": "Circuit breaker",
@@ -2525,7 +2542,8 @@
     ],
     "confusable": [
       "BM25",
-      "Reranker"
+      "Reranker",
+      "RRF"
     ]
   },
   {
@@ -2570,7 +2588,8 @@
     ],
     "confusable": [
       "Hybrid search",
-      "BM25"
+      "BM25",
+      "RRF"
     ]
   },
   {
@@ -2613,7 +2632,8 @@
     ],
     "confusable": [
       "Chunking",
-      "Embedding"
+      "Embedding",
+      "Cosine similarity"
     ]
   },
   {
@@ -2657,7 +2677,9 @@
     "confusable": [
       "RAGAS",
       "Faithfulness",
-      "Eval"
+      "Eval",
+      "Ground truth",
+      "Data leakage"
     ]
   },
   {
@@ -3848,7 +3870,8 @@
     ],
     "confusable": [
       "STT",
-      "Annotation"
+      "Annotation",
+      "HTR"
     ]
   },
   {
@@ -3910,7 +3933,8 @@
     ],
     "confusable": [
       "OCR",
-      "STT"
+      "STT",
+      "HTR"
     ]
   },
   {
@@ -4450,6 +4474,1871 @@
       "Customization"
     ],
     "confusable": []
+  },
+  {
+    "word": "Pod",
+    "meanings": [
+      "쿠버네티스가 배포·확장하는 최소 단위(컨테이너 1개 이상 묶음)",
+      "Kubernetes Pod"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "파드",
+      "포드"
+    ],
+    "level": 3,
+    "aliases": [
+      "Pod",
+      "Kubernetes Pod"
+    ],
+    "confusable": [
+      "Node",
+      "Deployment",
+      "Namespace"
+    ]
+  },
+  {
+    "word": "Namespace",
+    "meanings": [
+      "클러스터 안을 나누는 논리 구역(테넌트·용도별 격리 단위)",
+      "Kubernetes Namespace"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "네임스페이스"
+    ],
+    "level": 3,
+    "aliases": [
+      "Namespace",
+      "Kubernetes Namespace"
+    ],
+    "confusable": [
+      "Pod",
+      "Node",
+      "Deployment",
+      "Multi-tenancy",
+      "Service mesh"
+    ]
+  },
+  {
+    "word": "Node",
+    "meanings": [
+      "Pod가 실제로 올라가 도는 서버(물리·가상 머신)",
+      "Kubernetes Node"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "노드",
+      "워커 노드"
+    ],
+    "level": 2,
+    "aliases": [
+      "Node",
+      "Kubernetes Node"
+    ],
+    "confusable": [
+      "Pod",
+      "Deployment",
+      "Namespace"
+    ]
+  },
+  {
+    "word": "Deployment",
+    "meanings": [
+      "Pod 개수·버전·교체 방식을 선언해 관리하는 객체",
+      "Kubernetes Deployment"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "디플로이먼트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Deployment",
+      "Kubernetes Deployment"
+    ],
+    "confusable": [
+      "Pod",
+      "Node",
+      "Namespace"
+    ]
+  },
+  {
+    "word": "Headless Service",
+    "meanings": [
+      "IP 하나로 묶지 않고 Pod 각각의 주소를 DNS로 돌려주는 서비스",
+      "Headless Service"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "헤드리스 서비스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Headless Service"
+    ],
+    "confusable": [
+      "k3s",
+      "containerd"
+    ]
+  },
+  {
+    "word": "NetworkPolicy",
+    "meanings": [
+      "Pod 사이·외부와의 통신을 허용 목록으로 제한하는 규칙",
+      "Kubernetes NetworkPolicy"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "네트워크 정책",
+      "넷폴"
+    ],
+    "level": 3,
+    "aliases": [
+      "NetworkPolicy",
+      "Kubernetes NetworkPolicy"
+    ],
+    "confusable": [
+      "Default deny",
+      "Egress / Ingress"
+    ]
+  },
+  {
+    "word": "Default deny",
+    "meanings": [
+      "모든 통신을 먼저 막고 필요한 것만 여는 방식",
+      "Default Deny"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "기본 차단",
+      "디폴트 디나이"
+    ],
+    "level": 3,
+    "aliases": [
+      "Default deny",
+      "Default Deny"
+    ],
+    "confusable": [
+      "NetworkPolicy",
+      "Egress / Ingress"
+    ]
+  },
+  {
+    "word": "Egress / Ingress",
+    "meanings": [
+      "밖으로 나가는 통신 / 안으로 들어오는 통신",
+      "Egress / Ingress"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "이그레스",
+      "인그레스",
+      "송신 수신"
+    ],
+    "level": 2,
+    "aliases": [
+      "Egress / Ingress"
+    ],
+    "confusable": [
+      "NetworkPolicy",
+      "Default deny"
+    ]
+  },
+  {
+    "word": "ResourceQuota",
+    "meanings": [
+      "네임스페이스가 쓸 수 있는 CPU·메모리 총량 한도",
+      "Kubernetes ResourceQuota"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "리소스 쿼터",
+      "자원 할당량"
+    ],
+    "level": 3,
+    "aliases": [
+      "ResourceQuota",
+      "Kubernetes ResourceQuota"
+    ],
+    "confusable": [
+      "Requests / Limits",
+      "LimitRange"
+    ]
+  },
+  {
+    "word": "LimitRange",
+    "meanings": [
+      "Pod 하나의 기본·최대 자원 값을 정하는 규칙",
+      "Kubernetes LimitRange"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "리밋 레인지"
+    ],
+    "level": 2,
+    "aliases": [
+      "LimitRange",
+      "Kubernetes LimitRange"
+    ],
+    "confusable": [
+      "Requests / Limits",
+      "ResourceQuota"
+    ]
+  },
+  {
+    "word": "Requests / Limits",
+    "meanings": [
+      "스케줄링 때 예약하는 자원 / 넘으면 제한·종료되는 상한",
+      "Resource Requests / Limits"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "리퀘스트 리밋",
+      "요청량 상한"
+    ],
+    "level": 3,
+    "aliases": [
+      "Requests / Limits",
+      "Resource Requests / Limits"
+    ],
+    "confusable": [
+      "ResourceQuota",
+      "LimitRange"
+    ]
+  },
+  {
+    "word": "OOMKilled",
+    "meanings": [
+      "메모리 상한을 넘어 컨테이너가 강제 종료된 상태",
+      "Out-Of-Memory Killed"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "메모리 초과 종료",
+      "OOM"
+    ],
+    "level": 2,
+    "aliases": [
+      "OOMKilled",
+      "Out-Of-Memory Killed"
+    ],
+    "confusable": [
+      "CrashLoopBackOff",
+      "Overprovisioning"
+    ]
+  },
+  {
+    "word": "CrashLoopBackOff",
+    "meanings": [
+      "컨테이너가 시작하자마자 계속 죽어 재시작 간격이 늘어나는 상태",
+      "CrashLoopBackOff"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "크래시루프"
+    ],
+    "level": 2,
+    "aliases": [
+      "CrashLoopBackOff"
+    ],
+    "confusable": [
+      "OOMKilled",
+      "Overprovisioning"
+    ]
+  },
+  {
+    "word": "Readiness probe",
+    "meanings": [
+      "준비된 Pod에만 트래픽을 보내도록 상태를 묻는 검사",
+      "Readiness Probe"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "레디니스 프로브",
+      "준비 상태 검사"
+    ],
+    "level": 3,
+    "aliases": [
+      "Readiness probe",
+      "Readiness Probe"
+    ],
+    "confusable": [
+      "Liveness probe",
+      "Graceful shutdown"
+    ]
+  },
+  {
+    "word": "Liveness probe",
+    "meanings": [
+      "멈춘 컨테이너를 찾아 재시작시키는 검사",
+      "Liveness Probe"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "라이브니스 프로브",
+      "생존 검사"
+    ],
+    "level": 2,
+    "aliases": [
+      "Liveness probe",
+      "Liveness Probe"
+    ],
+    "confusable": [
+      "Readiness probe",
+      "Graceful shutdown"
+    ]
+  },
+  {
+    "word": "Graceful shutdown",
+    "meanings": [
+      "종료 신호 후 하던 일을 마치고 내려가게 하는 것(preStop·유예 시간)",
+      "Graceful Shutdown (preStop)"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "우아한 종료",
+      "그레이스풀 셧다운"
+    ],
+    "level": 3,
+    "aliases": [
+      "Graceful shutdown",
+      "Graceful Shutdown (preStop)"
+    ],
+    "confusable": [
+      "Readiness probe",
+      "Liveness probe"
+    ]
+  },
+  {
+    "word": "HPA",
+    "meanings": [
+      "CPU 등 지표에 따라 Pod 개수를 자동으로 늘리고 줄이는 기능",
+      "Horizontal Pod Autoscaler"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "수평 오토스케일러",
+      "파드 오토스케일링"
+    ],
+    "level": 3,
+    "aliases": [
+      "HPA",
+      "Horizontal Pod Autoscaler"
+    ],
+    "confusable": [
+      "Cluster Autoscaler",
+      "KEDA",
+      "Karpenter"
+    ]
+  },
+  {
+    "word": "KEDA",
+    "meanings": [
+      "대기열 길이 같은 외부 이벤트로 Pod 수를 조절(0개까지)하는 도구",
+      "Kubernetes Event-Driven Autoscaling"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "케다",
+      "이벤트 기반 오토스케일링"
+    ],
+    "level": 3,
+    "aliases": [
+      "KEDA",
+      "Kubernetes Event-Driven Autoscaling"
+    ],
+    "confusable": [
+      "HPA",
+      "Cluster Autoscaler",
+      "Karpenter"
+    ]
+  },
+  {
+    "word": "Cluster Autoscaler",
+    "meanings": [
+      "Pod가 들어갈 자리가 없으면 노드(서버) 자체를 늘리는 기능",
+      "Cluster Autoscaler"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "클러스터 오토스케일러",
+      "노드 오토스케일링"
+    ],
+    "level": 3,
+    "aliases": [
+      "Cluster Autoscaler"
+    ],
+    "confusable": [
+      "HPA",
+      "KEDA",
+      "Karpenter"
+    ]
+  },
+  {
+    "word": "Karpenter",
+    "meanings": [
+      "AWS용 노드 자동 확장 도구(필요한 사양의 노드를 바로 띄움)",
+      "Karpenter"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "카펜터"
+    ],
+    "level": 2,
+    "aliases": [
+      "Karpenter"
+    ],
+    "confusable": [
+      "HPA",
+      "Cluster Autoscaler",
+      "KEDA"
+    ]
+  },
+  {
+    "word": "Overprovisioning",
+    "meanings": [
+      "빈 자리를 미리 잡아 둬 확장 대기 시간을 줄이는 것",
+      "Overprovisioning"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "오버프로비저닝",
+      "여유 자원 확보"
+    ],
+    "level": 2,
+    "aliases": [
+      "Overprovisioning"
+    ],
+    "confusable": [
+      "OOMKilled",
+      "CrashLoopBackOff"
+    ]
+  },
+  {
+    "word": "PVC",
+    "meanings": [
+      "Pod가 재시작돼도 남는 저장공간을 요청하는 객체",
+      "PersistentVolumeClaim"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "퍼시스턴트 볼륨 클레임",
+      "영구 볼륨"
+    ],
+    "level": 2,
+    "aliases": [
+      "PVC",
+      "PersistentVolumeClaim"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "ServiceAccount",
+    "meanings": [
+      "Pod(프로그램)에 주는 쿠버네티스 신원",
+      "Kubernetes ServiceAccount"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "서비스 어카운트",
+      "서비스 계정"
+    ],
+    "level": 3,
+    "aliases": [
+      "ServiceAccount",
+      "Kubernetes ServiceAccount"
+    ],
+    "confusable": [
+      "TokenReview",
+      "Projected token"
+    ]
+  },
+  {
+    "word": "TokenReview",
+    "meanings": [
+      "받은 토큰이 진짜인지 API 서버에 물어 확인하는 API",
+      "Kubernetes TokenReview"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "토큰 리뷰",
+      "토큰 검증"
+    ],
+    "level": 3,
+    "aliases": [
+      "TokenReview",
+      "Kubernetes TokenReview"
+    ],
+    "confusable": [
+      "ServiceAccount",
+      "Projected token"
+    ]
+  },
+  {
+    "word": "Projected token",
+    "meanings": [
+      "용도(audience)와 만료가 정해진 짧은 수명 토큰을 Pod에 넣어 주는 것",
+      "Projected ServiceAccount Token"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "바운드 토큰",
+      "프로젝티드 토큰"
+    ],
+    "level": 2,
+    "aliases": [
+      "Projected token",
+      "Projected ServiceAccount Token"
+    ],
+    "confusable": [
+      "ServiceAccount",
+      "TokenReview"
+    ]
+  },
+  {
+    "word": "port-forward",
+    "meanings": [
+      "내 PC 포트를 클러스터 안 Pod로 잇는 임시 통로(네트워크 정책을 우회)",
+      "kubectl port-forward"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "포트포워드",
+      "포트 포워딩"
+    ],
+    "level": 2,
+    "aliases": [
+      "port-forward",
+      "kubectl port-forward"
+    ],
+    "confusable": []
+  },
+  {
+    "word": "k3s",
+    "meanings": [
+      "가벼운 쿠버네티스 배포판(단일 바이너리, 개발·엣지용)",
+      "k3s"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "케이쓰리에스",
+      "경량 쿠버네티스"
+    ],
+    "level": 2,
+    "aliases": [
+      "k3s"
+    ],
+    "confusable": [
+      "containerd",
+      "Headless Service"
+    ]
+  },
+  {
+    "word": "containerd",
+    "meanings": [
+      "도커 밑에서 실제로 컨테이너를 실행하는 런타임(k8s 기본)",
+      "containerd"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "컨테이너디",
+      "컨테이너 런타임"
+    ],
+    "level": 2,
+    "aliases": [
+      "containerd"
+    ],
+    "confusable": [
+      "k3s",
+      "Headless Service"
+    ]
+  },
+  {
+    "word": "Multi-tenancy",
+    "meanings": [
+      "한 시스템을 여러 고객(테넌트)이 서로 격리된 채 함께 쓰는 구조",
+      "Multi-tenancy"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "멀티테넌시",
+      "다중 테넌트"
+    ],
+    "level": 3,
+    "aliases": [
+      "Multi-tenancy"
+    ],
+    "confusable": [
+      "Namespace",
+      "Service mesh"
+    ]
+  },
+  {
+    "word": "Service mesh",
+    "meanings": [
+      "서비스 간 통신에 암호화·인증·관측을 대신 붙여 주는 계층",
+      "Service Mesh (Istio·Linkerd)"
+    ],
+    "partOfSpeech": "쿠버네티스·인프라",
+    "near": [
+      "서비스 메시",
+      "링커디",
+      "이스티오"
+    ],
+    "level": 3,
+    "aliases": [
+      "Service mesh",
+      "Service Mesh (Istio·Linkerd)"
+    ],
+    "confusable": [
+      "Multi-tenancy",
+      "Namespace"
+    ]
+  },
+  {
+    "word": "mTLS",
+    "meanings": [
+      "서버와 클라이언트가 서로 인증서로 신원을 확인하는 암호화 통신",
+      "Mutual TLS"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "상호 TLS",
+      "양방향 TLS"
+    ],
+    "level": 3,
+    "aliases": [
+      "mTLS",
+      "Mutual TLS"
+    ],
+    "confusable": [
+      "Bearer token",
+      "Proof-of-possession"
+    ]
+  },
+  {
+    "word": "Bearer token",
+    "meanings": [
+      "가진 사람이면 누구나 쓸 수 있는 토큰(가로채면 재사용 위험)",
+      "Bearer Token"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "베어러 토큰",
+      "소지자 토큰"
+    ],
+    "level": 3,
+    "aliases": [
+      "Bearer token",
+      "Bearer Token"
+    ],
+    "confusable": [
+      "mTLS",
+      "Proof-of-possession"
+    ]
+  },
+  {
+    "word": "Replay attack",
+    "meanings": [
+      "가로챈 요청·토큰을 그대로 다시 보내는 공격",
+      "Replay Attack"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "재전송 공격",
+      "리플레이 공격"
+    ],
+    "level": 2,
+    "aliases": [
+      "Replay attack",
+      "Replay Attack"
+    ],
+    "confusable": [
+      "Header spoofing",
+      "Prompt injection"
+    ]
+  },
+  {
+    "word": "Proof-of-possession",
+    "meanings": [
+      "토큰만이 아니라 개인키를 가졌음을 매번 증명하게 하는 방식",
+      "Proof-of-Possession"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "소유 증명",
+      "PoP"
+    ],
+    "level": 2,
+    "aliases": [
+      "Proof-of-possession",
+      "Proof-of-Possession"
+    ],
+    "confusable": [
+      "mTLS",
+      "Bearer token"
+    ]
+  },
+  {
+    "word": "Header spoofing",
+    "meanings": [
+      "신원 헤더(X-Bank 등)를 위조해 다른 사용자인 척하는 것",
+      "Header Spoofing"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "헤더 위조",
+      "헤더 스푸핑"
+    ],
+    "level": 3,
+    "aliases": [
+      "Header spoofing",
+      "Header Spoofing"
+    ],
+    "confusable": [
+      "Replay attack",
+      "Prompt injection"
+    ]
+  },
+  {
+    "word": "AES-GCM",
+    "meanings": [
+      "암호화와 위변조 검사를 함께 하는 대칭키 암호 방식",
+      "AES Galois/Counter Mode"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "에이이에스 지씨엠",
+      "인증 암호화"
+    ],
+    "level": 2,
+    "aliases": [
+      "AES-GCM",
+      "AES Galois/Counter Mode"
+    ],
+    "confusable": [
+      "PII masking",
+      "Luhn check"
+    ]
+  },
+  {
+    "word": "PII masking",
+    "meanings": [
+      "개인정보를 외부로 보내기 전 자리표시자로 가리는 것",
+      "PII Masking"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "개인정보 마스킹",
+      "비식별화"
+    ],
+    "level": 3,
+    "aliases": [
+      "PII masking",
+      "PII Masking"
+    ],
+    "confusable": [
+      "AES-GCM",
+      "Luhn check"
+    ]
+  },
+  {
+    "word": "Luhn check",
+    "meanings": [
+      "카드번호가 형식상 유효한지 검사하는 체크섬",
+      "Luhn Algorithm"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "룬 알고리즘",
+      "카드번호 검증"
+    ],
+    "level": 2,
+    "aliases": [
+      "Luhn check",
+      "Luhn Algorithm"
+    ],
+    "confusable": [
+      "PII masking",
+      "AES-GCM"
+    ]
+  },
+  {
+    "word": "LLM gateway",
+    "meanings": [
+      "여러 LLM 앞에서 라우팅·한도·비용·마스킹을 한곳에서 처리하는 관문",
+      "LLM Gateway"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "LLM 게이트웨이",
+      "모델 게이트웨이"
+    ],
+    "level": 3,
+    "aliases": [
+      "LLM gateway",
+      "LLM Gateway"
+    ],
+    "confusable": [
+      "Model routing",
+      "Budget cap"
+    ]
+  },
+  {
+    "word": "Model routing",
+    "meanings": [
+      "요청 종류·정책에 따라 어느 모델(사내 sLLM/외부 GPT)로 보낼지 정하는 것",
+      "Model Routing"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "모델 라우팅"
+    ],
+    "level": 3,
+    "aliases": [
+      "Model routing",
+      "Model Routing"
+    ],
+    "confusable": [
+      "LLM gateway",
+      "Budget cap"
+    ]
+  },
+  {
+    "word": "Token bucket",
+    "meanings": [
+      "일정 속도로 채워지는 토큰만큼만 요청을 보내는 속도 제한 방식",
+      "Token Bucket"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "토큰 버킷"
+    ],
+    "level": 3,
+    "aliases": [
+      "Token bucket",
+      "Token Bucket"
+    ],
+    "confusable": [
+      "Weighted round robin",
+      "Load shedding"
+    ]
+  },
+  {
+    "word": "Weighted round robin",
+    "meanings": [
+      "가중치 비율대로 돌아가며 차례를 주는 공정 분배 방식",
+      "Weighted Round Robin"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "가중 라운드 로빈",
+      "WRR"
+    ],
+    "level": 2,
+    "aliases": [
+      "Weighted round robin",
+      "Weighted Round Robin"
+    ],
+    "confusable": [
+      "Token bucket",
+      "Load shedding"
+    ]
+  },
+  {
+    "word": "Backpressure",
+    "meanings": [
+      "뒤가 밀리면 앞에서 받는 양을 줄이게 하는 흐름 제어",
+      "Backpressure"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "배압",
+      "백프레셔"
+    ],
+    "level": 3,
+    "aliases": [
+      "Backpressure"
+    ],
+    "confusable": [
+      "Bulkhead",
+      "Deadline",
+      "429 / Retry-After",
+      "Rate limit"
+    ]
+  },
+  {
+    "word": "Load shedding",
+    "meanings": [
+      "과부하 때 일부 요청을 일찍 거절해 전체를 지키는 것",
+      "Load Shedding"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "부하 차단",
+      "로드 셰딩"
+    ],
+    "level": 2,
+    "aliases": [
+      "Load shedding",
+      "Load Shedding"
+    ],
+    "confusable": [
+      "Token bucket",
+      "Weighted round robin"
+    ]
+  },
+  {
+    "word": "Bulkhead",
+    "meanings": [
+      "자원을 칸막이처럼 나눠 한쪽 장애가 번지지 않게 하는 패턴",
+      "Bulkhead Pattern"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "벌크헤드",
+      "격벽 패턴"
+    ],
+    "level": 2,
+    "aliases": [
+      "Bulkhead",
+      "Bulkhead Pattern"
+    ],
+    "confusable": [
+      "Backpressure",
+      "Deadline"
+    ]
+  },
+  {
+    "word": "Budget cap",
+    "meanings": [
+      "하루·테넌트별 LLM 사용 금액 한도(예약 후 실제 비용으로 정산)",
+      "Budget Cap"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "예산 한도",
+      "비용 상한"
+    ],
+    "level": 3,
+    "aliases": [
+      "Budget cap",
+      "Budget Cap"
+    ],
+    "confusable": [
+      "LLM gateway",
+      "Model routing"
+    ]
+  },
+  {
+    "word": "429 / Retry-After",
+    "meanings": [
+      "한도 초과 응답과, 얼마 뒤 다시 보내라는 대기 시간 헤더",
+      "HTTP 429 Too Many Requests"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "투머치리퀘스트",
+      "재시도 대기"
+    ],
+    "level": 2,
+    "aliases": [
+      "429 / Retry-After",
+      "HTTP 429 Too Many Requests"
+    ],
+    "confusable": [
+      "Rate limit",
+      "Backpressure"
+    ]
+  },
+  {
+    "word": "Deadline",
+    "meanings": [
+      "이 시각이 지나면 처리하지 않고 버리는 요청 마감 시간",
+      "Request Deadline"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "데드라인",
+      "처리 마감"
+    ],
+    "level": 2,
+    "aliases": [
+      "Deadline",
+      "Request Deadline"
+    ],
+    "confusable": [
+      "Backpressure",
+      "Bulkhead"
+    ]
+  },
+  {
+    "word": "Redis Streams",
+    "meanings": [
+      "Redis의 추가 전용 로그형 메시지 대기열(소비자 그룹·재처리 지원)",
+      "Redis Streams"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "레디스 스트림"
+    ],
+    "level": 3,
+    "aliases": [
+      "Redis Streams"
+    ],
+    "confusable": [
+      "Consumer group",
+      "Pending reclaim"
+    ]
+  },
+  {
+    "word": "Consumer group",
+    "meanings": [
+      "여러 소비자가 대기열 메시지를 나눠 받고 처리 완료를 표시하는 묶음",
+      "Consumer Group"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "컨슈머 그룹",
+      "소비자 그룹"
+    ],
+    "level": 3,
+    "aliases": [
+      "Consumer group",
+      "Consumer Group"
+    ],
+    "confusable": [
+      "Redis Streams",
+      "Pending reclaim"
+    ]
+  },
+  {
+    "word": "Pending reclaim",
+    "meanings": [
+      "받아 놓고 처리 못 한 메시지를 다른 소비자가 가져가 다시 처리",
+      "Pending Entries Reclaim (XPENDING/XCLAIM)"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "재할당",
+      "미처리 메시지 회수"
+    ],
+    "level": 2,
+    "aliases": [
+      "Pending reclaim",
+      "Pending Entries Reclaim (XPENDING/XCLAIM)"
+    ],
+    "confusable": [
+      "Redis Streams",
+      "Consumer group"
+    ]
+  },
+  {
+    "word": "At-least-once",
+    "meanings": [
+      "메시지가 최소 한 번은 처리됨을 보장(중복 가능 → 멱등 처리 필요)",
+      "At-least-once Delivery"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "최소 한 번 전달"
+    ],
+    "level": 2,
+    "aliases": [
+      "At-least-once",
+      "At-least-once Delivery"
+    ],
+    "confusable": [
+      "Idempotency",
+      "Retry / Backoff"
+    ]
+  },
+  {
+    "word": "Virtual thread",
+    "meanings": [
+      "JVM이 가볍게 만드는 스레드(대기 많은 I/O 작업을 수만 개 동시 처리)",
+      "Java Virtual Thread"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "가상 스레드",
+      "버추얼 스레드"
+    ],
+    "level": 3,
+    "aliases": [
+      "Virtual thread",
+      "Java Virtual Thread"
+    ],
+    "confusable": [
+      "DI",
+      "Prefix cache"
+    ]
+  },
+  {
+    "word": "DI",
+    "meanings": [
+      "객체가 쓸 의존 객체를 밖에서 넣어 주는 설계(스프링 핵심)",
+      "Dependency Injection"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "의존성 주입"
+    ],
+    "level": 2,
+    "aliases": [
+      "DI",
+      "Dependency Injection"
+    ],
+    "confusable": [
+      "Virtual thread",
+      "Prefix cache"
+    ]
+  },
+  {
+    "word": "Prefix cache",
+    "meanings": [
+      "같은 앞부분 지시문의 계산 결과를 재사용해 추론을 빠르게 하는 것",
+      "Prompt Prefix (KV) Cache"
+    ],
+    "partOfSpeech": "LLM 게이트웨이",
+    "near": [
+      "프리픽스 캐시",
+      "KV 캐시"
+    ],
+    "level": 2,
+    "aliases": [
+      "Prefix cache",
+      "Prompt Prefix (KV) Cache"
+    ],
+    "confusable": [
+      "Virtual thread",
+      "DI"
+    ]
+  },
+  {
+    "word": "LangGraph",
+    "meanings": [
+      "LLM 작업을 상태를 가진 그래프(노드·엣지·순환)로 짜는 라이브러리",
+      "LangGraph"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "랭그래프"
+    ],
+    "level": 3,
+    "aliases": [
+      "LangGraph"
+    ],
+    "confusable": [
+      "StateGraph",
+      "Subgraph"
+    ]
+  },
+  {
+    "word": "StateGraph",
+    "meanings": [
+      "공유 상태(State)를 노드들이 읽고 고쳐 가는 그래프 정의",
+      "LangGraph StateGraph"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "스테이트 그래프",
+      "상태 그래프"
+    ],
+    "level": 3,
+    "aliases": [
+      "StateGraph",
+      "LangGraph StateGraph"
+    ],
+    "confusable": [
+      "LangGraph",
+      "Subgraph"
+    ]
+  },
+  {
+    "word": "Conditional edge",
+    "meanings": [
+      "상태를 보고 다음 노드를 고르는 분기 엣지",
+      "Conditional Edge"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "조건부 엣지",
+      "분기"
+    ],
+    "level": 3,
+    "aliases": [
+      "Conditional edge",
+      "Conditional Edge"
+    ],
+    "confusable": [
+      "Send",
+      "Reducer"
+    ]
+  },
+  {
+    "word": "Checkpointer",
+    "meanings": [
+      "노드가 끝날 때마다 상태를 DB에 저장해 멈춤·재개·복구를 가능하게 하는 것",
+      "LangGraph Checkpointer"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "체크포인터",
+      "체크포인트 저장"
+    ],
+    "level": 3,
+    "aliases": [
+      "Checkpointer",
+      "LangGraph Checkpointer"
+    ],
+    "confusable": [
+      "Thread ID",
+      "Durable execution"
+    ]
+  },
+  {
+    "word": "Thread ID",
+    "meanings": [
+      "체크포인트를 묶는 실행 단위 식별자(대화·작업 1건)",
+      "LangGraph thread_id"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "스레드 아이디",
+      "실행 ID"
+    ],
+    "level": 2,
+    "aliases": [
+      "Thread ID",
+      "LangGraph thread_id"
+    ],
+    "confusable": [
+      "Checkpointer",
+      "Durable execution"
+    ]
+  },
+  {
+    "word": "interrupt",
+    "meanings": [
+      "흐름을 멈추고 사람 입력을 기다렸다가 그 값으로 이어 가는 기능",
+      "LangGraph interrupt() / Command(resume)"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "인터럽트",
+      "일시정지 재개"
+    ],
+    "level": 3,
+    "aliases": [
+      "interrupt",
+      "LangGraph interrupt() / Command(resume)"
+    ],
+    "confusable": [
+      "HITL",
+      "Review flag"
+    ]
+  },
+  {
+    "word": "Send",
+    "meanings": [
+      "항목마다 같은 노드를 병렬로 실행하는 팬아웃(map-reduce)",
+      "LangGraph Send API"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "센드",
+      "팬아웃",
+      "맵리듀스"
+    ],
+    "level": 3,
+    "aliases": [
+      "Send",
+      "LangGraph Send API"
+    ],
+    "confusable": [
+      "Conditional edge",
+      "Reducer"
+    ]
+  },
+  {
+    "word": "Reducer",
+    "meanings": [
+      "병렬 노드 결과를 상태에 합치는 규칙 함수",
+      "State Reducer"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "리듀서",
+      "병합 함수"
+    ],
+    "level": 2,
+    "aliases": [
+      "Reducer",
+      "State Reducer"
+    ],
+    "confusable": [
+      "Conditional edge",
+      "Send"
+    ]
+  },
+  {
+    "word": "Subgraph",
+    "meanings": [
+      "그래프 안에 노드로 넣은 또 하나의 그래프",
+      "Subgraph"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "서브그래프",
+      "하위 그래프"
+    ],
+    "level": 2,
+    "aliases": [
+      "Subgraph"
+    ],
+    "confusable": [
+      "LangGraph",
+      "StateGraph"
+    ]
+  },
+  {
+    "word": "Durable execution",
+    "meanings": [
+      "중간에 죽어도 저장된 지점부터 이어서 실행되는 성질",
+      "Durable Execution"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "내구 실행",
+      "듀러블 실행"
+    ],
+    "level": 2,
+    "aliases": [
+      "Durable execution",
+      "Durable Execution"
+    ],
+    "confusable": [
+      "Checkpointer",
+      "Thread ID"
+    ]
+  },
+  {
+    "word": "PaddleOCR",
+    "meanings": [
+      "바이두의 오픈소스 OCR(글자 상자 검출 + 인식, 한국어 지원, 로컬 실행)",
+      "PaddleOCR"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "패들OCR"
+    ],
+    "level": 3,
+    "aliases": [
+      "PaddleOCR"
+    ],
+    "confusable": [
+      "TrOCR",
+      "VLM"
+    ]
+  },
+  {
+    "word": "Text detection / recognition",
+    "meanings": [
+      "OCR 2단계: 글자 영역 찾기 / 그 영역의 글자 읽기",
+      "Text Detection / Text Recognition"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "텍스트 검출 인식",
+      "디텍션 레코그니션"
+    ],
+    "level": 2,
+    "aliases": [
+      "Text detection / recognition",
+      "Text Detection / Text Recognition"
+    ],
+    "confusable": [
+      "KIE",
+      "Document splitting"
+    ]
+  },
+  {
+    "word": "CER",
+    "meanings": [
+      "정답 글자 대비 틀린 글자 비율(OCR 품질 지표, 낮을수록 좋음)",
+      "Character Error Rate"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "글자 오류율"
+    ],
+    "level": 3,
+    "aliases": [
+      "CER",
+      "Character Error Rate"
+    ],
+    "confusable": [
+      "Precision / Recall",
+      "STP"
+    ]
+  },
+  {
+    "word": "HTR",
+    "meanings": [
+      "손글씨 인식(인쇄체 OCR보다 어려움)",
+      "Handwritten Text Recognition"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "손글씨 인식",
+      "필기 인식"
+    ],
+    "level": 3,
+    "aliases": [
+      "HTR",
+      "Handwritten Text Recognition"
+    ],
+    "confusable": [
+      "OCR",
+      "Annotation"
+    ]
+  },
+  {
+    "word": "TrOCR",
+    "meanings": [
+      "이미지 인코더 + 글자 디코더로 된 트랜스포머 OCR 모델",
+      "Transformer-based OCR"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "트로커",
+      "손글씨 OCR 모델"
+    ],
+    "level": 2,
+    "aliases": [
+      "TrOCR",
+      "Transformer-based OCR"
+    ],
+    "confusable": [
+      "PaddleOCR",
+      "VLM"
+    ]
+  },
+  {
+    "word": "VLM",
+    "meanings": [
+      "이미지와 글을 함께 이해하는 모델(GPT 비전 등)",
+      "Vision-Language Model"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "비전 언어 모델",
+      "비전 LLM"
+    ],
+    "level": 3,
+    "aliases": [
+      "VLM",
+      "Vision-Language Model"
+    ],
+    "confusable": [
+      "PaddleOCR",
+      "TrOCR"
+    ]
+  },
+  {
+    "word": "KIE",
+    "meanings": [
+      "문서에서 정해진 칸(번호·날짜·수신·제목 등) 값을 뽑는 작업",
+      "Key Information Extraction"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "핵심 정보 추출",
+      "필드 추출"
+    ],
+    "level": 3,
+    "aliases": [
+      "KIE",
+      "Key Information Extraction"
+    ],
+    "confusable": [
+      "Text detection / recognition",
+      "Document splitting"
+    ]
+  },
+  {
+    "word": "Document splitting",
+    "meanings": [
+      "스캔 묶음에서 문서가 새로 시작하는 쪽을 찾아 나누는 것",
+      "Document Boundary Detection"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "문서 경계 판별",
+      "문서 분할"
+    ],
+    "level": 3,
+    "aliases": [
+      "Document splitting",
+      "Document Boundary Detection"
+    ],
+    "confusable": [
+      "Text detection / recognition",
+      "KIE"
+    ]
+  },
+  {
+    "word": "Logprobs",
+    "meanings": [
+      "모델이 낸 토큰마다의 확률(로그값). 확신도 계산에 사용",
+      "Token Log Probabilities"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "로그 확률",
+      "토큰 확률"
+    ],
+    "level": 3,
+    "aliases": [
+      "Logprobs",
+      "Token Log Probabilities"
+    ],
+    "confusable": [
+      "Calibration",
+      "Confidence"
+    ]
+  },
+  {
+    "word": "Calibration",
+    "meanings": [
+      "확신도가 실제 정답률과 맞도록 기준을 맞추는 것(높은 확신도의 오답 문제)",
+      "Confidence Calibration"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "보정",
+      "캘리브레이션"
+    ],
+    "level": 3,
+    "aliases": [
+      "Calibration",
+      "Confidence Calibration"
+    ],
+    "confusable": [
+      "Logprobs",
+      "Confidence"
+    ]
+  },
+  {
+    "word": "STP",
+    "meanings": [
+      "사람 손을 거치지 않고 끝까지 자동 처리되는 비율(금융·보험 핵심 지표)",
+      "Straight-Through Processing"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "자동 처리율",
+      "무인 처리"
+    ],
+    "level": 3,
+    "aliases": [
+      "STP",
+      "Straight-Through Processing"
+    ],
+    "confusable": [
+      "CER",
+      "Precision / Recall"
+    ]
+  },
+  {
+    "word": "Review flag",
+    "meanings": [
+      "자신 없는 칸에 '검토 필요'를 달아 사람이 그 칸만 보게 하는 것",
+      "Human Review Flag"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "검토 필요 표시",
+      "검토 플래그"
+    ],
+    "level": 3,
+    "aliases": [
+      "Review flag",
+      "Human Review Flag"
+    ],
+    "confusable": [
+      "interrupt",
+      "HITL"
+    ]
+  },
+  {
+    "word": "Precision / Recall",
+    "meanings": [
+      "짚은 것 중 맞은 비율 / 실제 정답 중 찾아낸 비율",
+      "Precision / Recall"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "정밀도 재현율"
+    ],
+    "level": 3,
+    "aliases": [
+      "Precision / Recall"
+    ],
+    "confusable": [
+      "CER",
+      "STP"
+    ]
+  },
+  {
+    "word": "Ground truth",
+    "meanings": [
+      "채점 기준이 되는 사람이 확인한 정답",
+      "Ground Truth"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "정답셋",
+      "그라운드 트루스"
+    ],
+    "level": 3,
+    "aliases": [
+      "Ground truth",
+      "Ground Truth"
+    ],
+    "confusable": [
+      "Data leakage",
+      "Golden set"
+    ]
+  },
+  {
+    "word": "Data leakage",
+    "meanings": [
+      "평가 데이터가 모델 학습에 들어가 점수가 부풀려지는 것",
+      "Train/Test Data Leakage"
+    ],
+    "partOfSpeech": "문서 AI·LangGraph",
+    "near": [
+      "데이터 누출",
+      "데이터 누수"
+    ],
+    "level": 3,
+    "aliases": [
+      "Data leakage",
+      "Train/Test Data Leakage"
+    ],
+    "confusable": [
+      "Ground truth",
+      "Golden set"
+    ]
+  },
+  {
+    "word": "RRF",
+    "meanings": [
+      "여러 검색 결과를 순위의 역수 합으로 섞는 방법(벡터 + 키워드 합치기)",
+      "Reciprocal Rank Fusion"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "상호 순위 융합"
+    ],
+    "level": 3,
+    "aliases": [
+      "RRF",
+      "Reciprocal Rank Fusion"
+    ],
+    "confusable": [
+      "Hybrid search",
+      "Reranker"
+    ]
+  },
+  {
+    "word": "Cosine similarity",
+    "meanings": [
+      "두 벡터의 방향이 얼마나 같은지로 의미 유사도를 재는 값",
+      "Cosine Similarity"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "코사인 유사도"
+    ],
+    "level": 2,
+    "aliases": [
+      "Cosine similarity",
+      "Cosine Similarity"
+    ],
+    "confusable": [
+      "Embedding",
+      "Top-k"
+    ]
+  },
+  {
+    "word": "Metadata filtering",
+    "meanings": [
+      "벡터 검색 때 연도·테넌트 같은 속성으로 먼저 걸러 내는 것",
+      "Metadata (Payload) Filtering"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "메타데이터 필터",
+      "페이로드 필터"
+    ],
+    "level": 3,
+    "aliases": [
+      "Metadata filtering",
+      "Metadata (Payload) Filtering"
+    ],
+    "confusable": [
+      "Upsert",
+      "Citation"
+    ]
+  },
+  {
+    "word": "Upsert",
+    "meanings": [
+      "있으면 고치고 없으면 넣는 저장 방식",
+      "Update + Insert"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "업서트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Upsert",
+      "Update + Insert"
+    ],
+    "confusable": [
+      "Metadata filtering",
+      "Citation"
+    ]
+  },
+  {
+    "word": "Citation",
+    "meanings": [
+      "답변에 근거 문서를 표시하는 것(환각 확인용)",
+      "Source Citation"
+    ],
+    "partOfSpeech": "RAG·검색",
+    "near": [
+      "출처 표시",
+      "인용"
+    ],
+    "level": 3,
+    "aliases": [
+      "Citation",
+      "Source Citation"
+    ],
+    "confusable": [
+      "Metadata filtering",
+      "Upsert"
+    ]
+  },
+  {
+    "word": "Next.js",
+    "meanings": [
+      "React 기반 풀스택 웹 프레임워크(라우팅·서버 렌더링 포함)",
+      "Next.js"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "넥스트JS",
+      "넥스트"
+    ],
+    "level": 3,
+    "aliases": [
+      "Next.js"
+    ],
+    "confusable": [
+      "App Router",
+      "RSC"
+    ]
+  },
+  {
+    "word": "App Router",
+    "meanings": [
+      "폴더 구조로 화면 경로를 정하는 Next.js 라우팅 방식",
+      "Next.js App Router"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "앱 라우터"
+    ],
+    "level": 2,
+    "aliases": [
+      "App Router",
+      "Next.js App Router"
+    ],
+    "confusable": [
+      "Next.js",
+      "RSC"
+    ]
+  },
+  {
+    "word": "RSC",
+    "meanings": [
+      "서버에서만 렌더링되어 JS를 보내지 않는 React 컴포넌트",
+      "React Server Components"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "리액트 서버 컴포넌트",
+      "서버 컴포넌트"
+    ],
+    "level": 3,
+    "aliases": [
+      "RSC",
+      "React Server Components"
+    ],
+    "confusable": [
+      "Next.js",
+      "App Router"
+    ]
+  },
+  {
+    "word": "Rewrites",
+    "meanings": [
+      "주소는 그대로 두고 요청만 다른 서버로 넘기는 설정",
+      "Next.js Rewrites"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "리라이트",
+      "프록시",
+      "CORS 회피 프록시"
+    ],
+    "level": 2,
+    "aliases": [
+      "Rewrites",
+      "Next.js Rewrites"
+    ],
+    "confusable": [
+      "CORS",
+      "Proxy"
+    ]
+  },
+  {
+    "word": "CORS",
+    "meanings": [
+      "다른 출처의 API를 브라우저가 부를 수 있게 허용하는 규칙",
+      "Cross-Origin Resource Sharing"
+    ],
+    "partOfSpeech": "모바일·프론트",
+    "near": [
+      "교차 출처 리소스 공유",
+      "코스"
+    ],
+    "level": 3,
+    "aliases": [
+      "CORS",
+      "Cross-Origin Resource Sharing"
+    ],
+    "confusable": [
+      "Rewrites",
+      "Proxy"
+    ]
   },
   {
     "word": "Server",
@@ -5122,7 +7011,9 @@
     ],
     "confusable": [
       "Cache",
-      "CDN"
+      "CDN",
+      "Rewrites",
+      "CORS"
     ]
   },
   {
