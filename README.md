@@ -11,6 +11,8 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 > 이름은 단기기억을 관장하는 **해마**(hippocampus)에서 Hippo 를 따왔다.
 > IT 용어를 먹어 치우는 하마라는 뜻이다.
 
+<sub>최종 수정 2026-10-29 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
+
 ---
 
 ## 화면
@@ -431,6 +433,19 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
   ([측정 결과](https://github.com/reddol18/dev_keyword_test/issues/3#issuecomment-6332184571))
 - **Android만 확인** — iOS는 빌드해보지 않았다
   → [#4](https://github.com/reddol18/dev_keyword_test/issues/4)
+
+---
+
+## 변경 이력
+
+| 날짜 | 한 일 |
+|---|---|
+| **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |
+| **2026-10-23** | 모르겠어요 선택지·복습 개수 표시 ([#12](https://github.com/reddol18/dev_keyword_test/issues/12), [#13](https://github.com/reddol18/dev_keyword_test/issues/13)) · 오답노트를 물어본 방향으로 ([#11](https://github.com/reddol18/dev_keyword_test/issues/11)) · IT 용어 덱에서 주관식 제거 ([#9](https://github.com/reddol18/dev_keyword_test/issues/9)) · 채점 모델 비교 도구 ([#8](https://github.com/reddol18/dev_keyword_test/issues/8)) |
+| **2026-10-22** | 간격 반복(SRS) 도입 · APK 288MB → **181MB** ([#1](https://github.com/reddol18/dev_keyword_test/issues/1)) · 이모지·분야 필터 ([#5](https://github.com/reddol18/dev_keyword_test/issues/5), [#6](https://github.com/reddol18/dev_keyword_test/issues/6)) · 런칭 화면 ([#7](https://github.com/reddol18/dev_keyword_test/issues/7)) |
+| **2026-10-19** | 앱 이름을 **용어먹는하마**로 · 하마 아이콘·런칭 화면 · IT 용어 54개 추가 (246 → 301) |
+| **2026-10-13** | IT 용어 단어장 신설 · 출제 방식 4종 · 목록 화면 |
+| **2026-09-18** | 첫 커밋 — 온디바이스 한국어 임베딩 채점 |
 
 ---
 
