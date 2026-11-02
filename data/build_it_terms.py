@@ -391,6 +391,56 @@ DOCFLOW = [
 ]
 
 
+# ── 모노레포·타입계약·LLM 평가 보강 (11/02 면접 준비) ──────────────────────
+# 출처: fund_agent 세션 11/02 면접 준비 중 정리
+# 주의: 여섯째 값은 레벨이 아니라 '면접 우선' 플래그다(1이면 level 3, 0이면 level 2).
+STACK = [
+    # [빌드·도구] 모노레포와 Rust 기반 도구들 — 요즘 TS/Python 프로젝트의 기본 구성
+    ("빌드·패키지", "Monorepo", "Monorepo", "여러 패키지·앱을 저장소 하나에서 함께 관리하는 방식", ["모노레포", "단일 저장소"], 0),
+    ("빌드·패키지", "Turborepo", "Turborepo", "바뀐 패키지만 골라 빌드하고 결과를 캐시하는 모노레포 태스크 러너", ["터보레포"], 1),
+    ("빌드·패키지", "pnpm", "performant npm", "패키지를 한 곳에 두고 링크해 쓰는 빠르고 가벼운 JS 패키지 매니저", ["피엔피엠"], 1),
+    ("빌드·패키지", "Biome", "Biome", "Rust 로 만든 JS·TS 린터 겸 포매터", ["바이옴", "ESLint 대체", "Prettier 대체"], 0),
+    ("빌드·패키지", "Nx", "Nx", "기능이 많고 무거운 편인 모노레포 빌드 도구", ["엔엑스"], 0),
+    ("빌드·패키지", "uv", "uv", "Rust 로 만든 파이썬 패키지·프로젝트 관리자", ["유브이", "pip 대체", "poetry 대체"], 0),
+    ("빌드·패키지", "ruff", "ruff", "Rust 로 만든 파이썬 린터 겸 포매터(flake8·black·isort 대체)", ["러프"], 0),
+
+    # [타입 계약] 서버와 클라이언트가 같은 타입을 공유하게 만드는 방법들
+    ("타입 계약", "tRPC", "TypeScript Remote Procedure Call", "서버 코드의 타입이 그대로 계약이 되어 코드 생성 없이 타입이 이어지는 RPC", ["티알피씨"], 1),
+    ("타입 계약", "ts-rest", "ts-rest", "REST 주소 구조를 유지하면서 타입 계약을 맞추는 도구", ["티에스 레스트"], 0),
+    ("타입 계약", "zod", "zod", "스키마 하나로 타입 선언과 실행 중 값 검증을 함께 하는 라이브러리", ["조드"], 1),
+    ("타입 계약", "OpenAPI", "OpenAPI Specification", "REST API 를 기계가 읽는 형식으로 적어 둔 명세 표준(옛 Swagger)", ["오픈API", "스웨거"], 0),
+    ("타입 계약", "openapi-typescript", "openapi-typescript", "OpenAPI 명세에서 타입스크립트 타입을 뽑아내는 도구", ["오픈API 타입스크립트"], 0),
+
+    # [서버 상태·스트림] 가져온 데이터를 어떻게 들고 있을 것인가
+    ("서버 상태·스트림", "TanStack Query", "TanStack Query (React Query)", "서버에서 가져온 데이터의 캐시·재검증·재시도를 맡아 주는 라이브러리", ["탠스택 쿼리", "리액트 쿼리"], 1),
+    ("서버 상태·스트림", "stale-while-revalidate", "stale-while-revalidate", "캐시를 먼저 보여 주고 뒤에서 새 데이터를 받아 바꾸는 전략", ["스테일 와일 리밸리데이트", "캐시 먼저 보여주기"], 0),
+    ("서버 상태·스트림", "invalidateQueries", "invalidateQueries", "데이터를 바꾼 뒤 관련 캐시를 무효로 만들어 다시 받아오게 하는 호출", ["캐시 무효화", "쿼리 무효화"], 0),
+    ("서버 상태·스트림", "RxJS", "Reactive Extensions for JavaScript", "시간에 걸쳐 여러 번 오는 값을 흐름으로 다루고 가공·취소하는 라이브러리", ["알엑스제이에스", "리액티브 익스텐션"], 1),
+    ("서버 상태·스트림", "Observable", "Observable", "여러 값을 시간에 걸쳐 내보내는 흐름. 구독해야 돌고 구독을 끊으면 멈춘다", ["옵저버블", "관찰 가능 흐름"], 0),
+    ("서버 상태·스트림", "switchMap", "switchMap", "새 값이 오면 앞서 보낸 요청을 취소하고 가장 최근 것만 따르는 연산자", ["스위치맵"], 1),
+    ("서버 상태·스트림", "Marble Testing", "Marble Testing", "스트림의 타이밍을 문자열 그림으로 적어 가상 시간에서 검사하는 방법", ["마블 테스트", "구슬 테스트"], 0),
+    ("서버 상태·스트림", "SSE", "Server-Sent Events", "서버에서 브라우저로만 흐르는 단방향 이벤트 스트림(토큰 스트리밍에 쓴다)", ["서버 전송 이벤트", "에스에스이"], 0),
+    ("서버 상태·스트림", "Race condition", "Race Condition", "끝나는 순서에 따라 결과가 달라지는 버그(늦게 온 응답이 최신 값을 덮는다)", ["경쟁 상태", "레이스 컨디션"], 1),
+
+    # [DB 접근] ORM 선택지
+    ("타입 계약", "Prisma", "Prisma", "스키마 파일을 적어 두면 타입까지 만들어 주는 타입스크립트 ORM", ["프리즈마"], 0),
+    ("타입 계약", "Drizzle", "Drizzle ORM", "SQL 에 가깝게 쓰는 가벼운 타입스크립트 ORM 겸 쿼리 빌더", ["드리즐"], 0),
+    ("타입 계약", "Multi-DB driver", "Multi-Database Driver", "같은 코드로 여러 종류의 DB 에 붙게 해 주는 접속 계층", ["멀티DB 드라이버", "다중 DB 접속"], 0),
+
+    # [LLM 평가·관측] 프롬프트가 바뀌었을 때 나빠졌는지 어떻게 아는가
+    ("LLM 평가", "promptfoo", "promptfoo", "프롬프트·모델을 YAML 로 견줘 보고 공격까지 시험하는 평가 도구", ["프롬프트푸"], 1),
+    ("LLM 평가", "DeepEval", "DeepEval", "환각·관련성 같은 지표를 테스트 기준으로 거는 LLM 용 테스트 도구", ["딥이밸"], 0),
+    ("LLM 평가", "LangSmith", "LangSmith", "LLM 앱의 실행 기록·실험·운영을 보는 랭체인의 상용 서비스", ["랭스미스"], 0),
+    ("LLM 평가", "Langfuse", "Langfuse", "직접 설치해 쓸 수 있는 LLM 관측 도구(폐쇄망에 쓴다)", ["랭퓨즈"], 1),
+    ("LLM 평가", "LLM-as-judge", "LLM as a Judge", "채점 기준을 준 다른 LLM 에게 답변을 평가하게 하는 방식", ["엘엘엠 저지", "모델 채점"], 1),
+
+    # [보안·방법론]
+    ("보안·권한", "OWASP", "Open Worldwide Application Security Project", "웹 보안 표준을 내는 비영리 단체(Top 10 으로 흔한 취약점을 정리한다)", ["오와스프"], 0),
+    ("보안·권한", "OWASP LLM Top 10", "OWASP Top 10 for LLM Applications", "프롬프트 인젝션·과도한 권한 위임 등 LLM 앱의 대표 취약점 목록", ["LLM 취약점 목록", "오와스프 LLM"], 1),
+    ("개발·DevOps", "PDCA", "Plan-Do-Check-Act", "계획·실행·점검·개선을 돌리는 반복 개선 사이클(데밍 사이클)", ["피디씨에이", "데밍 사이클"], 1),
+]
+
+
 # ── 0. 기초 (면접장에서 '쉬운데 안 떠오르는' 용어 — 로드밸런싱 사례) ─────────
 B = "기초"
 BASIC = [
@@ -597,13 +647,29 @@ CONFUSABLE = [
     ["Metadata filtering", "Upsert", "Citation"],
     ["Next.js", "App Router", "RSC"],
     ["Rewrites", "CORS", "Proxy"],                                # 서버 우회 / 브라우저 규칙 / 중계
+    # ── 모노레포·타입계약·LLM 평가 보강 (11/02) ──
+    ["Turborepo", "Nx", "Monorepo"],                              # 러너 / 러너 / 구조 자체
+    ["pnpm", "uv", "Turborepo"],                                  # JS 패키지 / 파이썬 패키지 / 태스크
+    ["Biome", "ruff", "uv"],                                      # JS 린터 / 파이썬 린터 / 파이썬 패키지
+    ["tRPC", "ts-rest", "OpenAPI"],                               # 코드가 계약 / REST 유지 / 명세 표준
+    ["zod", "OpenAPI", "openapi-typescript"],                     # 런타임 검증 / 명세 / 타입 생성
+    ["Prisma", "Drizzle", "ORM", "Multi-DB driver"],              # 스키마 / SQL 가깝게 / 개념 / 접속 계층
+    ["TanStack Query", "stale-while-revalidate", "invalidateQueries"],   # 도구 / 전략 / 호출
+    ["RxJS", "Observable", "SSE"],                                # 라이브러리 / 흐름 / 전송 방식
+    ["switchMap", "Race condition", "Marble Testing"],            # 해결 / 문제 / 검사
+    ["SSE", "Webhook", "Streaming"],                              # 서버→브라우저 / 서버→서버 / 토큰 출력
+    ["promptfoo", "DeepEval", "RAGAS"],                           # 비교·레드팀 / 테스트 기준 / RAG 지표
+    ["LangSmith", "Langfuse", "Eval"],                            # 상용 / 오픈소스 / 측정 개념
+    ["LLM-as-judge", "Eval", "Golden set"],                       # 채점 주체 / 측정 / 기준셋
+    ["OWASP", "OWASP LLM Top 10", "Red teaming"],                 # 단체 / 목록 / 활동
+    ["PDCA", "Agile", "Scrum"],                                   # 개선 사이클 / 개발 방식 / 운영 틀
 ]
 
 
 def main():
     global T
     # 기초는 level 1. Load balancer 는 기초의 Load balancing 과 겹치므로 아키텍처에서 뺀다.
-    T = [r for r in T if r[1] != "Load balancer"] + EICN + TCCINS + DOCFLOW \
+    T = [r for r in T if r[1] != "Load balancer"] + EICN + TCCINS + DOCFLOW + STACK \
         + [(c, w, f, k, n, 0) for c, w, f, k, n in BASIC]
     lv = {w: 1 for _, w, *_ in BASIC}
 

@@ -556,7 +556,10 @@
       "Faithfulness",
       "Golden set",
       "Data drift",
-      "Fine-tuning"
+      "Fine-tuning",
+      "LangSmith",
+      "Langfuse",
+      "LLM-as-judge"
     ]
   },
   {
@@ -598,7 +601,10 @@
       "Red teaming",
       "Red Teaming"
     ],
-    "confusable": []
+    "confusable": [
+      "OWASP",
+      "OWASP LLM Top 10"
+    ]
   },
   {
     "word": "Temperature",
@@ -1414,7 +1420,9 @@
     "confusable": [
       "Queue",
       "Pub/Sub",
-      "Event-driven"
+      "Event-driven",
+      "SSE",
+      "Streaming"
     ]
   },
   {
@@ -2679,7 +2687,8 @@
       "Faithfulness",
       "Eval",
       "Ground truth",
-      "Data leakage"
+      "Data leakage",
+      "LLM-as-judge"
     ]
   },
   {
@@ -2701,7 +2710,9 @@
     "confusable": [
       "Faithfulness",
       "Golden set",
-      "Eval"
+      "Eval",
+      "promptfoo",
+      "DeepEval"
     ]
   },
   {
@@ -2865,7 +2876,9 @@
     ],
     "confusable": [
       "TTFT",
-      "Latency"
+      "Latency",
+      "SSE",
+      "Webhook"
     ]
   },
   {
@@ -6341,6 +6354,656 @@
     ]
   },
   {
+    "word": "Monorepo",
+    "meanings": [
+      "여러 패키지·앱을 저장소 하나에서 함께 관리하는 방식",
+      "Monorepo"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "모노레포",
+      "단일 저장소"
+    ],
+    "level": 2,
+    "aliases": [
+      "Monorepo"
+    ],
+    "confusable": [
+      "Turborepo",
+      "Nx"
+    ]
+  },
+  {
+    "word": "Turborepo",
+    "meanings": [
+      "바뀐 패키지만 골라 빌드하고 결과를 캐시하는 모노레포 태스크 러너",
+      "Turborepo"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "터보레포"
+    ],
+    "level": 3,
+    "aliases": [
+      "Turborepo"
+    ],
+    "confusable": [
+      "Nx",
+      "Monorepo",
+      "pnpm",
+      "uv"
+    ]
+  },
+  {
+    "word": "pnpm",
+    "meanings": [
+      "패키지를 한 곳에 두고 링크해 쓰는 빠르고 가벼운 JS 패키지 매니저",
+      "performant npm"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "피엔피엠"
+    ],
+    "level": 3,
+    "aliases": [
+      "pnpm",
+      "performant npm"
+    ],
+    "confusable": [
+      "uv",
+      "Turborepo"
+    ]
+  },
+  {
+    "word": "Biome",
+    "meanings": [
+      "Rust 로 만든 JS·TS 린터 겸 포매터",
+      "Biome"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "바이옴",
+      "ESLint 대체",
+      "Prettier 대체"
+    ],
+    "level": 2,
+    "aliases": [
+      "Biome"
+    ],
+    "confusable": [
+      "ruff",
+      "uv"
+    ]
+  },
+  {
+    "word": "Nx",
+    "meanings": [
+      "기능이 많고 무거운 편인 모노레포 빌드 도구",
+      "Nx"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "엔엑스"
+    ],
+    "level": 2,
+    "aliases": [
+      "Nx"
+    ],
+    "confusable": [
+      "Turborepo",
+      "Monorepo"
+    ]
+  },
+  {
+    "word": "uv",
+    "meanings": [
+      "Rust 로 만든 파이썬 패키지·프로젝트 관리자",
+      "uv"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "유브이",
+      "pip 대체",
+      "poetry 대체"
+    ],
+    "level": 2,
+    "aliases": [
+      "uv"
+    ],
+    "confusable": [
+      "pnpm",
+      "Turborepo",
+      "Biome",
+      "ruff"
+    ]
+  },
+  {
+    "word": "ruff",
+    "meanings": [
+      "Rust 로 만든 파이썬 린터 겸 포매터(flake8·black·isort 대체)",
+      "ruff"
+    ],
+    "partOfSpeech": "빌드·패키지",
+    "near": [
+      "러프"
+    ],
+    "level": 2,
+    "aliases": [
+      "ruff"
+    ],
+    "confusable": [
+      "Biome",
+      "uv"
+    ]
+  },
+  {
+    "word": "tRPC",
+    "meanings": [
+      "서버 코드의 타입이 그대로 계약이 되어 코드 생성 없이 타입이 이어지는 RPC",
+      "TypeScript Remote Procedure Call"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "티알피씨"
+    ],
+    "level": 3,
+    "aliases": [
+      "tRPC",
+      "TypeScript Remote Procedure Call"
+    ],
+    "confusable": [
+      "ts-rest",
+      "OpenAPI"
+    ]
+  },
+  {
+    "word": "ts-rest",
+    "meanings": [
+      "REST 주소 구조를 유지하면서 타입 계약을 맞추는 도구",
+      "ts-rest"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "티에스 레스트"
+    ],
+    "level": 2,
+    "aliases": [
+      "ts-rest"
+    ],
+    "confusable": [
+      "tRPC",
+      "OpenAPI"
+    ]
+  },
+  {
+    "word": "zod",
+    "meanings": [
+      "스키마 하나로 타입 선언과 실행 중 값 검증을 함께 하는 라이브러리",
+      "zod"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "조드"
+    ],
+    "level": 3,
+    "aliases": [
+      "zod"
+    ],
+    "confusable": [
+      "OpenAPI",
+      "openapi-typescript"
+    ]
+  },
+  {
+    "word": "OpenAPI",
+    "meanings": [
+      "REST API 를 기계가 읽는 형식으로 적어 둔 명세 표준(옛 Swagger)",
+      "OpenAPI Specification"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "오픈API",
+      "스웨거"
+    ],
+    "level": 2,
+    "aliases": [
+      "OpenAPI",
+      "OpenAPI Specification"
+    ],
+    "confusable": [
+      "tRPC",
+      "ts-rest",
+      "zod",
+      "openapi-typescript"
+    ]
+  },
+  {
+    "word": "openapi-typescript",
+    "meanings": [
+      "OpenAPI 명세에서 타입스크립트 타입을 뽑아내는 도구",
+      "openapi-typescript"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "오픈API 타입스크립트"
+    ],
+    "level": 2,
+    "aliases": [
+      "openapi-typescript"
+    ],
+    "confusable": [
+      "zod",
+      "OpenAPI"
+    ]
+  },
+  {
+    "word": "TanStack Query",
+    "meanings": [
+      "서버에서 가져온 데이터의 캐시·재검증·재시도를 맡아 주는 라이브러리",
+      "TanStack Query (React Query)"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "탠스택 쿼리",
+      "리액트 쿼리"
+    ],
+    "level": 3,
+    "aliases": [
+      "TanStack Query",
+      "TanStack Query (React Query)"
+    ],
+    "confusable": [
+      "stale-while-revalidate",
+      "invalidateQueries"
+    ]
+  },
+  {
+    "word": "stale-while-revalidate",
+    "meanings": [
+      "캐시를 먼저 보여 주고 뒤에서 새 데이터를 받아 바꾸는 전략",
+      "stale-while-revalidate"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "스테일 와일 리밸리데이트",
+      "캐시 먼저 보여주기"
+    ],
+    "level": 2,
+    "aliases": [
+      "stale-while-revalidate"
+    ],
+    "confusable": [
+      "TanStack Query",
+      "invalidateQueries"
+    ]
+  },
+  {
+    "word": "invalidateQueries",
+    "meanings": [
+      "데이터를 바꾼 뒤 관련 캐시를 무효로 만들어 다시 받아오게 하는 호출",
+      "invalidateQueries"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "캐시 무효화",
+      "쿼리 무효화"
+    ],
+    "level": 2,
+    "aliases": [
+      "invalidateQueries"
+    ],
+    "confusable": [
+      "TanStack Query",
+      "stale-while-revalidate"
+    ]
+  },
+  {
+    "word": "RxJS",
+    "meanings": [
+      "시간에 걸쳐 여러 번 오는 값을 흐름으로 다루고 가공·취소하는 라이브러리",
+      "Reactive Extensions for JavaScript"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "알엑스제이에스",
+      "리액티브 익스텐션"
+    ],
+    "level": 3,
+    "aliases": [
+      "RxJS",
+      "Reactive Extensions for JavaScript"
+    ],
+    "confusable": [
+      "Observable",
+      "SSE"
+    ]
+  },
+  {
+    "word": "Observable",
+    "meanings": [
+      "여러 값을 시간에 걸쳐 내보내는 흐름. 구독해야 돌고 구독을 끊으면 멈춘다",
+      "Observable"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "옵저버블",
+      "관찰 가능 흐름"
+    ],
+    "level": 2,
+    "aliases": [
+      "Observable"
+    ],
+    "confusable": [
+      "RxJS",
+      "SSE"
+    ]
+  },
+  {
+    "word": "switchMap",
+    "meanings": [
+      "새 값이 오면 앞서 보낸 요청을 취소하고 가장 최근 것만 따르는 연산자",
+      "switchMap"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "스위치맵"
+    ],
+    "level": 3,
+    "aliases": [
+      "switchMap"
+    ],
+    "confusable": [
+      "Race condition",
+      "Marble Testing"
+    ]
+  },
+  {
+    "word": "Marble Testing",
+    "meanings": [
+      "스트림의 타이밍을 문자열 그림으로 적어 가상 시간에서 검사하는 방법",
+      "Marble Testing"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "마블 테스트",
+      "구슬 테스트"
+    ],
+    "level": 2,
+    "aliases": [
+      "Marble Testing"
+    ],
+    "confusable": [
+      "switchMap",
+      "Race condition"
+    ]
+  },
+  {
+    "word": "SSE",
+    "meanings": [
+      "서버에서 브라우저로만 흐르는 단방향 이벤트 스트림(토큰 스트리밍에 쓴다)",
+      "Server-Sent Events"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "서버 전송 이벤트",
+      "에스에스이"
+    ],
+    "level": 2,
+    "aliases": [
+      "SSE",
+      "Server-Sent Events"
+    ],
+    "confusable": [
+      "RxJS",
+      "Observable",
+      "Webhook",
+      "Streaming"
+    ]
+  },
+  {
+    "word": "Race condition",
+    "meanings": [
+      "끝나는 순서에 따라 결과가 달라지는 버그(늦게 온 응답이 최신 값을 덮는다)",
+      "Race Condition"
+    ],
+    "partOfSpeech": "서버 상태·스트림",
+    "near": [
+      "경쟁 상태",
+      "레이스 컨디션"
+    ],
+    "level": 3,
+    "aliases": [
+      "Race condition",
+      "Race Condition"
+    ],
+    "confusable": [
+      "switchMap",
+      "Marble Testing"
+    ]
+  },
+  {
+    "word": "Prisma",
+    "meanings": [
+      "스키마 파일을 적어 두면 타입까지 만들어 주는 타입스크립트 ORM",
+      "Prisma"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "프리즈마"
+    ],
+    "level": 2,
+    "aliases": [
+      "Prisma"
+    ],
+    "confusable": [
+      "Drizzle",
+      "ORM",
+      "Multi-DB driver"
+    ]
+  },
+  {
+    "word": "Drizzle",
+    "meanings": [
+      "SQL 에 가깝게 쓰는 가벼운 타입스크립트 ORM 겸 쿼리 빌더",
+      "Drizzle ORM"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "드리즐"
+    ],
+    "level": 2,
+    "aliases": [
+      "Drizzle",
+      "Drizzle ORM"
+    ],
+    "confusable": [
+      "Prisma",
+      "ORM",
+      "Multi-DB driver"
+    ]
+  },
+  {
+    "word": "Multi-DB driver",
+    "meanings": [
+      "같은 코드로 여러 종류의 DB 에 붙게 해 주는 접속 계층",
+      "Multi-Database Driver"
+    ],
+    "partOfSpeech": "타입 계약",
+    "near": [
+      "멀티DB 드라이버",
+      "다중 DB 접속"
+    ],
+    "level": 2,
+    "aliases": [
+      "Multi-DB driver",
+      "Multi-Database Driver"
+    ],
+    "confusable": [
+      "Prisma",
+      "Drizzle",
+      "ORM"
+    ]
+  },
+  {
+    "word": "promptfoo",
+    "meanings": [
+      "프롬프트·모델을 YAML 로 견줘 보고 공격까지 시험하는 평가 도구",
+      "promptfoo"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "프롬프트푸"
+    ],
+    "level": 3,
+    "aliases": [
+      "promptfoo"
+    ],
+    "confusable": [
+      "DeepEval",
+      "RAGAS"
+    ]
+  },
+  {
+    "word": "DeepEval",
+    "meanings": [
+      "환각·관련성 같은 지표를 테스트 기준으로 거는 LLM 용 테스트 도구",
+      "DeepEval"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "딥이밸"
+    ],
+    "level": 2,
+    "aliases": [
+      "DeepEval"
+    ],
+    "confusable": [
+      "promptfoo",
+      "RAGAS"
+    ]
+  },
+  {
+    "word": "LangSmith",
+    "meanings": [
+      "LLM 앱의 실행 기록·실험·운영을 보는 랭체인의 상용 서비스",
+      "LangSmith"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "랭스미스"
+    ],
+    "level": 2,
+    "aliases": [
+      "LangSmith"
+    ],
+    "confusable": [
+      "Langfuse",
+      "Eval"
+    ]
+  },
+  {
+    "word": "Langfuse",
+    "meanings": [
+      "직접 설치해 쓸 수 있는 LLM 관측 도구(폐쇄망에 쓴다)",
+      "Langfuse"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "랭퓨즈"
+    ],
+    "level": 3,
+    "aliases": [
+      "Langfuse"
+    ],
+    "confusable": [
+      "LangSmith",
+      "Eval"
+    ]
+  },
+  {
+    "word": "LLM-as-judge",
+    "meanings": [
+      "채점 기준을 준 다른 LLM 에게 답변을 평가하게 하는 방식",
+      "LLM as a Judge"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "엘엘엠 저지",
+      "모델 채점"
+    ],
+    "level": 3,
+    "aliases": [
+      "LLM-as-judge",
+      "LLM as a Judge"
+    ],
+    "confusable": [
+      "Eval",
+      "Golden set"
+    ]
+  },
+  {
+    "word": "OWASP",
+    "meanings": [
+      "웹 보안 표준을 내는 비영리 단체(Top 10 으로 흔한 취약점을 정리한다)",
+      "Open Worldwide Application Security Project"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "오와스프"
+    ],
+    "level": 2,
+    "aliases": [
+      "OWASP",
+      "Open Worldwide Application Security Project"
+    ],
+    "confusable": [
+      "OWASP LLM Top 10",
+      "Red teaming"
+    ]
+  },
+  {
+    "word": "OWASP LLM Top 10",
+    "meanings": [
+      "프롬프트 인젝션·과도한 권한 위임 등 LLM 앱의 대표 취약점 목록",
+      "OWASP Top 10 for LLM Applications"
+    ],
+    "partOfSpeech": "보안·권한",
+    "near": [
+      "LLM 취약점 목록",
+      "오와스프 LLM"
+    ],
+    "level": 3,
+    "aliases": [
+      "OWASP LLM Top 10",
+      "OWASP Top 10 for LLM Applications"
+    ],
+    "confusable": [
+      "OWASP",
+      "Red teaming"
+    ]
+  },
+  {
+    "word": "PDCA",
+    "meanings": [
+      "계획·실행·점검·개선을 돌리는 반복 개선 사이클(데밍 사이클)",
+      "Plan-Do-Check-Act"
+    ],
+    "partOfSpeech": "개발·DevOps",
+    "near": [
+      "피디씨에이",
+      "데밍 사이클"
+    ],
+    "level": 3,
+    "aliases": [
+      "PDCA",
+      "Plan-Do-Check-Act"
+    ],
+    "confusable": [
+      "Agile",
+      "Scrum"
+    ]
+  },
+  {
     "word": "Server",
     "meanings": [
       "요청을 받아 처리해 주는 컴퓨터·프로그램",
@@ -6811,7 +7474,11 @@
       "ORM",
       "Object-Relational Mapping"
     ],
-    "confusable": []
+    "confusable": [
+      "Prisma",
+      "Drizzle",
+      "Multi-DB driver"
+    ]
   },
   {
     "word": "HTTP",
@@ -7753,7 +8420,8 @@
     ],
     "confusable": [
       "Scrum",
-      "Sprint"
+      "Sprint",
+      "PDCA"
     ]
   },
   {
@@ -7772,7 +8440,8 @@
     ],
     "confusable": [
       "Agile",
-      "Sprint"
+      "Sprint",
+      "PDCA"
     ]
   },
   {

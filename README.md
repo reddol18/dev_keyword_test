@@ -11,7 +11,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 > 이름은 단기기억을 관장하는 **해마**(hippocampus)에서 Hippo 를 따왔다.
 > IT 용어를 먹어 치우는 하마라는 뜻이다.
 
-<sub>최종 수정 2026-10-29 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
+<sub>최종 수정 2026-11-02 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
 
 ---
 
@@ -54,7 +54,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
 | 단어장 | 수록 | 구성 |
 |---|---|---|
-| **IT 개발 용어** | 391개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 /<br>제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 /<br>쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph / 기초 |
+| **IT 개발 용어** | 423개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 /<br>제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 /<br>쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph /<br>빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 / 기초 |
 | **IT 문서 영단어** | 80개 | 문서 읽기 / 에러·로그 / 리뷰·협업 / 릴리스·운영 |
 
 용어는 한국어 뜻과 영문 풀네임을 함께 담는다. 둘 다 정답으로 인정한다.
@@ -117,7 +117,7 @@ JSON은 손으로 고치지 않는다. `data/build_it_terms.py`가 생성하며,
 |---|---|
 | <img src="docs/screenshots/11-modes-terms.png" width="260"> | <img src="docs/screenshots/16-modes-words.png" width="260"> |
 
-**IT 용어 덱에 주관식이 없는 이유**는 뜻이 서술형 문장이라서다. 391개의
+**IT 용어 덱에 주관식이 없는 이유**는 뜻이 서술형 문장이라서다. 423개의
 첫 번째 뜻이 중간값 24자, 15자 이상이 95%, 최대 45자다.
 
 ```
@@ -158,7 +158,7 @@ FDE → "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발�
 **처음 보는 단어 자리를 매 회차 2개 떼어 둔다.** 우선순위만 따르면 복습이 자리를
 다 차지해서, 덱을 하루 10문제로 90일 돌려도 23%밖에 못 본다. 두 자리를 비워 두면
 63%가 된다 (301개였을 때 재 본 값 — 69개 → 191개). 면접 대비라 덱을 한 바퀴
-도는 것도 중요하다. 덱이 391개로 늘었으니 한 바퀴에 걸리는 날은 그만큼 길어진다.
+도는 것도 중요하다. 덱이 423개로 늘었으니 한 바퀴에 걸리는 날은 그만큼 길어진다.
 
 오늘 **맞힌** 단어는 그날 다시 나오지 않는다. 다만 **틀린** 단어는 같은 날에도
 다시 나온다 — 오답을 바로 복습하는 흐름이 끊기지 않게.
@@ -362,7 +362,7 @@ src/
   theme.ts          공통 스타일
   types.ts          Word, Grade, QuizMode, Question, Answer
 data/
-  it_terms.json     IT 개발 용어 391개   ← build_it_terms.py 가 생성
+  it_terms.json     IT 개발 용어 423개   ← build_it_terms.py 가 생성
   it_words.json     IT 문서 영단어 80개  ← build_it_words.py 가 생성
   quiz_cli.mjs      채점·출제 로직 CLI 점검용
 assets/model/
@@ -440,6 +440,7 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 | 날짜 | 한 일 |
 |---|---|
+| **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |
 | **2026-10-23** | 모르겠어요 선택지·복습 개수 표시 ([#12](https://github.com/reddol18/dev_keyword_test/issues/12), [#13](https://github.com/reddol18/dev_keyword_test/issues/13)) · 오답노트를 물어본 방향으로 ([#11](https://github.com/reddol18/dev_keyword_test/issues/11)) · IT 용어 덱에서 주관식 제거 ([#9](https://github.com/reddol18/dev_keyword_test/issues/9)) · 채점 모델 비교 도구 ([#8](https://github.com/reddol18/dev_keyword_test/issues/8)) |
 | **2026-10-22** | 간격 반복(SRS) 도입 · APK 288MB → **181MB** ([#1](https://github.com/reddol18/dev_keyword_test/issues/1)) · 이모지·분야 필터 ([#5](https://github.com/reddol18/dev_keyword_test/issues/5), [#6](https://github.com/reddol18/dev_keyword_test/issues/6)) · 런칭 화면 ([#7](https://github.com/reddol18/dev_keyword_test/issues/7)) |
