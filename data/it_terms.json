@@ -624,7 +624,9 @@
     "confusable": [
       "System prompt",
       "Few-shot",
-      "CoT"
+      "CoT",
+      "Reproducibility",
+      "Idempotency"
     ]
   },
   {
@@ -1269,7 +1271,9 @@
     ],
     "confusable": [
       "At-least-once",
-      "Retry / Backoff"
+      "Retry / Backoff",
+      "Reproducibility",
+      "Temperature"
     ]
   },
   {
@@ -6939,6 +6943,26 @@
     "confusable": [
       "Eval",
       "Golden set"
+    ]
+  },
+  {
+    "word": "Reproducibility",
+    "meanings": [
+      "같은 입력에 같은 결과가 나오는 정도(temperature·seed 로 맞춘다)",
+      "Reproducibility"
+    ],
+    "partOfSpeech": "LLM 평가",
+    "near": [
+      "재현성",
+      "재현 가능성"
+    ],
+    "level": 3,
+    "aliases": [
+      "Reproducibility"
+    ],
+    "confusable": [
+      "Temperature",
+      "Idempotency"
     ]
   },
   {

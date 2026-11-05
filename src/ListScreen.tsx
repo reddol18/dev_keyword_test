@@ -37,15 +37,17 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
   const availableLevels = useMemo(() => levelsOf(deck), [deck]);
   const availableFields = useMemo(() => fieldsOf(deck), [deck]);
 
+  /** 검색어가 이 단어에 걸리는가. 뜻만 기억나는 경우가 흔해 함께 훑는다. */
+  const matches = (w: Word, q: string) =>
+    !q ||
+    w.word.toLowerCase().includes(q) ||
+    w.meanings.some((m) => m.toLowerCase().includes(q)) ||
+    (w.near ?? []).some((n) => n.toLowerCase().includes(q)) ||
+    (w.aliases ?? []).some((a) => a.toLowerCase().includes(q));
+
   const sections = useMemo(() => {
     const q = query.trim().toLowerCase();
-    // 용어·한국어 뜻·영문 풀네임을 함께 훑는다. 뜻만 기억나는 경우가 흔해서다.
-    const hit = (w: Word) =>
-      !q ||
-      w.word.toLowerCase().includes(q) ||
-      w.meanings.some((m) => m.toLowerCase().includes(q)) ||
-      (w.near ?? []).some((n) => n.toLowerCase().includes(q)) ||
-      (w.aliases ?? []).some((a) => a.toLowerCase().includes(q));
+    const hit = (w: Word) => matches(w, q);
 
     const byField = new Map<string, Word[]>();
     for (const w of deck.words) {
@@ -63,6 +65,27 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
     () => sections.reduce((n, s) => n + s.data.length, 0),
     [sections],
   );
+
+  /**
+   * 이 덱에서 못 찾았을 때, 다른 덱에 있는지 본다.
+   *
+   * 목록은 IT 개발 용어(424개)로 열린다. 영단어 덱 80개는 수가 적어
+   * 존재가 잊히기 쉬운데, 거기 있는 단어를 찾으면 "없습니다"만 나와서
+   * 지워진 것처럼 읽힌다(실제 제보가 있었다).
+   *
+   * 검색어가 있을 때만 본다. 필터만 걸었을 때는 덱마다 분야가 달라
+   * 안내가 혼란만 준다.
+   */
+  const otherDeck = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q || total > 0) return null;
+    for (const d of DECKS) {
+      if (d.id === deckId) continue;
+      const n = d.words.filter((w) => matches(w, q)).length;
+      if (n > 0) return { deck: d, count: n };
+    }
+    return null;
+  }, [query, total, deckId]);
 
   /**
    * 목록이 바뀌면 맨 위로 올린다.
@@ -202,9 +225,28 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
           listRef.current?.getScrollResponder()?.scrollTo({ y: 0, animated: false });
         }}
         ListEmptyComponent={
-          <Text style={l.empty}>
-            {query ? `"${query}"에 맞는 단어가 없습니다` : '단어가 없습니다'}
-          </Text>
+          <View style={l.emptyBox}>
+            <Text style={l.empty}>
+              {query ? `"${query}"에 맞는 단어가 없습니다` : '단어가 없습니다'}
+            </Text>
+            {otherDeck && (
+              <Pressable
+                onPress={() => {
+                  // 검색어는 그대로 두고 덱만 옮긴다 — 찾던 단어가 바로 보이게
+                  setDeckId(otherDeck.deck.id);
+                  setLevels([]);
+                  setFields([]);
+                }}
+                style={l.otherBtn}
+              >
+                <Text style={l.otherText}>
+                  {deckIcon(otherDeck.deck.id)} {otherDeck.deck.name} 덱에
+                  {' '}{otherDeck.count}개 있습니다
+                </Text>
+                <Text style={l.otherGo}>그 덱으로 보기 →</Text>
+              </Pressable>
+            )}
+          </View>
         }
         renderSectionHeader={({ section }) => (
           <View style={l.sectionHead}>
@@ -314,5 +356,13 @@ const l = StyleSheet.create({
   meaning: { fontSize: 15, color: C.text, lineHeight: 21 },
   full: { fontSize: 13, color: C.faint },
 
-  empty: { textAlign: 'center', color: C.faint, fontSize: 15, paddingVertical: 48 },
+  emptyBox: { paddingVertical: 48, paddingHorizontal: 20, gap: 16 },
+  empty: { textAlign: 'center', color: C.faint, fontSize: 15 },
+  otherBtn: {
+    alignSelf: 'center', alignItems: 'center', gap: 4,
+    paddingHorizontal: 18, paddingVertical: 14, borderRadius: 12,
+    borderWidth: 1, borderColor: C.blue, backgroundColor: '#eff6ff',
+  },
+  otherText: { fontSize: 14, color: C.text, textAlign: 'center' },
+  otherGo: { fontSize: 13, color: C.blue, fontWeight: '700' },
 });

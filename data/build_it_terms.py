@@ -433,6 +433,7 @@ STACK = [
     ("LLM 평가", "LangSmith", "LangSmith", "LLM 앱의 실행 기록·실험·운영을 보는 랭체인의 상용 서비스", ["랭스미스"], 0),
     ("LLM 평가", "Langfuse", "Langfuse", "직접 설치해 쓸 수 있는 LLM 관측 도구(폐쇄망에 쓴다)", ["랭퓨즈"], 1),
     ("LLM 평가", "LLM-as-judge", "LLM as a Judge", "채점 기준을 준 다른 LLM 에게 답변을 평가하게 하는 방식", ["엘엘엠 저지", "모델 채점"], 1),
+    ("LLM 평가", "Reproducibility", "Reproducibility", "같은 입력에 같은 결과가 나오는 정도(temperature·seed 로 맞춘다)", ["재현성", "재현 가능성"], 1),
 
     # [보안·방법론]
     ("보안·권한", "OWASP", "Open Worldwide Application Security Project", "웹 보안 표준을 내는 비영리 단체(Top 10 으로 흔한 취약점을 정리한다)", ["오와스프"], 0),
@@ -663,6 +664,9 @@ CONFUSABLE = [
     ["LLM-as-judge", "Eval", "Golden set"],                       # 채점 주체 / 측정 / 기준셋
     ["OWASP", "OWASP LLM Top 10", "Red teaming"],                 # 단체 / 목록 / 활동
     ["PDCA", "Agile", "Scrum"],                                   # 개선 사이클 / 개발 방식 / 운영 틀
+    # 같은 입력에 같은 답이 나오게 하는 이야기 — 셋이 자주 섞인다.
+    # deterministic 은 영단어 덱에 있어 여기 못 넣는다(묶음은 한 덱 안에서만 쓴다).
+    ["Reproducibility", "Temperature", "Idempotency"],            # 재현 정도 / 무작위성 조절 / 여러 번 호출
 ]
 
 
