@@ -11,7 +11,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 > 이름은 단기기억을 관장하는 **해마**(hippocampus)에서 Hippo 를 따왔다.
 > IT 용어를 먹어 치우는 하마라는 뜻이다.
 
-<sub>최종 수정 2026-11-02 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
+<sub>최종 수정 2026-11-05 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
 
 ---
 
@@ -54,7 +54,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 
 | 단어장 | 수록 | 구성 |
 |---|---|---|
-| **IT 개발 용어** | 423개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 /<br>제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 /<br>쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph /<br>빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 / 기초 |
+| **IT 개발 용어** | 424개 | AI·에이전트 / 개발·DevOps / 아키텍처 / 보안·권한 / 커머스 운영 /<br>모바일·프론트 / RAG·검색 / LLM 서빙 / 대화형 AI / 컨택센터 /<br>제조·스마트팩토리 / 물류 현장 / Vision AI / 기간계 연동 / SI·프로젝트 /<br>쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph /<br>빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 / 기초 |
 | **IT 문서 영단어** | 80개 | 문서 읽기 / 에러·로그 / 리뷰·협업 / 릴리스·운영 |
 
 용어는 한국어 뜻과 영문 풀네임을 함께 담는다. 둘 다 정답으로 인정한다.
@@ -117,7 +117,7 @@ JSON은 손으로 고치지 않는다. `data/build_it_terms.py`가 생성하며,
 |---|---|
 | <img src="docs/screenshots/11-modes-terms.png" width="260"> | <img src="docs/screenshots/16-modes-words.png" width="260"> |
 
-**IT 용어 덱에 주관식이 없는 이유**는 뜻이 서술형 문장이라서다. 423개의
+**IT 용어 덱에 주관식이 없는 이유**는 뜻이 서술형 문장이라서다. 424개의
 첫 번째 뜻이 중간값 24자, 15자 이상이 95%, 최대 45자다.
 
 ```
@@ -158,7 +158,7 @@ FDE → "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발�
 **처음 보는 단어 자리를 매 회차 2개 떼어 둔다.** 우선순위만 따르면 복습이 자리를
 다 차지해서, 덱을 하루 10문제로 90일 돌려도 23%밖에 못 본다. 두 자리를 비워 두면
 63%가 된다 (301개였을 때 재 본 값 — 69개 → 191개). 면접 대비라 덱을 한 바퀴
-도는 것도 중요하다. 덱이 423개로 늘었으니 한 바퀴에 걸리는 날은 그만큼 길어진다.
+도는 것도 중요하다. 덱이 424개로 늘었으니 한 바퀴에 걸리는 날은 그만큼 길어진다.
 
 오늘 **맞힌** 단어는 그날 다시 나오지 않는다. 다만 **틀린** 단어는 같은 날에도
 다시 나온다 — 오답을 바로 복습하는 흐름이 끊기지 않게.
@@ -362,7 +362,7 @@ src/
   theme.ts          공통 스타일
   types.ts          Word, Grade, QuizMode, Question, Answer
 data/
-  it_terms.json     IT 개발 용어 423개   ← build_it_terms.py 가 생성
+  it_terms.json     IT 개발 용어 424개   ← build_it_terms.py 가 생성
   it_words.json     IT 문서 영단어 80개  ← build_it_words.py 가 생성
   quiz_cli.mjs      채점·출제 로직 CLI 점검용
 assets/model/
@@ -400,8 +400,21 @@ APK 안의 번들을 직접 열어 보는 게 확실하다.
 
 ```sh
 tar -xf app-release.apk assets/index.android.bundle
-grep -c "새로 넣은 용어" assets/index.android.bundle
 ```
+
+> **번들은 Hermes 바이트코드라 평문 `grep` 이 안 된다.** 문자열이 테이블에
+> 따로 들어가는데, **ASCII 전용 문자열은 1바이트(latin1), 한글이 섞이면
+> UTF-16LE** 로 저장된다. 둘 다 찾아야 한다. 한쪽만 보면 멀쩡히 들어간
+> 데이터를 "없다"고 읽는다 — 실제로 `WMS` 를 대조군으로 넣고서야 알았다.
+>
+> ```js
+> const buf = fs.readFileSync('index.android.bundle');
+> const has = (s) =>
+>   buf.includes(Buffer.from(s, 'utf16le')) || buf.includes(Buffer.from(s, 'latin1'));
+> ```
+>
+> 확인할 때는 **원래 있던 문자열을 대조군으로 함께** 본다. 그게 안 잡히면
+> 검색 방법이 틀린 것이지 데이터가 빠진 게 아니다.
 
 번들을 강제로 다시 만들면 해결된다.
 
@@ -414,6 +427,43 @@ grep -c "새로 넣은 용어" assets/index.android.bundle
 
 `build.gradle`이 `org.gradle.util.VersionNumber`를 쓰는데 Gradle 9에서 빠졌다.
 RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
+
+### 4. 긴 목록에서 스크롤이 아예 멈춘다
+
+갤럭시 S8(안드로이드 9)에서 424개 목록을 내리다 보면 **20회차쯤부터
+스크롤이 먹지 않았다.** 끝이 아니라 113번째에서였다. 그때 화면 좌표를
+찍어 보니 원인이 보였다.
+
+```
+y= 776  B2B
+y= 776  Safety stock
+y= 776  품절을 막으려 늘 남겨 두는 재고     ← 9개가 같은 자리에 쌓임
+   ...
+y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
+```
+
+스크롤이 안 되는 게 아니라 **그릴 위치를 몰라서 못 그리는 것**이었다.
+
+`SectionList` 에 `getItemLayout` 이 없으면 RN 은 항목을 **그려 본 뒤에야**
+높이를 안다. 이 덱은 뜻이 8~45자라 1줄이 되기도 2줄이 되기도 하고,
+풀네임 줄은 295/424 개에만 그려져서 **항목마다 높이가 다르다.** 스크롤
+중 계속 측정·보정이 일어나는데, 느린 기기에서는 그 계산이 따라가지
+못하고 무너진다.
+
+여기에 `removeClippedSubviews` 가 **안드로이드에서 기본 `true`** 인 것이
+겹친다. [공식 문서](https://reactnative.dev/docs/sectionlist)가 직접
+"may lead to bugs (missing content)" 라고 경고한다.
+
+세 가지를 함께 고쳤다.
+
+- 뜻 2줄·풀네임 1줄로 **높이를 고정**하고 `getItemLayout` 을 준다
+  (`SectionList` 는 헤더까지 섞인 평탄화 인덱스를 넘기므로 직접 센다)
+- `removeClippedSubviews={false}`
+- 필터·검색어가 바뀌면 맨 위로 올린다
+
+**빠른 기기에서는 잘 안 드러난다.** Redmi 14C 에서는 "가끔 이상하다"
+정도였던 것이 S8 에서는 40회 연속 멈춤으로 나타났다. 성능 문제는
+느린 기기로 봐야 한다.
 
 ---
 
@@ -440,6 +490,7 @@ RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
 | 날짜 | 한 일 |
 |---|---|
+| **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |
 | **2026-10-23** | 모르겠어요 선택지·복습 개수 표시 ([#12](https://github.com/reddol18/dev_keyword_test/issues/12), [#13](https://github.com/reddol18/dev_keyword_test/issues/13)) · 오답노트를 물어본 방향으로 ([#11](https://github.com/reddol18/dev_keyword_test/issues/11)) · IT 용어 덱에서 주관식 제거 ([#9](https://github.com/reddol18/dev_keyword_test/issues/9)) · 채점 모델 비교 도구 ([#8](https://github.com/reddol18/dev_keyword_test/issues/8)) |
