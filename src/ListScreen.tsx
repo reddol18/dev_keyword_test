@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Pressable, ScrollView, SectionList, StyleSheet, Text, TextInput, View,
 } from 'react-native';
@@ -9,6 +9,17 @@ import { deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 const LEVEL_LABEL: Record<number, string> = { 1: '기초', 2: '일반', 3: '면접 우선' };
+
+/**
+ * 항목·헤더의 고정 높이(dp). getItemLayout 이 쓴다.
+ *
+ * 스타일에서 계산해 둔 값이라 둘을 따로 고치면 어긋난다.
+ *   row  = paddingVertical 11*2 + 단어 24 + 뜻 21*2 + 풀네임 18 + gap 2*2 ≈ 130
+ *   head = paddingVertical 7*2 + 글자 20 ≈ 34
+ * 실기기(S8, density 480)에서 265px/328px 로 나왔던 것을 2줄 고정으로 맞춘 값.
+ */
+const ROW_H = 130;
+const SECTION_H = 34;
 
 /**
  * 단어-뜻 목록.
@@ -52,6 +63,25 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
     () => sections.reduce((n, s) => n + s.data.length, 0),
     [sections],
   );
+
+  /**
+   * 목록이 바뀌면 맨 위로 올린다.
+   *
+   * 분야 칩을 누르면 섹션이 23개에서 1~2개로 줄어드는데 스크롤 위치는
+   * 그대로다. 그 자리에 있던 내용이 사라져 RN 이 위치를 보정하고,
+   * 사용자에게는 "갑자기 다른 섹션으로 튀는" 것처럼 보인다.
+   *
+   * 덱·검색어·필터 중 하나라도 바뀌면 지금 보던 자리는 의미를 잃으므로
+   * 올려 버리는 쪽이 맞다.
+   */
+  const listRef = useRef<SectionList<Word>>(null);
+  useEffect(() => {
+    // 섹션이 비었을 때 부르면 터진다
+    if (sections.length === 0) return;
+    listRef.current?.scrollToLocation({
+      sectionIndex: 0, itemIndex: 0, animated: false, viewPosition: 0,
+    });
+  }, [deckId, query, levels, fields, sections.length]);
 
   const toggleLevel = (lv: number) =>
     setLevels(levels.includes(lv) ? levels.filter((x) => x !== lv) : [...levels, lv]);
@@ -149,11 +179,28 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
       </View>
 
       <SectionList
+        ref={listRef}
         sections={sections}
         keyExtractor={(w) => `${deckId}-${w.word}`}
         stickySectionHeadersEnabled
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingBottom: 32 }}
+        /*
+         * 안드로이드 기본값이 true 인데, 공식 문서가 "may lead to bugs
+         * (missing content)" 라고 경고한다. 실제로 S8(안드로이드 9)에서
+         * 423개를 내리다 보면 항목이 같은 y 에 겹쳐 쌓이고 일부는 y=0 으로
+         * 튀면서 스크롤이 아예 멈췄다. 항목 높이를 미리 모르는 상태에서
+         * 화면 밖 뷰를 떼어내면 다시 들어올 때 위치를 잃는다.
+         * 423개 텍스트 항목이라 메모리 부담은 크지 않다.
+         */
+        removeClippedSubviews={false}
+        /*
+         * getItemLayout 이 없으면 아직 안 그린 곳으로는 못 뛴다.
+         * 이 fallback 이 없으면 scrollToLocation 이 예외를 던진다.
+         */
+        onScrollToIndexFailed={() => {
+          listRef.current?.getScrollResponder()?.scrollTo({ y: 0, animated: false });
+        }}
         ListEmptyComponent={
           <Text style={l.empty}>
             {query ? `"${query}"에 맞는 단어가 없습니다` : '단어가 없습니다'}
@@ -167,16 +214,45 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
             </Text>
           </View>
         )}
+        /*
+         * 항목 높이를 고정하고 미리 알려 준다. 이게 없으면 RN 이 항목을
+         * 그려 본 뒤에야 높이를 알아서, 스크롤 중 계속 측정·보정이 일어나고
+         * 느린 기기에서는 그 계산이 무너진다(S8 재현 참조).
+         *
+         * SectionList 의 getItemLayout 은 헤더·푸터까지 섞인 평탄화 인덱스를
+         * 받는다. 섹션마다 [헤더, 항목…] 순서라 직접 세어 offset 을 만든다.
+         */
+        getItemLayout={(_data, index) => {
+          let offset = 0;
+          let i = 0;
+          for (const s of sections) {
+            if (i === index) return { length: SECTION_H, offset, index };   // 헤더
+            offset += SECTION_H;
+            i += 1;
+            if (index < i + s.data.length) {
+              const within = index - i;
+              return { length: ROW_H, offset: offset + within * ROW_H, index };
+            }
+            offset += s.data.length * ROW_H;
+            i += s.data.length;
+          }
+          return { length: ROW_H, offset, index };
+        }}
         renderItem={({ item }) => (
           <View style={l.row}>
             <View style={l.wordRow}>
-              <Text style={l.word}>{item.word}</Text>
+              <Text style={l.word} numberOfLines={1}>{item.word}</Text>
               {item.level === 3 && <Text style={l.star}>★</Text>}
             </View>
-            <Text style={l.meaning}>{item.meanings[0]}</Text>
-            {item.meanings[1] != null && item.meanings[1] !== item.word && (
-              <Text style={l.full}>{item.meanings[1]}</Text>
-            )}
+            {/* 뜻은 최대 45자라 2줄이면 거의 다 들어간다. 높이를 고정하려고
+                줄 수를 묶되, 짧은 뜻도 두 줄 자리를 차지하게 해 간격을 맞춘다. */}
+            <Text style={l.meaning} numberOfLines={2}>{item.meanings[0]}</Text>
+            {/* 풀네임 줄은 295/424 개에만 있다. 없을 때도 자리를 비워 둬야
+                항목 높이가 같아진다. */}
+            <Text style={l.full} numberOfLines={1}>
+              {item.meanings[1] != null && item.meanings[1] !== item.word
+                ? item.meanings[1] : ' '}
+            </Text>
           </View>
         )}
       />
@@ -217,15 +293,19 @@ const l = StyleSheet.create({
   // 가로 스크롤이라 줄바꿈하지 않는다. 좌우 여백은 헤더 패딩과 맞춘다.
   fieldRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 20 },
 
+  // 높이를 getItemLayout 과 맞춘다 (SECTION_H)
   sectionHead: {
-    backgroundColor: C.card, paddingHorizontal: 20, paddingVertical: 7,
+    backgroundColor: C.card, paddingHorizontal: 20,
+    height: SECTION_H, justifyContent: 'center',
     borderBottomWidth: 1, borderBottomColor: C.line,
   },
   sectionText: { fontSize: 14, fontWeight: '700', color: C.text },
   sectionCount: { fontSize: 12, color: C.faint, fontWeight: '400' },
 
+  // 높이를 getItemLayout 과 맞춘다 (ROW_H). 뜻 2줄 + 풀네임 1줄 기준.
   row: {
     paddingHorizontal: 20, paddingVertical: 11, gap: 2,
+    height: ROW_H,
     borderBottomWidth: 1, borderBottomColor: '#f3f4f6',
   },
   wordRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
