@@ -133,8 +133,24 @@ FDE → "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발�
 ### 목록 보기
 
 시작 화면 우상단에서 전체 용어를 훑어볼 수 있다.
-분야별로 묶여 있고 헤더가 상단에 고정되며, 검색은 용어·뜻·별칭·근접어를
-모두 훑는다. ★는 면접 우선 등급이다.
+분야별로 묶여 있고 헤더가 상단에 고정되며, ★는 면접 우선 등급이다.
+덱·난이도·분야를 바꾸면 맨 위로 돌아가고, 424개를 끝까지 내려도
+멈추지 않는다 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)).
+
+검색은 용어뿐 아니라 **뜻·풀네임·근접어**까지 훑고, 일부만 쳐도 걸린다.
+`Reprodu` 까지만 쳐도 `Reproducibility` 가 나온다.
+
+<img src="docs/screenshots/19-list-search.png" width="260">
+
+찾는 단어가 **다른 덱**에 있으면 그쪽을 알려 준다.
+덱이 424 대 80 으로 기울어 있어 영단어 덱 80개는 존재가 잊히기 쉽고,
+그래서 "있던 게 없어졌다"로 읽힌다 — 실제로 그렇게 제보를 받았다.
+([#14](https://github.com/reddol18/dev_keyword_test/issues/14))
+
+| 없다고만 하지 않는다 | 검색어를 들고 넘어간다 |
+|---|---|
+| <img src="docs/screenshots/17-list-otherdeck.png" width="260"> | <img src="docs/screenshots/18-list-otherdeck-moved.png" width="260"> |
+| `deterministic`은 **영단어 덱**에 있다.<br>거기 몇 개 있는지까지 세어 보여준다 | 누르면 덱이 바뀌고 **검색어는 그대로**.<br>찾던 단어가 바로 보인다 |
 
 ### 잊을 때쯤 다시 나온다 — 간격 반복
 
@@ -490,7 +506,7 @@ y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
 
 | 날짜 | 한 일 |
 |---|---|
-| **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) |
+| **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) · 목록 화면 스크린샷 갱신 |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |
 | **2026-10-23** | 모르겠어요 선택지·복습 개수 표시 ([#12](https://github.com/reddol18/dev_keyword_test/issues/12), [#13](https://github.com/reddol18/dev_keyword_test/issues/13)) · 오답노트를 물어본 방향으로 ([#11](https://github.com/reddol18/dev_keyword_test/issues/11)) · IT 용어 덱에서 주관식 제거 ([#9](https://github.com/reddol18/dev_keyword_test/issues/9)) · 채점 모델 비교 도구 ([#8](https://github.com/reddol18/dev_keyword_test/issues/8)) |
