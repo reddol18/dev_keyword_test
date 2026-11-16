@@ -626,10 +626,11 @@ tar -xf app-release.apk assets/index.android.bundle
 
 비밀번호는 맞았다. **`gradle.properties` 가 비밀번호를 끝까지 담지
 못한 것**이었다. 이 파일은 자바 `.properties` 포맷이고 `#` 이 주석
-시작이라, `Wb!2026#Rls$kS7q` 를 넣으면 파일에는 `Wb!2026` 만 남는다.
+시작이라, `Pw1234#SECRET` 처럼 `#` 이 들어간 비밀번호를 넣으면 파일에는
+`Pw1234` 만 남는다. (아래는 자리표시자다 — 실제 값이 아니다.)
 
 ```
-WORDBOOK_RELEASE_STORE_PASSWORD=Wb!2026        ← # 뒤가 사라졌다
+WORDBOOK_RELEASE_STORE_PASSWORD=Pw1234         ← # 뒤가 사라졌다
 ```
 
 Gradle 은 잘린 값으로 키스토어를 열려다 실패하고, 메시지는 "비밀번호가
