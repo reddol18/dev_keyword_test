@@ -46,6 +46,7 @@
       [
         "react-native-google-mobile-ads",
         {
+          "_comment": "실제 앱 ID 는 app.config.js 가 .env 의 ADMOB_ID 로 덮어쓴다. 여기 값은 .env 가 없을 때의 테스트 ID 다.",
           "androidAppId": "ca-app-pub-3940256099942544~3347511713"
         }
       ]

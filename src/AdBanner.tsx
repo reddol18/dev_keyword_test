@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import { useRef, useState } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import {
@@ -40,13 +41,22 @@ import { C } from './theme';
  * 개발 중에는 반드시 테스트 ID 를 쓴다. 자기 앱의 진짜 광고를 직접
  * 누르면 무효 클릭으로 계정이 정지될 수 있다.
  * __DEV__ 는 릴리스 빌드에서 false 라 실수로 테스트 광고가 나갈 일은
- * 없지만, 출시 전에 REAL_UNIT_ID 를 실제 값으로 바꿔야 한다.
+ * 없다.
+ *
+ * 실제 단위 ID 는 소스에 박지 않고 `.env` 의 ADMOB_AD_ID 에 둔다.
+ * 공개 저장소라서다. `process.env` 는 EXPO_PUBLIC_ 접두사가 붙은
+ * 변수만 번들에 박아 주므로, app.config.js 의 `extra` 를 거쳐
+ * expo-constants 로 꺼낸다.
+ * https://docs.expo.dev/versions/v57.0.0/sdk/constants/
  */
 
-// TODO(출시 전): AdMob 콘솔에서 발급받은 배너 단위 ID 로 바꾼다.
-//   ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY  (앱 ID 와 달리 슬래시다)
-const REAL_UNIT_ID = '';
+const REAL_UNIT_ID =
+  (Constants.expoConfig?.extra?.admobBannerUnitId as string | undefined) ?? '';
 
+/*
+  개발 빌드이거나 실제 ID 가 안 들어왔으면 테스트 광고로 떨어진다.
+  `.env` 없이 clone 한 환경에서도 화면이 그대로 돌아간다.
+*/
 const unitId =
   __DEV__ || !REAL_UNIT_ID ? TestIds.ADAPTIVE_BANNER : REAL_UNIT_ID;
 
