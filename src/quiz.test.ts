@@ -1,8 +1,30 @@
-import { buildQuiz, hintOf } from './quiz';
-import type { Card } from './srs';
-import { today } from './srs';
-import type { QuizMode, Word } from './types';
+import { buildQuiz as rawBuildQuiz, hintOf } from './quiz';
+import type { Cards } from './srs';
+import { cardKey, today } from './srs';
+import type { Question, QuizMode, Word } from './types';
 import { ALL_MODES, isChoiceMode } from './types';
+
+/**
+ * 테스트용 덱 이름. 카드 키가 `덱:단어` 라서 기록을 만들 때도
+ * 조회할 때도 같은 덱 이름을 써야 한다.
+ */
+const DECK = 'test-deck';
+
+/** deckId 를 매번 쓰지 않도록 감싼다. 기본은 빈 기록. */
+function buildQuiz(
+  pool: Word[],
+  modes: QuizMode[],
+  count: number,
+  cards: Cards = {},
+  deckId: string = DECK,
+): Question[] {
+  return rawBuildQuiz(pool, modes, count, cards, deckId);
+}
+
+/** 테스트 덱 기준으로 카드 키를 만든다 */
+function key(word: string): string {
+  return cardKey(DECK, word);
+}
 
 /**
  * 출제 테스트.
@@ -176,10 +198,10 @@ describe('buildQuiz — MIN_NEW 가 새 단어 자리를 확보한다', () => {
   const now = today();
 
   /** 전부 '오늘 맞혀서 Later' 인 기록 — 새 단어 자리가 없으면 0개가 된다 */
-  function allLater(words: Word[]): Record<string, Card> {
-    const cards: Record<string, Card> = {};
+  function allLater(words: Word[]): Cards {
+    const cards: Cards = {};
     for (const w of words) {
-      cards[w.word] = { streak: 3, due: '2099-01-01', last: now };
+      cards[key(w.word)] = { streak: 3, due: '2099-01-01', last: now };
     }
     return cards;
   }
@@ -192,20 +214,20 @@ describe('buildQuiz — MIN_NEW 가 새 단어 자리를 확보한다', () => {
 
     const quiz = buildQuiz(deck, TYPE_MODE, 10, cards);
     expect(quiz).toHaveLength(10);
-    const fresh = quiz.filter((q) => !cards[q.word.word]);
+    const fresh = quiz.filter((q) => !cards[key(q.word.word)]);
     expect(fresh.length).toBeGreaterThanOrEqual(2);
   });
 
   it('복습 대상이 Due 로 가득해도 새 단어 자리가 남는다', () => {
     const deck = pool(40);
-    const cards: Record<string, Card> = {};
+    const cards: Cards = {};
     for (const w of deck.slice(0, 30)) {
       // due 가 지났고 오늘 안 풀었다 → Due
-      cards[w.word] = { streak: 1, due: '2000-01-01', last: '2000-01-01' };
+      cards[key(w.word)] = { streak: 1, due: '2000-01-01', last: '2000-01-01' };
     }
 
     const quiz = buildQuiz(deck, TYPE_MODE, 10, cards);
-    const fresh = quiz.filter((q) => !cards[q.word.word]);
+    const fresh = quiz.filter((q) => !cards[key(q.word.word)]);
     expect(fresh.length).toBeGreaterThanOrEqual(2);
   });
 
@@ -227,12 +249,12 @@ describe('buildQuiz — 간격 반복 순서', () => {
 
   it('오늘 틀린 것(Relearn)을 먼저 낸다', () => {
     const deck = pool(40);
-    const cards: Record<string, Card> = {};
+    const cards: Cards = {};
     // Term0 만 오늘 틀렸다
-    cards.Term0 = { streak: 0, due: '2099-01-01', last: now };
+    cards[key('Term0')] = { streak: 0, due: '2099-01-01', last: now };
     // 나머지는 아직 볼 때가 아니다
     for (const w of deck.slice(1)) {
-      cards[w.word] = { streak: 3, due: '2099-01-01', last: now };
+      cards[key(w.word)] = { streak: 3, due: '2099-01-01', last: now };
     }
 
     const quiz = buildQuiz(deck, TYPE_MODE, 5, cards);
@@ -241,12 +263,12 @@ describe('buildQuiz — 간격 반복 순서', () => {
 
   it('밀린 복습(due 가 오래된 것)을 먼저 낸다', () => {
     const deck = pool(40);
-    const cards: Record<string, Card> = {};
+    const cards: Cards = {};
     for (const w of deck) {
-      cards[w.word] = { streak: 1, due: '2026-11-15', last: '2026-11-10' };
+      cards[key(w.word)] = { streak: 1, due: '2026-11-15', last: '2026-11-10' };
     }
     // Term7 이 가장 오래 밀렸다
-    cards.Term7 = { streak: 1, due: '2000-01-01', last: '2000-01-01' };
+    cards[key('Term7')] = { streak: 1, due: '2000-01-01', last: '2000-01-01' };
 
     const quiz = buildQuiz(deck, TYPE_MODE, 5, cards);
     expect(quiz.map((q) => q.word.word)).toContain('Term7');
@@ -254,6 +276,25 @@ describe('buildQuiz — 간격 반복 순서', () => {
 
   it('cards 를 안 주면 전부 처음 보는 것으로 취급한다', () => {
     expect(buildQuiz(pool(30), TYPE_MODE, 10)).toHaveLength(10);
+  });
+
+  /**
+   * 다른 덱의 기록이 이 덱의 출제를 흔들면 안 된다.
+   * 키에 덱이 없던 구조에서는 `Term0` 하나로 두 덱이 같은 칸을 썼다.
+   */
+  it('다른 덱 기록은 이 덱 출제에 영향을 주지 않는다', () => {
+    const deck = pool(5);
+    const other: Cards = {};
+    // 다른 덱에서 전부 '오늘 맞힘(Later)' 으로 기록돼 있다
+    for (const w of deck) {
+      other[cardKey('other-deck', w.word)] = {
+        streak: 3, due: '2099-01-01', last: now,
+      };
+    }
+
+    // 이 덱에는 기록이 없으므로 5개 전부 처음 보는 것으로 나와야 한다
+    const quiz = buildQuiz(deck, TYPE_MODE, 5, other);
+    expect(quiz).toHaveLength(5);
   });
 });
 

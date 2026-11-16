@@ -4,7 +4,7 @@ import type { DeckId, Filter } from './decks';
 import { DECKS, applyFilter, fieldsOf, getDeck, levelsOf } from './decks';
 import type { QuizMode } from './types';
 import { MODE_LABEL } from './types';
-import type { Card } from './srs';
+import type { Cards } from './srs';
 import { countDue, countNew, loadCards } from './srs';
 import { SECTION, SRS, deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
@@ -47,7 +47,7 @@ export default function StartScreen({
    * 제자리에서 고친다(`cards.current[w] = ...`). 참조가 같으면 리렌더가
    * 걸리지 않으므로 **얕게 복사해서** 넣는다.
    */
-  const [cards, setCards] = useState<Record<string, Card>>({});
+  const [cards, setCards] = useState<Cards>({});
 
   // 이 화면은 문제를 풀러 갈 때 통째로 unmount 된다(App.tsx 의 config 분기).
   // 돌아오면 다시 mount 되므로 이 effect 가 다시 돌아 숫자가 갱신된다.
@@ -72,8 +72,11 @@ export default function StartScreen({
   // 필터·덱이 바뀌면 그 범위 안에서만 다시 센다
   const { due, fresh } = useMemo(() => {
     const names = pool.map((w) => w.word);
-    return { due: countDue(cards, names), fresh: countNew(cards, names) };
-  }, [pool, cards]);
+    return {
+      due: countDue(cards, deckId, names),
+      fresh: countNew(cards, deckId, names),
+    };
+  }, [pool, cards, deckId]);
 
   // 덱을 바꾸면 이전 덱의 분야·레벨이 남아 0개가 되는 일이 없도록 초기화한다.
   // 출제 방식도 마찬가지다 — 덱마다 쓸 수 있는 방식이 다르다.

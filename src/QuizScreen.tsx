@@ -10,8 +10,8 @@ import type { Answer, Question } from './types';
 import { MODE_LABEL, SKIPPED, isChoiceMode } from './types';
 import type { StartConfig } from './StartScreen';
 import ResultScreen from './ResultScreen';
-import type { Card } from './srs';
-import { loadCards, nextCard, recordResult } from './srs';
+import type { Cards } from './srs';
+import { cardKey, loadCards, nextCard, recordResult } from './srs';
 import { fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
@@ -36,7 +36,7 @@ export default function QuizScreen({
   }, [config]);
   // 간격 반복 기록. 읽기 전에는 빈 값이라 고르게 출제된다.
   // 기록은 ref 에도 둬서 '다시 풀기' 때 최신 값을 쓴다.
-  const cards = useRef<Record<string, Card>>({});
+  const cards = useRef<Cards>({});
   const [questions, setQuestions] = useState<Question[]>([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState('');
@@ -54,11 +54,13 @@ export default function QuizScreen({
       .catch((e) => console.warn('[srs] 로딩 실패, 고르게 출제:', e))
       .finally(() => {
         if (alive) {
-          setQuestions(buildQuiz(pool, modes, config.count, cards.current));
+          setQuestions(
+            buildQuiz(pool, modes, config.count, cards.current, config.deckId),
+          );
         }
       });
     return () => { alive = false; };
-  }, [pool, modes, config.count]);
+  }, [pool, modes, config.count, config.deckId]);
 
   const q = questions[index];
   // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
@@ -77,8 +79,10 @@ export default function QuizScreen({
     setAnswers((prev) => [...prev, result]);
     setJudged(result);
     const w = result.word.word;
-    cards.current[w] = nextCard(cards.current[w], result.grade);
-    recordResult(w, result.grade).catch(() => {});   // 저장 실패가 학습을 막지 않게
+    const key = cardKey(config.deckId, w);
+    cards.current[key] = nextCard(cards.current[key], result.grade);
+    // 저장 실패가 학습을 막지 않게
+    recordResult(config.deckId, w, result.grade).catch(() => {});
   };
 
   const commit = async (raw: string) => {
@@ -119,7 +123,7 @@ export default function QuizScreen({
 
   const restart = () => {
     // 방금 푼 것도 반영되도록 ref 의 최신 기록을 쓴다
-    setQuestions(buildQuiz(pool, modes, config.count, cards.current));
+    setQuestions(buildQuiz(pool, modes, config.count, cards.current, config.deckId));
     setIndex(0);
     setInput('');
     setAnswers([]);

@@ -179,7 +179,30 @@ FDE → "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발�
 오늘 **맞힌** 단어는 그날 다시 나오지 않는다. 다만 **틀린** 단어는 같은 날에도
 다시 나온다 — 오답을 바로 복습하는 흐름이 끊기지 않게.
 
-기록은 기기에만 남는다(`AsyncStorage`, 키 `srs-v1`).
+기록은 기기에만 남는다(`AsyncStorage`, 키 `srs-v2`).
+
+저장 모양은 이렇다. **덱마다 따로 기록한다** — 두 덱에 겹치는 단어가 있어서
+(`Rollback`/`rollback`, `Incident`, `Postmortem`, `Legacy`) 단어만 키로 쓰면
+한쪽에서 맞힌 게 다른 쪽 진도로 새어 간다. 덱이 늘면 겹침도 늘어난다.
+
+```jsonc
+{
+  "version": 2,
+  "cards": {
+    "it-terms:Rollback": { "streak": 2, "due": "2026-11-23", "last": "2026-11-16" },
+    "it-words:rollback": { "streak": 0, "due": "2026-11-17", "last": "2026-11-16" }
+  }
+}
+```
+
+**버전을 데이터 안에 넣어 둔다.** 키 이름에만 있으면 읽는 쪽이 모양을 확인할
+수단이 없어서, `Card` 에 필드를 하나 추가하는 순간 기존 기록이 `undefined` 인
+채로 통과하고 `due` 비교가 전부 어긋나 복습이 조용히 멈춘다. 예외도 로그도
+없이 멈추는 종류라 재설치 말고는 복구 경로가 없다.
+
+옛 `srs-v1`(덱 구분 없는 평면 구조)은 첫 실행에 한 번 옮긴다. 단어가 실제로
+어느 덱에 있는지 찾아서 귀속시키고, 옮긴 뒤 옛 키를 지운다. 실패하면 옛 키를
+남겨 두고 다음 실행에 다시 시도한다 — 마이그레이션이 학습을 막지는 않는다.
 
 ---
 
@@ -680,7 +703,7 @@ y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
 
 | 날짜 | 한 일 |
 |---|---|
-| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) · **테스트 기반 구축** — jest-expo, 순수 함수 103개, GitHub Actions CI ([#19](https://github.com/reddol18/dev_keyword_test/issues/19)). 쓰면서 `nextCard` 에 streak 가드를 넣었다 — 깨진 기록이 들어오면 `due` 가 NaN 날짜로 영구 저장되는 경로가 있었다 |
+| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) · **테스트 기반 구축** — jest-expo, 순수 함수 103개, GitHub Actions CI ([#19](https://github.com/reddol18/dev_keyword_test/issues/19)). 쓰면서 `nextCard` 에 streak 가드를 넣었다 — 깨진 기록이 들어오면 `due` 가 NaN 날짜로 영구 저장되는 경로가 있었다 · **SRS 저장 구조를 `srs-v2` 로 올렸다** — 카드 키에 덱을 넣어 두 덱의 같은 단어가 기록을 공유하던 것을 끊고([#17](https://github.com/reddol18/dev_keyword_test/issues/17)), 버전을 데이터 안에 넣어 다음 구조 변경 때 복습이 조용히 멈추지 않게 했다([#18](https://github.com/reddol18/dev_keyword_test/issues/18)). 기존 `srs-v1` 기록은 첫 실행에 한 번 옮긴다 — 실기기 업데이트 설치로 복습 61개가 그대로 보존되는 것을 확인했다 |
 | **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) · 목록 화면 스크린샷 갱신 |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |

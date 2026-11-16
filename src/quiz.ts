@@ -2,8 +2,8 @@ import type { Question, QuizMode, Word } from './types';
 import { isChoiceMode } from './types';
 import { buildChoices } from './choices';
 import { shuffle } from './grading';
-import type { Card } from './srs';
-import { Priority, priorityOf, today } from './srs';
+import type { Cards } from './srs';
+import { Priority, cardKey, priorityOf, today } from './srs';
 
 /**
  * 한 회차에 최소한 이만큼은 처음 보는 단어를 넣는다.
@@ -30,15 +30,17 @@ const MIN_NEW = 2;
 function srsPick(
   pool: Word[],
   count: number,
-  cards: Record<string, Card>,
+  cards: Cards,
+  deckId: string,
 ): Word[] {
   const now = today();
+  const cardOf = (w: Word) => cards[cardKey(deckId, w.word)];
   const groups: Word[][] = [[], [], [], []];   // Relearn / Due / New / Later
-  for (const w of pool) groups[priorityOf(cards[w.word], now)].push(w);
+  for (const w of pool) groups[priorityOf(cardOf(w), now)].push(w);
 
   // 복습 대상만 밀린 순으로. 나머지는 섞는다.
   groups[Priority.Due].sort(
-    (a, b) => (cards[a.word]?.due ?? '').localeCompare(cards[b.word]?.due ?? ''),
+    (a, b) => (cardOf(a)?.due ?? '').localeCompare(cardOf(b)?.due ?? ''),
   );
   groups[Priority.Relearn] = shuffle(groups[Priority.Relearn]);
   groups[Priority.New] = shuffle(groups[Priority.New]);
@@ -59,17 +61,23 @@ function srsPick(
  * 답하는 요령이 생겨서 실제로 외웠는지 확인이 안 된다.
  *
  * cards 를 주면 간격 반복 순서(복습할 것 → 새 것 → 나머지)로 뽑는다.
- * 안 주면 전부 '처음 보는 것'으로 취급되어 고르게 섞인다.
+ * 빈 기록을 주면 전부 '처음 보는 것'으로 취급되어 고르게 섞인다.
+ *
+ * `deckId` 는 기록을 찾는 데 쓴다 — 카드 키가 `덱:단어` 라서
+ * 어느 덱의 기록인지 알아야 조회가 된다. 기본값을 두지 않는 이유는
+ * 빠뜨리면 조회가 전부 빗나가 '기록이 없는 것처럼' 조용히 동작하기
+ * 때문이다. 타입이 호출부를 강제하게 둔다.
  */
 export function buildQuiz(
   pool: Word[],
   modes: QuizMode[],
   count: number,
-  cards: Record<string, Card> = {},
+  cards: Cards,
+  deckId: string,
 ): Question[] {
   if (pool.length === 0 || modes.length === 0) return [];
 
-  const picked = srsPick(pool, count, cards);
+  const picked = srsPick(pool, count, cards, deckId);
   const modeBag = shuffle(modes);
 
   return picked.map((word, i) => {
