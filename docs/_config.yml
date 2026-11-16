@@ -1,0 +1,7 @@
+title: 용어먹는하마
+description: IT 실무·면접 용어 암기 앱
+lang: ko-KR
+theme: jekyll-theme-primer
+
+exclude:
+  - privacy-source.md
