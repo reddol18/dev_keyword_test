@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { allowedModes, applyFilter, getDeck } from './decks';
 import { gradeByMode } from './grading';
-import { buildQuiz, hintOf, quizPhase } from './quiz';
+import { buildQuiz, hintOf, quizPhase, shouldKeepGrade } from './quiz';
 import type { Answer, Question } from './types';
 import { MODE_LABEL, SKIPPED, isChoiceMode } from './types';
 import type { StartConfig } from './StartScreen';
@@ -57,6 +57,15 @@ export default function QuizScreen({
    */
   const [questions, setQuestions] = useState<Question[] | null>(null);
   const [index, setIndex] = useState(0);
+  /**
+   * 회차 번호. '다시 풀기' 를 누를 때마다 1 올라간다.
+   *
+   * 비동기 채점이 끝났을 때 "그 답이 아직 이 문제의 답인가" 를 판정하는 데
+   * 쓴다 (`shouldKeepGrade`). index 만으로는 부족하다 — `restart` 가
+   * index 를 0 으로 되돌리므로, 1번 문제를 채점하는 중에 다시 풀기를 누르면
+   * index 가 그대로 0 이어서 "안 바뀌었다" 로 잘못 읽힌다.
+   */
+  const [epoch, setEpoch] = useState(0);
   const [input, setInput] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([]);
   // 채점 직후 결과를 잠깐 보여주는 상태. null이면 아직 답하는 중.
@@ -87,6 +96,17 @@ export default function QuizScreen({
   const phase = quizPhase(questions !== null, total, index);
   const q = questions?.[index];
   const finished = phase === 'finished';
+
+  /**
+   * 지금 보고 있는 자리(회차·문제 번호)의 **최신** 값.
+   *
+   * 비동기 채점이 끝난 뒤 "그 사이에 문제가 바뀌었는가" 를 보려면 지금
+   * 값이 필요한데, `commit` 의 클로저가 잡은 `epoch`/`index` 는 렌더 당시
+   * 값이라 낡아 있다. state 를 그대로 읽으면 항상 "안 바뀌었다" 가 나와서
+   * 검사가 무력해진다. 그래서 렌더마다 ref 에 실어 둔다.
+   */
+  const nowAt = useRef({ epoch, index });
+  nowAt.current = { epoch, index };
 
   /** 그만두기 확인 다이얼로그가 떠 있는가. 두 겹으로 쌓이는 것을 막는다. */
   const asking = useRef(false);
@@ -181,15 +201,32 @@ export default function QuizScreen({
     // `questions[index]` 가 `Question` 이라고 거짓말을 해서 이 자리가
     // 검사 없이 통과했다 — 그 거짓말이 이슈 #26 의 멈춤을 가린 쪽이다.
     if (!q || !raw.trim() || judged || grading) return;
+
+    /**
+     * 채점을 시작한 시점의 문제를 고정한다.
+     *
+     * `await` 뒤에서 `q` 를 다시 읽으면 안 된다 — 이 클로저의 `q` 는
+     * 렌더 당시 값이라 낡았을 수 있고, 그 낡은 값으로 기록하는 것이
+     * 이슈 #22 의 버그 자체다. 기록은 반드시 `asked` 로 한다.
+     */
+    const asked = q;
+    const at = { epoch, index };
+
     setGrading(true);
-    const result: Answer = {
-      word: q.word,
-      mode: q.mode,
-      input: raw,            // 입력 원문을 그대로 보관 → 오답노트에서 쓴다
-      grade: await gradeByMode(raw, q.word, q.mode),
-    };
+    const grade = await gradeByMode(raw, asked.word, asked.mode);
     setGrading(false);
-    keep(result);
+
+    // 채점 중에 문제가 바뀌었으면(뒤로가기·다시 풀기 등) 결과를 버린다.
+    // 여기서 버리지 않으면 답한 적 없는 문제가 오답으로 기록되고
+    // SRS 복습 주기까지 잘못 당겨진다 (이슈 #22).
+    if (!shouldKeepGrade(at, nowAt.current)) return;
+
+    keep({
+      word: asked.word,
+      mode: asked.mode,
+      input: raw,            // 입력 원문을 그대로 보관 → 오답노트에서 쓴다
+      grade,
+    });
   };
 
   /**
@@ -209,16 +246,29 @@ export default function QuizScreen({
     keep({ word: q.word, mode: q.mode, input: SKIPPED, grade: 'wrong' });
   };
 
+  /**
+   * 다음 문제로.
+   *
+   * `grading` 가드가 있다. 지금은 채점 중에 `judged` 가 null 이라 "다음"
+   * 버튼이 아예 그려지지 않지만, 그건 **화면 모양에 기댄 안전성**이다.
+   * 스와이프 전환처럼 버튼을 거치지 않는 경로가 생기면 그대로 깨진다.
+   * 불변식은 렌더 조건이 아니라 로직이 지켜야 한다 (이슈 #22).
+   */
   const next = () => {
+    if (grading) return;
     setJudged(null);
     setInput('');
     setIndex((i) => i + 1);
   };
 
   const restart = () => {
+    if (grading) return;
     // 방금 푼 것도 반영되도록 ref 의 최신 기록을 쓴다
     setQuestions(buildQuiz(pool, modes, config.count, cards.current, config.deckId));
     setIndex(0);
+    // 회차를 올려 둔다. 진행 중인 채점이 끝나도 이전 회차의 결과로
+    // 판정되어 버려진다 (shouldKeepGrade).
+    setEpoch((e) => e + 1);
     setInput('');
     setAnswers([]);
     setJudged(null);

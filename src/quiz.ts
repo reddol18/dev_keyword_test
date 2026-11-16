@@ -138,6 +138,31 @@ export function quizPhase(
   return index >= total ? 'finished' : 'asking';
 }
 
+/**
+ * 비동기 채점이 끝났을 때, 그 결과를 기록해도 되는가.
+ *
+ * `gradeByMode` 는 모델 추론을 타면 수백 ms ~ 수 초 걸린다. 그 사이에
+ * 사용자가 다른 문제로 넘어갔거나 '다시 풀기' 로 회차를 바꿨으면,
+ * 끝난 결과는 **지금 화면에 있는 문제의 답이 아니다.** 그대로 기록하면
+ * 답한 적 없는 문제가 오답으로 들어가고 SRS 복습 주기까지 당겨진다
+ * (이슈 #22).
+ *
+ * 판정 기준을 `questions[index] === asked` 같은 **객체 동일성**으로 두지
+ * 않은 이유: `restart` 가 `buildQuiz` 로 배열을 새로 만들기 때문에, 같은
+ * 단어가 같은 자리에 다시 뽑히면 다른 회차인데도 동일성 검사가 통과할 수
+ * 있다(객체는 다르지만 index 는 0 으로 돌아가 있어 "안 바뀐 것처럼" 보이는
+ * 경우도 있다). 그래서 **회차(epoch)와 문제 번호(index) 두 값을 함께**
+ * 본다 — 둘 중 하나라도 움직였으면 버린다.
+ *
+ * 순수 함수라 타이밍을 흉내내지 않고 단위 테스트로 덮인다.
+ */
+export function shouldKeepGrade(
+  asked: { epoch: number; index: number },
+  now: { epoch: number; index: number },
+): boolean {
+  return asked.epoch === now.epoch && asked.index === now.index;
+}
+
 /** 지문 위에 붙일 짧은 안내 — 무엇을 답해야 하는지 */
 export function hintOf(mode: QuizMode): string {
   switch (mode) {

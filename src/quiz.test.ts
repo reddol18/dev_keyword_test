@@ -1,4 +1,4 @@
-import { buildQuiz as rawBuildQuiz, hintOf, quizPhase } from './quiz';
+import { buildQuiz as rawBuildQuiz, hintOf, quizPhase, shouldKeepGrade } from './quiz';
 import type { Cards } from './srs';
 import { cardKey, today } from './srs';
 import type { Question, QuizMode, Word } from './types';
@@ -403,6 +403,40 @@ describe('quizPhase', () => {
   it('다시 풀기에서 0개가 나오면 empty 로 간다', () => {
     expect(quizPhase(true, 10, 10)).toBe('finished'); // 결과 화면
     expect(quizPhase(true, 0, 0)).toBe('empty');      // 다시 풀기 → 낼 게 없음
+  });
+});
+
+/**
+ * 비동기 채점이 끝났을 때 그 결과를 기록해도 되는가 (이슈 #22).
+ *
+ * 버리는 쪽이 안전한 판정이다. 잘못 기록하면 답한 적 없는 문제가 오답으로
+ * 남고 SRS 복습 주기까지 당겨지는데, 버리면 사용자가 한 번 더 답하면 된다.
+ */
+describe('shouldKeepGrade', () => {
+  it('자리가 그대로면 기록한다 — 정상 경로', () => {
+    expect(shouldKeepGrade({ epoch: 0, index: 0 }, { epoch: 0, index: 0 })).toBe(true);
+    expect(shouldKeepGrade({ epoch: 2, index: 7 }, { epoch: 2, index: 7 })).toBe(true);
+  });
+
+  it('채점 중 다음 문제로 넘어갔으면 버린다', () => {
+    expect(shouldKeepGrade({ epoch: 0, index: 3 }, { epoch: 0, index: 4 })).toBe(false);
+  });
+
+  it('채점 중 이전 문제로 돌아갔어도 버린다 — 방향을 가리지 않는다', () => {
+    expect(shouldKeepGrade({ epoch: 0, index: 3 }, { epoch: 0, index: 2 })).toBe(false);
+  });
+
+  /**
+   * 이게 index 만으로는 못 잡는 경우다. '다시 풀기' 는 index 를 0 으로
+   * 되돌리므로, 1번 문제를 채점하는 중에 다시 풀기를 누르면 index 가
+   * 양쪽 다 0 이어서 "안 바뀌었다" 가 된다. epoch 가 그걸 가른다.
+   */
+  it('다시 풀기로 회차가 바뀌면 index 가 같아도 버린다', () => {
+    expect(shouldKeepGrade({ epoch: 0, index: 0 }, { epoch: 1, index: 0 })).toBe(false);
+  });
+
+  it('회차와 문제 번호가 둘 다 바뀌었으면 당연히 버린다', () => {
+    expect(shouldKeepGrade({ epoch: 0, index: 5 }, { epoch: 1, index: 0 })).toBe(false);
   });
 });
 
