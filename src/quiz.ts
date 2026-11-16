@@ -33,6 +33,11 @@ function srsPick(
   cards: Cards,
   deckId: string,
 ): Word[] {
+  // 음수가 들어오면 아래 slice 가 뒤에서 세어 **거의 전부**를 돌려준다
+  // (`slice(0, -1)` = 마지막 하나만 빼고 전부). 0 으로 눌러 둔다.
+  const want = Math.max(0, Math.floor(count));
+  if (want === 0) return [];
+
   const now = today();
   const cardOf = (w: Word) => cards[cardKey(deckId, w.word)];
   const groups: Word[][] = [[], [], [], []];   // Relearn / Due / New / Later
@@ -47,11 +52,11 @@ function srsPick(
   groups[Priority.Later] = shuffle(groups[Priority.Later]);
 
   // 새 단어 자리를 먼저 확보한다. 새 단어가 없으면 그만큼 복습이 더 들어간다.
-  const fresh = groups[Priority.New].splice(0, Math.min(MIN_NEW, count));
+  const fresh = groups[Priority.New].splice(0, Math.min(MIN_NEW, want));
   const rest = groups.flat();
 
   // 섞어서 내보낸다. 새 단어가 항상 1번 문제로 나오면 티가 난다.
-  return shuffle([...fresh, ...rest.slice(0, count - fresh.length)]);
+  return shuffle([...fresh, ...rest.slice(0, want - fresh.length)]);
 }
 
 /**
@@ -93,6 +98,44 @@ export function buildQuiz(
     const { choices, answerIndex } = buildChoices(word, pool, mode);
     return { word, mode, prompt, choices, answerIndex };
   });
+}
+
+/**
+ * 시험 화면이 지금 그려야 하는 것.
+ *
+ * - `loading`  아직 문제를 만들지 않았다 (기록 읽는 중)
+ * - `empty`    만들었는데 0개다 — 조건에 맞는 문제가 없다
+ * - `asking`   풀 문제가 남았다
+ * - `finished` 다 풀었다
+ */
+export type QuizPhase = 'loading' | 'empty' | 'asking' | 'finished';
+
+/**
+ * 네 상태를 가른다.
+ *
+ * `built` 를 따로 받는 이유: 문제 **개수만으로는** `loading` 과 `empty` 가
+ * 구분되지 않는다. 둘 다 0개라서, 개수만 보는 코드는
+ *
+ *   `total > 0 && index >= total`  → 0개일 때 finished 가 아니다 → 로딩 화면
+ *
+ * 로 흘러 **만들었는데 0개인 상태가 영구히 '준비 중' 으로 굳는다.**
+ * 기다릴 비동기 작업이 없으므로 저절로 풀리지 않는다. 그래서 개수가 아니라
+ * "만들었는가"를 별도로 들고 온다.
+ *
+ * `loading` 을 먼저 보는 순서가 중요하다. 처음 진입 때 `index` 는 0 이고
+ * `total` 도 0 이라, 만들기 전에 끝남/빈 상태로 판정하면 결과 화면이나
+ * 안내 문구가 한 번 번쩍 지나간다.
+ *
+ * 순수 함수라 화면을 띄우지 않고 단위 테스트로 덮인다.
+ */
+export function quizPhase(
+  built: boolean,
+  total: number,
+  index: number,
+): QuizPhase {
+  if (!built) return 'loading';
+  if (total === 0) return 'empty';
+  return index >= total ? 'finished' : 'asking';
 }
 
 /** 지문 위에 붙일 짧은 안내 — 무엇을 답해야 하는지 */

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { allowedModes, applyFilter, getDeck } from './decks';
 import { gradeByMode } from './grading';
-import { buildQuiz, hintOf } from './quiz';
+import { buildQuiz, hintOf, quizPhase } from './quiz';
 import type { Answer, Question } from './types';
 import { MODE_LABEL, SKIPPED, isChoiceMode } from './types';
 import type { StartConfig } from './StartScreen';
@@ -48,7 +48,14 @@ export default function QuizScreen({
   // 간격 반복 기록. 읽기 전에는 빈 값이라 고르게 출제된다.
   // 기록은 ref 에도 둬서 '다시 풀기' 때 최신 값을 쓴다.
   const cards = useRef<Cards>({});
-  const [questions, setQuestions] = useState<Question[]>([]);
+  /**
+   * 출제된 문제. **`null` 은 "아직 만들지 않았다"** 를 뜻한다.
+   *
+   * `[]` 를 초기값으로 쓰면 "기록 읽는 중"과 "만들었는데 0개"가 같은 값이
+   * 되어 구분이 안 된다(이슈 #26). boolean state 를 하나 더 두는 쪽은
+   * 두 state 가 어긋날 수 있어서, 없는 값을 `null` 로 표현한다.
+   */
+  const [questions, setQuestions] = useState<Question[] | null>(null);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -73,9 +80,13 @@ export default function QuizScreen({
     return () => { alive = false; };
   }, [pool, modes, config.count, config.deckId]);
 
-  const q = questions[index];
-  // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
-  const finished = questions.length > 0 && index >= questions.length;
+  // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 되고,
+  // 만들었는데 0개인 상태를 '준비 중'으로 봐도 안 된다. 판정은 quizPhase 에
+  // 모아 두고 단위 테스트로 덮는다 (src/quiz.ts).
+  const total = questions?.length ?? 0;
+  const phase = quizPhase(questions !== null, total, index);
+  const q = questions?.[index];
+  const finished = phase === 'finished';
 
   /** 그만두기 확인 다이얼로그가 떠 있는가. 두 겹으로 쌓이는 것을 막는다. */
   const asking = useRef(false);
@@ -164,7 +175,12 @@ export default function QuizScreen({
   };
 
   const commit = async (raw: string) => {
-    if (!raw.trim() || judged || grading) return;
+    // `q` 를 함께 본다. 문제가 없을 때는 이 핸들러가 붙은 입력창·보기 자체가
+    // 그려지지 않으므로 실제로는 호출되지 않지만, `questions` 가
+    // `Question[] | null` 이 되어 타입이 그 사실을 모른다. 예전에는
+    // `questions[index]` 가 `Question` 이라고 거짓말을 해서 이 자리가
+    // 검사 없이 통과했다 — 그 거짓말이 이슈 #26 의 멈춤을 가린 쪽이다.
+    if (!q || !raw.trim() || judged || grading) return;
     setGrading(true);
     const result: Answer = {
       word: q.word,
@@ -189,7 +205,7 @@ export default function QuizScreen({
    * 모르는 단어가 점점 안 나오게 되므로, 찍기보다 이 버튼이 낫다.
    */
   const giveUp = () => {
-    if (judged || grading) return;
+    if (!q || judged || grading) return;
     keep({ word: q.word, mode: q.mode, input: SKIPPED, grade: 'wrong' });
   };
 
@@ -208,12 +224,36 @@ export default function QuizScreen({
     setJudged(null);
   };
 
-  if (finished) {
+  if (phase === 'finished') {
     return <ResultScreen answers={answers} onRestart={restart} onExit={onExit} />;
   }
 
+  /**
+   * 낼 문제가 0개다.
+   *
+   * 오류가 아니라 정상 상태다 — 조건에 맞는 단어가 없거나 출제 방식이
+   * 없으면 낼 게 없는 게 맞다. 그래서 문구도 "준비 중"(= 기다리면 된다)이
+   * 아니라 "없다"(= 조건을 바꿔야 한다)로 말하고, **나갈 길을 그려 준다.**
+   * 여기엔 기다릴 비동기 작업이 없으므로 안내만 띄우면 영구히 갇힌다.
+   */
+  if (phase === 'empty') {
+    return (
+      <View style={[S.flex, S.screen, { justifyContent: 'center', gap: 14 }]}>
+        <Text style={[S.h2, { textAlign: 'center' }]}>낼 문제가 없습니다</Text>
+        <Text style={[S.sub, { textAlign: 'center' }]}>
+          지금 조건에 맞는 단어가 없습니다. 난이도·분야나 출제 방식을 바꿔 보세요.
+        </Text>
+        <Pressable style={S.button} onPress={onExit}>
+          <Text style={S.buttonText}>조건 바꾸기</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   // 기록을 읽는 동안의 짧은 공백. 여기서 q 가 없는데 아래로 내려가면 터진다.
-  if (!q) {
+  // `q` 를 함께 보는 이유는 타입을 좁히기 위해서다 — phase 만으로는
+  // 컴파일러가 `questions?.[index]` 가 있다는 것을 알 수 없다.
+  if (phase === 'loading' || !q) {
     return (
       <View style={[S.flex, { alignItems: 'center', justifyContent: 'center' }]}>
         <Text style={S.sub}>문제 준비 중…</Text>
@@ -241,7 +281,7 @@ export default function QuizScreen({
             <Text style={q2.exit}>← 설정</Text>
           </Pressable>
           <Text style={q2.progress}>
-            {index + 1} / {questions.length}
+            {index + 1} / {total}
           </Text>
           {/* 이 문제가 모델로 채점되는 방식일 때만 알린다 */}
           {q.mode === 'type-term-to-meaning' ? (
@@ -326,7 +366,7 @@ export default function QuizScreen({
             <Text style={q2.answerMeaning}>{q.word.meanings.join(' · ')}</Text>
             <Pressable style={S.button} onPress={next}>
               <Text style={S.buttonText}>
-                {index + 1 === questions.length ? '결과 보기' : '다음'}
+                {index + 1 === total ? '결과 보기' : '다음'}
               </Text>
             </Pressable>
           </View>

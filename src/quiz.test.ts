@@ -1,4 +1,4 @@
-import { buildQuiz as rawBuildQuiz, hintOf } from './quiz';
+import { buildQuiz as rawBuildQuiz, hintOf, quizPhase } from './quiz';
 import type { Cards } from './srs';
 import { cardKey, today } from './srs';
 import type { Question, QuizMode, Word } from './types';
@@ -295,6 +295,114 @@ describe('buildQuiz — 간격 반복 순서', () => {
     // 이 덱에는 기록이 없으므로 5개 전부 처음 보는 것으로 나와야 한다
     const quiz = buildQuiz(deck, TYPE_MODE, 5, other);
     expect(quiz).toHaveLength(5);
+  });
+});
+
+/**
+ * ★ 이슈 #26 — 빈 배열이 나오는 조건을 못박는다.
+ *
+ * 화면은 "0개"를 "아직 안 만들어짐"과 구분해야 하는데, 그 전에 **언제 0개가
+ * 되는지**가 고정돼 있어야 한다. 조건이 늘어나면(= 여기서 실패하면)
+ * `QuizScreen` 의 `empty` 안내 문구가 그 경우에도 맞는지 다시 봐야 한다.
+ */
+describe('buildQuiz — 빈 배열이 나오는 조건은 셋뿐이다', () => {
+  const now = today();
+
+  it('pool·modes·count 셋 중 하나라도 비면 빈 배열', () => {
+    expect(buildQuiz([], TYPE_MODE, 10)).toEqual([]);
+    expect(buildQuiz(pool(10), [], 10)).toEqual([]);
+    expect(buildQuiz(pool(10), TYPE_MODE, 0)).toEqual([]);
+  });
+
+  it('count 가 음수여도 빈 배열 — 터지지 않는다', () => {
+    expect(buildQuiz(pool(10), TYPE_MODE, -1)).toEqual([]);
+  });
+
+  it('세 조건이 다 만족되면 절대 비지 않는다', () => {
+    expect(buildQuiz(pool(1), TYPE_MODE, 1).length).toBeGreaterThan(0);
+    expect(buildQuiz(pool(1), TYPE_MODE, 30).length).toBeGreaterThan(0);
+    expect(buildQuiz(pool(40), ALL_MODES, 1).length).toBeGreaterThan(0);
+  });
+
+  /**
+   * SRS 기록으로는 pool 이 줄지 않는다.
+   *
+   * `srsPick` 은 pool 의 단어를 4개 그룹에 빠짐없이 담고 `Priority.Later`
+   * 까지 출제 후보로 쓴다. 그래서 "덱을 다 외워서 낼 게 없어지는" 경로는
+   * **없다** — 이슈 #26 에서 처음 의심했던 재현 조건이 이 테스트로 닫힌다.
+   * 여기가 깨지면 '다시 풀기'가 빈 시험을 만들 수 있게 된다는 뜻이다.
+   */
+  it('덱을 전부 오늘 맞혀 둬도(Later) 빈 배열이 되지 않는다', () => {
+    const deck = pool(20);
+    const cards: Cards = {};
+    for (const w of deck) {
+      cards[key(w.word)] = { streak: 6, due: '2099-12-31', last: now };
+    }
+    expect(buildQuiz(deck, TYPE_MODE, 10, cards)).toHaveLength(10);
+  });
+
+  it('덱이 count 보다 작고 전부 Later 여도 있는 만큼은 낸다', () => {
+    const deck = pool(3);
+    const cards: Cards = {};
+    for (const w of deck) {
+      cards[key(w.word)] = { streak: 6, due: '2099-12-31', last: now };
+    }
+    expect(buildQuiz(deck, TYPE_MODE, 10, cards)).toHaveLength(3);
+  });
+});
+
+/**
+ * ★ 이슈 #26 — 로딩과 빈 결과를 가른다.
+ *
+ * 개수만 보면 둘 다 0개라 구분되지 않고, 그 상태로는 "만들었는데 0개"가
+ * 영구히 '준비 중' 으로 굳는다. 기다릴 비동기 작업이 없어 저절로 안 풀린다.
+ */
+describe('quizPhase', () => {
+  it('아직 만들지 않았으면 loading — 개수와 무관하다', () => {
+    expect(quizPhase(false, 0, 0)).toBe('loading');
+    // 만들기 전이라면 개수가 뭐로 들어와도 loading 이다
+    expect(quizPhase(false, 10, 0)).toBe('loading');
+    expect(quizPhase(false, 10, 10)).toBe('loading');
+  });
+
+  it('만들었는데 0개면 empty — loading 이 아니다 (이 버그의 핵심)', () => {
+    expect(quizPhase(true, 0, 0)).toBe('empty');
+  });
+
+  it('0개일 때 index 가 무엇이든 empty 로 남는다 — finished 로 새지 않는다', () => {
+    expect(quizPhase(true, 0, 0)).toBe('empty');
+    expect(quizPhase(true, 0, 1)).toBe('empty');
+    expect(quizPhase(true, 0, 99)).toBe('empty');
+  });
+
+  it('풀 문제가 남았으면 asking', () => {
+    expect(quizPhase(true, 10, 0)).toBe('asking');
+    expect(quizPhase(true, 10, 9)).toBe('asking');
+    expect(quizPhase(true, 1, 0)).toBe('asking');
+  });
+
+  it('마지막 문제를 넘기면 finished', () => {
+    expect(quizPhase(true, 10, 10)).toBe('finished');
+    expect(quizPhase(true, 1, 1)).toBe('finished');
+  });
+
+  it('index 가 총 개수를 넘어가도 finished', () => {
+    expect(quizPhase(true, 10, 11)).toBe('finished');
+  });
+
+  /**
+   * 첫 진입의 짧은 공백. 기록을 읽는 동안 index 와 total 이 둘 다 0 인데,
+   * 여기서 finished/empty 로 판정하면 결과 화면이나 안내가 번쩍 지나간다.
+   */
+  it('첫 진입 → 출제 흐름에서 결과 화면이 먼저 번쩍이지 않는다', () => {
+    expect(quizPhase(false, 0, 0)).toBe('loading');   // 기록 읽는 중
+    expect(quizPhase(true, 10, 0)).toBe('asking');    // 출제됨
+  });
+
+  /** 다시 풀기: 0개가 돌아오면 멈추지 말고 empty 로 알려야 한다 */
+  it('다시 풀기에서 0개가 나오면 empty 로 간다', () => {
+    expect(quizPhase(true, 10, 10)).toBe('finished'); // 결과 화면
+    expect(quizPhase(true, 0, 0)).toBe('empty');      // 다시 풀기 → 낼 게 없음
   });
 });
 
