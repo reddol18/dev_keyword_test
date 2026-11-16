@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { Answer } from './types';
 import { MODE_LABEL, asksForTerm, isSkipped } from './types';
 import { fieldIcon, levelIcon } from './icons';
+import AdBanner from './AdBanner';
 import { C, S } from './theme';
 
 export default function ResultScreen({
@@ -37,6 +38,12 @@ export default function ResultScreen({
       <Text style={r.score}>
         {score} <Text style={r.scoreTotal}>/ {answers.length}</Text>
       </Text>
+
+      {/*
+        점수를 확인하고 오답노트로 눈이 옮겨가는 자리. 아래 버튼과 멀어
+        잘못 눌릴 일이 없고, 오답 항목 사이에 끼지도 않는다.
+      */}
+      <AdBanner />
 
       {missed.length > 0 && (
         <View style={{ gap: 10 }}>

@@ -9,6 +9,7 @@ import QuizScreen from './src/QuizScreen';
 import ListScreen from './src/ListScreen';
 import SplashScreen from './src/SplashScreen';
 import { loadModel } from './src/embedding';
+import mobileAds from 'react-native-google-mobile-ads';
 
 // 네이티브 스플래시를 런칭 화면이 뜰 때까지 붙잡아 둔다.
 // 컴포넌트 밖(전역)에서 불러야 자동으로 숨겨지기 전에 실행된다.
@@ -33,6 +34,15 @@ export default function App() {
     loadModel()
       .then(() => setModelReady(true))
       .catch((e) => console.warn('[model] 로딩 실패, 규칙 기반으로 동작:', e));
+  }, []);
+
+  // 광고 SDK. 결과 화면에 배너 하나를 띄우는 데만 쓴다.
+  // 실패해도 삼킨다 — 광고는 부수 기능이고, 이 앱은 비행기 모드에서도
+  // 쓰라고 만든 앱이다. 네트워크가 없으면 배너만 높이 0 으로 접힌다.
+  useEffect(() => {
+    mobileAds()
+      .initialize()
+      .catch((e) => console.warn('[ads] 초기화 실패, 광고 없이 동작:', e));
   }, []);
 
   // 런칭 화면을 내리는 시점.
