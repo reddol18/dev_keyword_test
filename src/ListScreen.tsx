@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Pressable, ScrollView, SectionList, StyleSheet, Text, TextInput, View,
+  Alert, Pressable, ScrollView, SectionList, Share,
+  StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import type { DeckId } from './decks';
 import { DECKS, fieldsOf, getDeck, levelsOf } from './decks';
 import type { Word } from './types';
+import { buildExport, clearCards, loadCards } from './srs';
 import { deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
@@ -111,6 +113,65 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
 
   const toggleField = (f: string) =>
     setFields(fields.includes(f) ? fields.filter((x) => x !== f) : [...fields, f]);
+
+  /**
+   * 진도 내보내기.
+   *
+   * RN 내장 `Share` 를 쓴다. `expo-sharing` 은 **로컬 파일만** 보낼 수
+   * 있어서(v57 문서) JSON 을 파일로 먼저 써야 하는데, 그러려면
+   * `expo-file-system` 까지 새로 깔아야 한다. 출시 직전에 네이티브
+   * 의존성을 두 개 더 얹을 이유가 없다 — `Share.share({ message })` 는
+   * 문자열을 그대로 공유 시트에 넘기고, 사용자는 메모앱·드라이브·메신저
+   * 중 원하는 곳에 붙여 둘 수 있다.
+   *
+   * 저장은 안 하므로 실패해도 잃는 게 없다. 취소(dismissedAction)도
+   * 실패가 아니라서 따로 알리지 않는다.
+   */
+  const exportProgress = async () => {
+    try {
+      const cards = await loadCards();
+      const json = buildExport(cards);
+      const n = Object.keys(cards).length;
+      await Share.share({
+        message: json,
+        // 안드로이드 공유 시트의 제목. 메일 앱으로 보내면 제목 줄이 된다.
+        title: `용어먹는하마 진도 백업 (${n}개)`,
+      });
+    } catch (e) {
+      console.warn('[export] 내보내기 실패:', e);
+      Alert.alert('내보내기 실패', '잠시 후 다시 시도해 주세요.');
+    }
+  };
+
+  /**
+   * 처음부터 다시 외우기.
+   *
+   * 되돌릴 수 없으므로 확인을 받는다. 지우기 전에 몇 개가 사라지는지
+   * 보여준다 — "진도 삭제"라는 말만으로는 양이 체감되지 않는다.
+   */
+  const resetProgress = async () => {
+    const n = Object.keys(await loadCards()).length;
+    if (n === 0) {
+      Alert.alert('지울 기록이 없습니다', '아직 푼 문제가 없습니다.');
+      return;
+    }
+    Alert.alert(
+      '처음부터 다시 외우기',
+      `단어 ${n}개의 학습 기록이 모두 지워집니다.\n되돌릴 수 없습니다.`,
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '지우기',
+          style: 'destructive',
+          onPress: () => {
+            clearCards()
+              .then(() => Alert.alert('완료', '학습 기록을 지웠습니다.'))
+              .catch(() => Alert.alert('삭제 실패', '잠시 후 다시 시도해 주세요.'));
+          },
+        },
+      ],
+    );
+  };
 
   const pickDeck = (id: DeckId) => {
     setDeckId(id);
@@ -224,6 +285,24 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
         onScrollToIndexFailed={() => {
           listRef.current?.getScrollResponder()?.scrollTo({ y: 0, animated: false });
         }}
+        /*
+         * 데이터 관리는 목록 끝에 둔다. 헤더에 두면 검색·필터보다 먼저
+         * 눈에 들어오는데, 자주 쓰는 기능이 아니고 하나는 파괴적이다.
+         * 필터가 걸려 목록이 짧아져도 푸터는 항상 따라오므로 닿을 수 있다.
+         */
+        ListFooterComponent={
+          <View style={l.dataBox}>
+            <Text style={l.dataNote}>
+              학습 기록은 이 기기에만 저장됩니다. 앱을 지우면 사라집니다.
+            </Text>
+            <Pressable onPress={exportProgress} style={l.dataBtn}>
+              <Text style={l.dataBtnText}>진도 내보내기</Text>
+            </Pressable>
+            <Pressable onPress={resetProgress} style={l.dataBtn}>
+              <Text style={l.dataDanger}>처음부터 다시 외우기</Text>
+            </Pressable>
+          </View>
+        }
         ListEmptyComponent={
           <View style={l.emptyBox}>
             <Text style={l.empty}>
@@ -355,6 +434,20 @@ const l = StyleSheet.create({
   star: { fontSize: 12, color: C.close },
   meaning: { fontSize: 15, color: C.text, lineHeight: 21 },
   full: { fontSize: 13, color: C.faint },
+
+  // 목록 끝의 데이터 관리. 항목과 섞이지 않게 위에 선을 하나 둔다.
+  dataBox: {
+    paddingHorizontal: 20, paddingTop: 20, paddingBottom: 8, gap: 10,
+    borderTopWidth: 1, borderTopColor: C.line,
+  },
+  dataNote: { fontSize: 13, color: C.faint, lineHeight: 19 },
+  dataBtn: {
+    paddingVertical: 13, borderRadius: 10, alignItems: 'center',
+    borderWidth: 1, borderColor: C.line, backgroundColor: '#fff',
+  },
+  dataBtnText: { fontSize: 15, color: C.text },
+  // 파괴적인 동작이라 색으로 구분한다. 확인 다이얼로그가 한 겹 더 있다.
+  dataDanger: { fontSize: 15, color: C.no },
 
   emptyBox: { paddingVertical: 48, paddingHorizontal: 20, gap: 16 },
   empty: { textAlign: 'center', color: C.faint, fontSize: 15 },

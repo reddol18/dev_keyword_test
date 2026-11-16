@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { MutableRefObject } from 'react';
 import {
-  KeyboardAvoidingView, Platform, Pressable, ScrollView,
+  Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { allowedModes, applyFilter, getDeck } from './decks';
@@ -16,11 +17,21 @@ import { fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 export default function QuizScreen({
-  config, modelReady, onExit,
+  config, modelReady, onExit, onBackRequest,
 }: {
   config: StartConfig;
   modelReady: boolean;
   onExit: () => void;
+  /**
+   * 하드웨어 뒤로가기를 이 화면이 직접 처리하려고 꽂아 두는 자리.
+   * `App.tsx` 가 들고 있고, 처리했으면 true 를 돌려줘야 한다.
+   *
+   * **필수 prop 이다.** optional 로 두면 넘기는 걸 빼먹어도 타입 에러가
+   * 없는데, 그때 확인 다이얼로그가 통째로 사라지고 뒤로가기가 App 의
+   * "start 로 되돌리기"로 흘러 답을 푼 시험이 확인 없이 날아간다 —
+   * 이 화면이 막으려는 바로 그 사고다. 필수로 두면 컴파일에서 걸린다.
+   */
+  onBackRequest: MutableRefObject<(() => boolean) | null>;
 }) {
   const pool = useMemo(
     () => applyFilter(getDeck(config.deckId), config.filter),
@@ -65,6 +76,73 @@ export default function QuizScreen({
   const q = questions[index];
   // 문제가 아직 안 만들어진 상태(기록 읽는 중)를 '끝남'으로 보면 안 된다
   const finished = questions.length > 0 && index >= questions.length;
+
+  /** 그만두기 확인 다이얼로그가 떠 있는가. 두 겹으로 쌓이는 것을 막는다. */
+  const asking = useRef(false);
+
+  /**
+   * 시험을 그만두려 할 때. `← 설정` 과 하드웨어 뒤로가기가 **같이** 쓴다.
+   *
+   * 푼 문제가 있으면 확인부터 받는다. `answers` 는 메모리에만 있어서
+   * 이 화면이 unmount 되면 그 회차의 점수와 오답노트가 통째로 사라진다
+   * (SRS 기록은 문제마다 저장되므로 남는다 — 그래서 "뭘 틀렸는지"만
+   * 잃는 어중간한 손실이 된다).
+   *
+   * 아직 하나도 안 풀었으면 바로 나간다. 거기서까지 묻는 건 성가시다.
+   * 결과 화면(finished)에서도 묻지 않는다 — 이미 결과를 본 상태다.
+   */
+  const confirmExit = useCallback((): void => {
+    if (answers.length === 0 || finished) {
+      onExit();
+      return;
+    }
+    // 이미 떠 있으면 또 띄우지 않는다. `← 설정` 을 누른 직후 하드웨어
+    // 뒤로가기를 빠르게 누르면 다이얼로그가 두 겹으로 쌓여서 취소를
+    // 두 번 눌러야 한다.
+    if (asking.current) return;
+    asking.current = true;
+    const done = (then?: () => void) => () => {
+      asking.current = false;
+      then?.();
+    };
+    Alert.alert(
+      '시험을 그만둘까요?',
+      `지금까지 푼 ${answers.length}문제의 결과를 볼 수 없게 됩니다`,
+      [
+        { text: '취소', style: 'cancel', onPress: done() },
+        { text: '그만두기', style: 'destructive', onPress: done(onExit) },
+      ],
+      // 바깥을 눌러 닫은 경우에도 플래그를 풀어야 한다.
+      // 안 풀면 다음 뒤로가기가 영구히 무시된다.
+      { onDismiss: done() },
+    );
+  }, [answers.length, finished, onExit]);
+
+  /**
+   * 하드웨어 뒤로가기를 가로챈다.
+   *
+   * 항상 true 를 돌려준다 — 이 화면에서는 뒤로가기가 언제나 "확인 후
+   * 설정으로" 를 뜻하고, 앱 종료로 흘러가면 안 된다. App.tsx 가 start 로
+   * 되돌리는 것도 막아야 한다. 확인을 받기 전에 화면이 바뀌면
+   * 다이얼로그를 띄운 의미가 없다.
+   */
+  useEffect(() => {
+    const handler = () => {
+      confirmExit();
+      return true;
+    };
+    onBackRequest.current = handler;
+    // 화면이 사라지면 뗀다. 남겨 두면 설정 화면에서 뒤로가기를 눌렀을 때
+    // 없어진 시험의 다이얼로그가 뜬다.
+    //
+    // **내가 넣은 것일 때만** 비운다. `if (current)` 같은 truthy 검사는
+    // 들어갈 수 있는 값이 함수 아니면 null 뿐이라 아무것도 보호하지 않는다.
+    // 지금은 등록하는 화면이 하나라 결과가 같지만, 다른 화면이 하나라도
+    // 등록하게 되면 남의 핸들러를 지우는 코드가 된다.
+    return () => {
+      if (onBackRequest.current === handler) onBackRequest.current = null;
+    };
+  }, [onBackRequest, confirmExit]);
 
   /**
    * 채점 결과를 기록한다.
@@ -157,7 +235,9 @@ export default function QuizScreen({
         showsVerticalScrollIndicator={false}
       >
         <View style={q2.topRow}>
-          <Pressable onPress={onExit} hitSlop={12}>
+          {/* 확인을 거친다. hitSlop 으로 터치 영역이 글자보다 넓고,
+              바로 옆이 진행 표시라 오터치 거리가 가깝다. */}
+          <Pressable onPress={confirmExit} hitSlop={12}>
             <Text style={q2.exit}>← 설정</Text>
           </Pressable>
           <Text style={q2.progress}>

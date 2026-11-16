@@ -310,6 +310,53 @@ export async function recordResult(
   return card;
 }
 
+/* ────────────────────────────────────────────────────────────────
+ * 내보내기
+ * ──────────────────────────────────────────────────────────────── */
+
+/**
+ * 내보낸 진도의 모양.
+ *
+ * `StoredV2` 와 **같은 `version`·`cards`** 를 쓴다. 내보낸 파일이 저장소
+ * 구조와 같은 모양이면 나중에 가져오기를 붙일 때 `loadCards` 의 버전 분기를
+ * 그대로 재사용할 수 있다. 모양이 다르면 변환 코드를 한 벌 더 들고 있어야 한다.
+ *
+ * `exportedAt` 과 `app` 은 사람이 읽을 때를 위한 것이다. 메모앱이나 드라이브에
+ * 붙여 둔 JSON 이 여러 개 쌓이면 어느 게 최신인지 알 수 없다.
+ */
+export type ExportedProgress = {
+  version: 2;
+  /** 내보낸 시각 (ISO 8601) */
+  exportedAt: string;
+  app: 'wordbook';
+  cards: Cards;
+};
+
+/**
+ * 내보낼 JSON 문자열을 만든다.
+ *
+ * 저장소를 읽지 않고 **인자로 받은 카드만** 쓴다. 순수 함수라 테스트할 수
+ * 있고, 화면은 이미 읽어 둔 카드를 그대로 넘기면 된다.
+ *
+ * 기록이 하나도 없어도 `cards: {}` 로 정상적인 JSON 을 만든다. 빈 기록을
+ * 막지 않는 이유: 사용자는 "내보내기가 되는 앱"이라는 걸 먼저 확인해 두고
+ * 싶을 수 있고, 빈 백업은 복원해도 해가 없다.
+ *
+ * 들여쓰기(2칸)를 넣는다. 사용자가 이 문자열을 메모앱에서 직접 보게 되므로
+ * 한 줄로 뭉친 424개 카드보다는 읽히는 쪽이 낫다.
+ */
+export function buildExport(cards: Cards, now: Date = new Date()): string {
+  const payload: ExportedProgress = {
+    version: VERSION,
+    exportedAt: now.toISOString(),
+    app: 'wordbook',
+    // 받은 객체를 그대로 넣지 않고 걸러서 넣는다. 저장소에서 온 카드가
+    // 깨져 있으면 내보낸 백업도 같이 깨지는데, 백업은 그게 마지막 사본이다.
+    cards: reviveCards(cards),
+  };
+  return JSON.stringify(payload, null, 2);
+}
+
 /** 기록 전체 삭제 (디버그·초기화용) */
 export async function clearCards(): Promise<void> {
   cache = null;

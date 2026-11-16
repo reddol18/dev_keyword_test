@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Card } from './srs';
 import {
-  Priority, cardKey, clearCards, countDue, countNew,
+  Priority, buildExport, cardKey, clearCards, countDue, countNew,
   loadCards, nextCard, priorityOf, recordResult, today,
 } from './srs';
 
@@ -501,6 +501,67 @@ describe('clearCards', () => {
     expect(await AsyncStorage.getItem(V1_KEY)).toBeNull();
     expect(await AsyncStorage.getItem(V2_KEY)).toBeNull();
     await expect(loadCards()).resolves.toEqual({});
+  });
+});
+
+/**
+ * 내보내기.
+ *
+ * 내보낸 JSON 은 사용자가 가진 **마지막 사본**이 될 수 있다. 그래서
+ * 이 파일이 지키는 것은 두 가지다 — (1) 저장 구조 v2 와 같은 모양이라
+ * 나중에 가져오기를 붙일 때 그대로 읽힌다, (2) 기록이 비었거나 깨져 있어도
+ * 터지지 않고 유효한 JSON 이 나온다.
+ */
+describe('buildExport', () => {
+  const sample: Record<string, Card> = {
+    'it-terms:LLM': { streak: 3, due: '2099-01-01', last: '2026-01-01' },
+    'it-words:rollback': { streak: 0, due: '2026-11-17', last: '2026-11-16' },
+  };
+
+  it('v2 구조(version·cards)를 그대로 유지한다', () => {
+    const parsed = JSON.parse(buildExport(sample));
+    expect(parsed.version).toBe(2);
+    expect(parsed.cards).toEqual(sample);
+  });
+
+  it('덱별 카드 키(덱:단어)가 보존된다', () => {
+    const parsed = JSON.parse(buildExport(sample));
+    // 키가 뭉개지면 두 덱의 같은 단어가 한 칸으로 합쳐진다
+    expect(Object.keys(parsed.cards).sort())
+      .toEqual(['it-terms:LLM', 'it-words:rollback']);
+  });
+
+  it('빈 기록이어도 유효한 JSON 을 만든다', () => {
+    const parsed = JSON.parse(buildExport({}));
+    expect(parsed.version).toBe(2);
+    expect(parsed.cards).toEqual({});
+  });
+
+  it('내보낸 시각과 앱 표시를 담는다 — 사본이 여러 개 쌓일 때 구분용', () => {
+    const at = new Date('2026-11-16T01:02:03.000Z');
+    const parsed = JSON.parse(buildExport(sample, at));
+    expect(parsed.exportedAt).toBe('2026-11-16T01:02:03.000Z');
+    expect(parsed.app).toBe('wordbook');
+  });
+
+  it('깨진 카드는 걸러서 내보낸다 — 백업이 같이 깨지면 복구할 게 없다', () => {
+    const broken = {
+      'it-terms:A': { streak: 'x', due: 'nope', last: 1 },
+      'it-terms:B': null,
+    } as unknown as Record<string, Card>;
+    const parsed = JSON.parse(buildExport(broken));
+    // B 는 카드가 아니라 버리고, A 는 날짜를 오늘로 되살린다
+    expect(parsed.cards['it-terms:B']).toBeUndefined();
+    expect(parsed.cards['it-terms:A'].streak).toBe(0);
+    expect(parsed.cards['it-terms:A'].due).toMatch(YMD);
+    expect(parsed.cards['it-terms:A'].last).toMatch(YMD);
+  });
+
+  it('내보낸 JSON 을 저장소에 그대로 넣으면 loadCards 가 읽는다', async () => {
+    await reset();
+    // 가져오기를 나중에 붙일 수 있다는 전제를 여기서 못 박는다
+    await AsyncStorage.setItem(V2_KEY, buildExport(sample));
+    await expect(loadCards()).resolves.toEqual(sample);
   });
 });
 

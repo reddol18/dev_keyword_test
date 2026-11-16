@@ -179,7 +179,12 @@ FDE → "고객 현장에 들어가 제품을 맞춰 붙이고 요구를 개발�
 오늘 **맞힌** 단어는 그날 다시 나오지 않는다. 다만 **틀린** 단어는 같은 날에도
 다시 나온다 — 오답을 바로 복습하는 흐름이 끊기지 않게.
 
-기록은 기기에만 남는다(`AsyncStorage`, 키 `srs-v2`).
+기록은 기기에만 남는다(`AsyncStorage`, 키 `srs-v2`). 목록 화면 맨 아래에
+**진도 내보내기**가 있다 — 저장된 카드 전체를 아래 저장 모양 그대로(버전 포함)
+JSON 으로 만들어 공유 시트로 넘긴다. 같은 자리에 **처음부터 다시 외우기**(확인
+다이얼로그를 거친다)와 "이 기기에만 저장된다"는 안내를 함께 뒀다. 안드로이드
+자동 백업(`allowBackup`)이 켜져 있어 기기를 바꾸면 구글 계정 백업으로 복원되지만,
+그건 사용자가 직접 제어할 수 없으므로 내보내기를 따로 둔다. 가져오기는 아직 없다.
 
 저장 모양은 이렇다. **덱마다 따로 기록한다** — 두 덱에 겹치는 단어가 있어서
 (`Rollback`/`rollback`, `Incident`, `Postmortem`, `Legacy`) 단어만 키로 쓰면
@@ -703,7 +708,7 @@ y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
 
 | 날짜 | 한 일 |
 |---|---|
-| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) · **테스트 기반 구축** — jest-expo, 순수 함수 103개, GitHub Actions CI ([#19](https://github.com/reddol18/dev_keyword_test/issues/19)). 쓰면서 `nextCard` 에 streak 가드를 넣었다 — 깨진 기록이 들어오면 `due` 가 NaN 날짜로 영구 저장되는 경로가 있었다 · **SRS 저장 구조를 `srs-v2` 로 올렸다** — 카드 키에 덱을 넣어 두 덱의 같은 단어가 기록을 공유하던 것을 끊고([#17](https://github.com/reddol18/dev_keyword_test/issues/17)), 버전을 데이터 안에 넣어 다음 구조 변경 때 복습이 조용히 멈추지 않게 했다([#18](https://github.com/reddol18/dev_keyword_test/issues/18)). 기존 `srs-v1` 기록은 첫 실행에 한 번 옮긴다 — 실기기 업데이트 설치로 복습 61개가 그대로 보존되는 것을 확인했다 |
+| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) · **테스트 기반 구축** — jest-expo, 순수 함수 103개, GitHub Actions CI ([#19](https://github.com/reddol18/dev_keyword_test/issues/19)). 쓰면서 `nextCard` 에 streak 가드를 넣었다 — 깨진 기록이 들어오면 `due` 가 NaN 날짜로 영구 저장되는 경로가 있었다 · **SRS 저장 구조를 `srs-v2` 로 올렸다** — 카드 키에 덱을 넣어 두 덱의 같은 단어가 기록을 공유하던 것을 끊고([#17](https://github.com/reddol18/dev_keyword_test/issues/17)), 버전을 데이터 안에 넣어 다음 구조 변경 때 복습이 조용히 멈추지 않게 했다([#18](https://github.com/reddol18/dev_keyword_test/issues/18)). 기존 `srs-v1` 기록은 첫 실행에 한 번 옮긴다 — 실기기 업데이트 설치로 복습 61개가 그대로 보존되는 것을 확인했다 · **안드로이드 뒤로가기를 붙였다** ([#20](https://github.com/reddol18/dev_keyword_test/issues/20)) — 네비게이션 스택이 없어서 시험 중 뒤로가기가 앱을 그냥 종료시키고 그 회차의 점수·오답노트가 사라졌다. 화면 상태 2개(`config`/`listing`)를 판별 유니온 `Route` 하나로 합쳐 무효 조합을 타입에서 막고, `react-navigation` 없이 `BackHandler` 로 처리한다 · **시험 중 이탈에 확인을 넣었다** ([#21](https://github.com/reddol18/dev_keyword_test/issues/21)) — 푼 문제가 있을 때만 묻고, `← 설정` 과 하드웨어 뒤로가기가 같은 경로를 탄다 · **진도 내보내기·초기화** ([#25](https://github.com/reddol18/dev_keyword_test/issues/25)) — 목록 끝에 배치. 새 패키지 없이 RN 내장 `Share` 를 쓴다(`expo-sharing` 은 로컬 파일만 보낼 수 있어 `expo-file-system` 까지 필요했다). 쓰이지 않던 `clearCards()` 를 "처음부터 다시 외우기"로 살렸고, "이 기기에만 저장됩니다" 안내를 앱 안에 넣었다 |
 | **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) · 목록 화면 스크린샷 갱신 |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |
