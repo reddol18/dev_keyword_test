@@ -96,6 +96,22 @@ async function save(): Promise<void> {
 }
 
 /**
+ * 저장소에서 읽은 streak 을 믿을 수 있는 수로 만든다.
+ *
+ * `loadCards()` 는 JSON 이 객체인지만 보고 카드 하나하나는 검사하지 않는다.
+ * 그래서 깨진 기록(문자열 "3", 음수, NaN)이 그대로 여기까지 올 수 있다.
+ * 그걸 막지 않으면:
+ *   "3"  → streak 이 "31" 로 문자열 연결되고 간격이 60일로 튄다
+ *   -1   → INTERVALS[-1] 이 undefined → addDays(undefined) → due 가 "NaN-NaN-NaN"
+ * due 가 NaN 이 되면 `priorityOf` 의 날짜 비교가 영구히 어긋나고,
+ * 그 값이 AsyncStorage 에 그대로 저장돼 앱을 다시 켜도 낫지 않는다.
+ */
+function safeStreak(streak: unknown): number {
+  if (typeof streak !== 'number' || !Number.isFinite(streak)) return 0;
+  return Math.max(0, Math.floor(streak));
+}
+
+/**
  * 한 문제를 푼 결과로 다음 카드 상태를 계산한다. 저장은 하지 않는다.
  * 순수 함수라 테스트하기 쉽고, 화면에서도 같은 결과를 바로 쓸 수 있다.
  */
@@ -103,7 +119,8 @@ export function nextCard(
   prev: Card | undefined,
   grade: 'correct' | 'close' | 'wrong',
 ): Card {
-  const streak = grade === 'correct' ? (prev?.streak ?? 0) + 1 : 0;
+  const streak = grade === 'correct' ? safeStreak(prev?.streak) + 1 : 0;
+  // streak 는 correct 일 때 항상 1 이상이라 인덱스가 음수로 내려가지 않는다.
   const days =
     grade === 'correct'
       ? INTERVALS[Math.min(streak - 1, INTERVALS.length - 1)]

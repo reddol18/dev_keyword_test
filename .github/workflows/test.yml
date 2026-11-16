@@ -1,0 +1,30 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      # postinstall 은 onnxruntime-react-native 의 네이티브 파일만 손본다
+      # (모델을 내려받지 않는다). 실제 설치와 같게 두려고 그대로 돌린다.
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 타입 검사
+        run: npx tsc --noEmit
+
+      - name: 테스트
+        run: npm test -- --ci

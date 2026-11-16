@@ -453,6 +453,54 @@ ANDROID_KEY_PASSWORD=...
 
 ---
 
+## 테스트
+
+```bash
+npm test              # jest (103개)
+npm test -- --watch   # 고친 파일만 다시
+npm run typecheck     # tsc --noEmit
+```
+
+`jest-expo` 프리셋을 쓴다. **화면 렌더링은 테스트하지 않는다** — 순수 함수만
+본다. RN 컴포넌트를 띄우는 설정 비용이 크고, 이 앱에서 조용히 깨지는 건
+화면이 아니라 채점·출제 로직이다.
+
+`src/*.test.ts` 4개 파일, [GitHub Actions](.github/workflows/test.yml) 에서
+push·PR 마다 `tsc --noEmit` 과 함께 돌린다.
+
+| 파일 | 지키는 것 |
+|---|---|
+| `grading.test.ts` | `stem()` 이 **긴 어미를 먼저** 떼는지. `ENDINGS` 순서가 뒤집히면 `여행하다` → `여행하` 가 되어 `여행` 과 어긋나고 복수정답 인정이 깨진다. `gradeTerm()` 이 **SLA ↔ SLO** 를 서로 정답으로 받지 않는지 |
+| `srs.test.ts` | `nextCard()` 의 간격이 `INTERVALS`(1·3·7·14·30·60) 를 따르는지. **깨진 기록이 들어와도 `due` 가 NaN 날짜가 되지 않는지**. `priorityOf()` 의 4분기 |
+| `quiz.test.ts` | **`choices[answerIndex]` 가 항상 기대 정답인지** — 어긋나면 "정답이 보기에 없음" 또는 "보기 둘 다 정답"이 된다. 중복 없이 N개, `MIN_NEW` 가 새 단어 자리를 확보하는지 |
+| `data.test.ts` | 단어 JSON 품질 — 뜻 1개 이상, 덱 내 `word` 중복 0, 첫 뜻 중복 0(객관식 정답이 둘이 된다), `partOfSpeech` 빈 값 없음. `build_it_terms.py` 가 생성 시점에 `assert` 로 지키는 규칙을 CI 에서도 지킨다 |
+
+### 테스트가 실제로 뭘 잡는지 확인했다
+
+"통과하지만 아무것도 검증하지 않는 테스트"가 가장 나쁘다. 그래서 일부러
+세 군데를 깨 보고 **그 테스트들만** 빨개지는지 봤다.
+
+| 일부러 넣은 회귀 | 결과 |
+|---|---|
+| `ENDINGS` 순서를 뒤집었다 | `stem` 5개 실패 |
+| `nextCard` 의 streak 가드를 뺐다 | NaN 가드 5개 실패 (`due` 가 `NaN-NaN-NaN`) |
+| `buildChoices` 의 `answerIndex` 를 `0` 으로 고정했다 | 정답 위치 4개 실패 |
+
+14개가 실패하고 89개는 통과했다. 로직을 안 건드리는 `data.test.ts` 는
+그대로 초록이었다 — 테스트가 **자기 대상만** 보고 있다는 뜻이다. 확인 후 되돌렸다.
+
+### 네이티브 모듈은 가짜로 바꾼다
+
+순수 함수만 보는데도 그 함수가 든 파일이 네이티브 모듈을 import 한다
+(`grading.ts` → `embedding.ts` → ONNX, `srs.ts` → AsyncStorage).
+import 시점에 바인딩을 찾아서 Node 에서는 바로 터지므로 `jest.setup.js` 에서
+둘만 막는다. **채점 로직 자체는 실제 코드를 쓴다.**
+
+모델은 로딩하지 않아 `isModelReady()` 가 false 로 남는다. 그래서 채점이
+규칙 기반 경로(어간·`near`)만 타고, 테스트 결과가 모델 유사도에 흔들리지 않는다.
+
+---
+
 ## 프로젝트 구조
 
 ```
@@ -470,6 +518,8 @@ src/
   embedding.ts      ONNX 추론 · 토크나이저 · 코사인 유사도
   theme.ts          공통 스타일
   types.ts          Word, Grade, QuizMode, Question, Answer
+  *.test.ts         순수 함수 테스트 4개 (→ 테스트)
+jest.setup.js       네이티브 모듈(ONNX·AsyncStorage) 가짜로 바꾸기
 data/
   it_terms.json     IT 개발 용어 424개   ← build_it_terms.py 가 생성
   it_words.json     IT 문서 영단어 80개  ← build_it_words.py 가 생성
@@ -630,7 +680,7 @@ y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
 
 | 날짜 | 한 일 |
 |---|---|
-| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) |
+| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) · **테스트 기반 구축** — jest-expo, 순수 함수 103개, GitHub Actions CI ([#19](https://github.com/reddol18/dev_keyword_test/issues/19)). 쓰면서 `nextCard` 에 streak 가드를 넣었다 — 깨진 기록이 들어오면 `due` 가 NaN 날짜로 영구 저장되는 경로가 있었다 |
 | **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) · 목록 화면 스크린샷 갱신 |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |

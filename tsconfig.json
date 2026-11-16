@@ -2,6 +2,9 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    // jest 의 전역(describe·it·expect)을 타입 검사에 알린다.
+    // expo/tsconfig.base 는 types 를 비워 두므로 여기서 지정해도 잃는 게 없다.
+    "types": ["jest"]
   }
 }
