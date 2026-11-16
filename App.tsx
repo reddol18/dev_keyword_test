@@ -9,6 +9,7 @@ import QuizScreen from './src/QuizScreen';
 import ListScreen from './src/ListScreen';
 import SplashScreen from './src/SplashScreen';
 import { loadModel } from './src/embedding';
+import type { ModelStatus } from './src/embedding';
 import mobileAds from 'react-native-google-mobile-ads';
 
 // 네이티브 스플래시를 런칭 화면이 뜰 때까지 붙잡아 둔다.
@@ -42,15 +43,28 @@ const START: Route = { name: 'start' };
 
 export default function App() {
   const [route, setRoute] = useState<Route>(START);
-  const [modelReady, setModelReady] = useState(false);
+  /**
+   * 모델 로딩 상태. 불리언이 아니라 세 값이다.
+   *
+   * 불리언으로는 "로딩 중"과 "실패"가 같은 `false` 가 되어, 실패한 기기에
+   * "○ 모델 로딩 중" 이 앱이 켜져 있는 동안 영구히 떠 있었다 (이슈 #23).
+   * 앱은 규칙 기반 채점으로 **정상 동작하는데도** 고장으로 읽힌다.
+   */
+  const [modelStatus, setModelStatus] = useState<ModelStatus>('loading');
   const [splashDone, setSplashDone] = useState(false);
 
   // 모델 로딩은 수 초 걸린다. 그동안에도 앱은 쓸 수 있고,
   // 채점은 규칙 기반으로 동작한다.
+  //
+  // 실패를 'failed' 로 **표시한다.** console.warn 은 릴리스 빌드에서 아무
+  // 데도 보이지 않아서, 예전에는 개발자도 사용자도 실패 사실을 몰랐다.
   useEffect(() => {
     loadModel()
-      .then(() => setModelReady(true))
-      .catch((e) => console.warn('[model] 로딩 실패, 규칙 기반으로 동작:', e));
+      .then(() => setModelStatus('ready'))
+      .catch((e) => {
+        console.warn('[model] 로딩 실패, 규칙 기반으로 동작:', e);
+        setModelStatus('failed');
+      });
   }, []);
 
   // 광고 SDK. 결과 화면에 배너 하나를 띄우는 데만 쓴다.
@@ -66,13 +80,17 @@ export default function App() {
   // 모델이 준비되면 최소 시간만 채우고 넘어가고, 안 되면 최대 시간에서 끊는다.
   // 남은 시간은 "앱이 켜진 시각"부터 재야 한다. modelReady 가 바뀔 때마다
   // 타이머를 새로 걸면 그만큼 뒤로 밀려 최대 시간을 넘긴다.
+  // 결판이 났으면(ready 든 failed 든) 최소 시간만 채운다. 실패를 기다려 줄
+  // 이유는 없다 — 재시도는 채점할 때 일어나고, 여기서 최대 시간까지 붙잡으면
+  // 실패한 기기만 시작이 더 느려진다.
   useEffect(() => {
-    const left = modelReady
+    const settled = modelStatus !== 'loading';
+    const left = settled
       ? Math.max(0, SPLASH_MIN_MS - (Date.now() - START_AT))
       : Math.max(0, SPLASH_MAX_MS - (Date.now() - START_AT));
     const t = setTimeout(() => setSplashDone(true), left);
     return () => clearTimeout(t);
-  }, [modelReady]);
+  }, [modelStatus]);
 
   // 런칭 화면이 그려진 뒤에 네이티브 스플래시를 내린다.
   // 순서가 반대면 그 사이에 빈 흰 화면이 한 번 번쩍인다.
@@ -146,7 +164,7 @@ export default function App() {
           <ListScreen onExit={goStart} />
         ) : route.name === 'start' ? (
           <StartScreen
-            modelReady={modelReady}
+            modelStatus={modelStatus}
             onStart={(config) => setRoute({ name: 'quiz', config })}
             onOpenList={() => setRoute({ name: 'list' })}
           />
@@ -155,7 +173,7 @@ export default function App() {
             // 시험으로 들어오는 길은 start 화면뿐이라, 새 시험은 항상
             // unmount → mount 를 거친다. 그래서 key 로 강제할 필요가 없다.
             config={route.config}
-            modelReady={modelReady}
+            modelStatus={modelStatus}
             onExit={goStart}
             onBackRequest={screenBack}
           />

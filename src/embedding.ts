@@ -20,22 +20,61 @@ let session: InferenceSession | null = null;
 let tokenizer: Tokenizer | null = null;
 let loading: Promise<void> | null = null;
 
-/** 모델 로딩. 여러 번 불러도 한 번만 로딩한다. */
+/**
+ * 모델 로딩. 여러 번 불러도 한 번만 로딩한다.
+ *
+ * **실패하면 캐시를 비운다.** 예전에는 `loading` 에 reject 된 Promise 가
+ * 그대로 남아서, 한 번 실패하면 이후 모든 호출이 같은 실패 Promise 를 받아
+ * 세션 내내 영구 실패였다 — 앱을 완전히 종료해야 풀렸다 (이슈 #23).
+ * 모델이 106MB 라 저사양 기기에서 OOM·파일 접근 실패가 현실적으로 나온다.
+ *
+ * `loading = null` 로 되돌리면 다음 호출이 **재시도**가 된다. 실패를
+ * 삼키지는 않고 그대로 다시 던지므로, 호출부가 '실패' 상태를 표시할 수 있다.
+ */
 export function loadModel(): Promise<void> {
   if (loading) return loading;
-  loading = (async () => {
+
+  const run = async (): Promise<void> => {
     const asset = Asset.fromModule(require('../assets/model/model.onnx'));
     await asset.downloadAsync();
     const uri = asset.localUri ?? asset.uri;
     session = await InferenceSession.create(uri.replace('file://', ''));
     tokenizer = new Tokenizer(tokenizerJson as never, tokenizerConfig as never);
-  })();
-  return loading;
+  };
+
+  // 캐시에 넣는 것과 실패 처리를 분리한다. `catch` 를 async 본문 안에
+  // 두면 `require` 처럼 **동기로 던지는** 경우에 캐시를 비우는 코드가
+  // `loading = ...` 보다 먼저 돌아서, 결국 reject 된 Promise 가 캐시에
+  // 남는다 — 고치려던 버그가 그대로 재현된다.
+  const attempt = run().catch((e) => {
+    // 중간까지 올라간 것이 남아 있으면 isModelReady 가 어긋난다.
+    // 둘 다 있어야 준비된 것이므로 같이 되돌린다.
+    session = null;
+    tokenizer = null;
+    // 이 호출이 아직 캐시에 있을 때만 비운다. 재시도가 이미 새 Promise 를
+    // 넣어 둔 뒤라면 남의 것을 지우는 코드가 된다.
+    if (loading === attempt) loading = null;
+    throw e;
+  });
+
+  loading = attempt;
+  return attempt;
 }
 
 export function isModelReady(): boolean {
   return session !== null && tokenizer !== null;
 }
+
+/**
+ * 모델 로딩 상태.
+ *
+ * 불리언 하나로는 **세 번째 상태를 표현할 수 없다** — 그게 이슈 #23 의
+ * 근원이었다. `modelReady === false` 가 "아직 로딩 중"과 "실패해서 영원히
+ * 안 됨"을 같이 뜻해서, 실패한 기기에 "로딩 중" 이 영구히 떠 있었다.
+ *
+ * 화면 문구를 상태별로 가를 수 있게 유니온으로 둔다.
+ */
+export type ModelStatus = 'loading' | 'ready' | 'failed';
 
 /** 짧은 구를 다루므로 32토큰이면 충분하다. 길이를 줄이면 추론도 빨라진다. */
 const MAX_LEN = 32;

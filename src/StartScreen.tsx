@@ -6,6 +6,7 @@ import type { QuizMode } from './types';
 import { MODE_LABEL } from './types';
 import type { Cards } from './srs';
 import { countDue, countNew, loadCards } from './srs';
+import type { ModelStatus } from './embedding';
 import { SECTION, SRS, deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
@@ -27,11 +28,11 @@ const COUNTS = [10, 20, 30];
 export default function StartScreen({
   onStart,
   onOpenList,
-  modelReady,
+  modelStatus,
 }: {
   onStart: (config: StartConfig) => void;
   onOpenList: () => void;
-  modelReady: boolean;
+  modelStatus: ModelStatus;
 }) {
   const [deckId, setDeckId] = useState<DeckId>('it-terms');
   const [levels, setLevels] = useState<number[]>([]);
@@ -110,9 +111,16 @@ export default function StartScreen({
             AI 채점은 주관식에서만 쓰인다. 객관식뿐인 덱에서는 이 표시가
             뜻을 잃으므로 숨긴다 — 안 쓰는 기능을 준비됐다고 알릴 이유가 없다.
           */}
+          {/*
+            세 상태를 각각 말한다. 'failed' 를 '로딩 중' 과 같은 문구로
+            두면 끝나지 않는 로딩으로 읽혀서 앱이 고장난 것처럼 보인다
+            (이슈 #23). 실패도 **쓸 수 있는 상태**라는 걸 전달해야 한다.
+          */}
           {usesModel && (
             <Text style={S.sub}>
-              {modelReady ? '● AI 채점 준비됨' : '○ 모델 로딩 중 — 지금 시작해도 됩니다'}
+              {modelStatus === 'ready' ? '● AI 채점 준비됨'
+               : modelStatus === 'failed' ? '○ 규칙 기반으로 채점합니다'
+               : '○ 모델 로딩 중 — 지금 시작해도 됩니다'}
             </Text>
           )}
         </View>

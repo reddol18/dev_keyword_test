@@ -13,14 +13,15 @@ import type { StartConfig } from './StartScreen';
 import ResultScreen from './ResultScreen';
 import type { Cards } from './srs';
 import { cardKey, loadCards, nextCard, recordResult } from './srs';
+import type { ModelStatus } from './embedding';
 import { fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 export default function QuizScreen({
-  config, modelReady, onExit, onBackRequest,
+  config, modelStatus, onExit, onBackRequest,
 }: {
   config: StartConfig;
-  modelReady: boolean;
+  modelStatus: ModelStatus;
   onExit: () => void;
   /**
    * 하드웨어 뒤로가기를 이 화면이 직접 처리하려고 꽂아 두는 자리.
@@ -333,10 +334,18 @@ export default function QuizScreen({
           <Text style={q2.progress}>
             {index + 1} / {total}
           </Text>
-          {/* 이 문제가 모델로 채점되는 방식일 때만 알린다 */}
+          {/*
+            이 문제가 모델로 채점되는 방식일 때만 알린다.
+
+            'failed' 를 '로딩 중' 으로 두면 끝나지 않는 로딩으로 읽힌다
+            (이슈 #23). 이 줄은 진행 표시 옆이라 자리가 좁아서 짧게
+            '규칙 채점' 으로 쓴다 — 설정 화면에 긴 문구가 있다.
+          */}
           {q.mode === 'type-term-to-meaning' ? (
-            <Text style={modelReady ? q2.aiOn : q2.aiOff}>
-              {modelReady ? '● AI 채점' : '○ 로딩 중'}
+            <Text style={modelStatus === 'ready' ? q2.aiOn : q2.aiOff}>
+              {modelStatus === 'ready' ? '● AI 채점'
+               : modelStatus === 'failed' ? '○ 규칙 채점'
+               : '○ 로딩 중'}
             </Text>
           ) : (
             <Text style={q2.aiOff} />
