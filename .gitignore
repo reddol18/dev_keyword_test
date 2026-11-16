@@ -18,6 +18,11 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
+# 릴리스 서명 키 — 유출되면 남이 내 앱 이름으로 업데이트를 올릴 수 있다.
+# `*.jks` 는 확장자가 .jks 인 것만 걸러서 .keystore 는 빠져나간다.
+/keystore/
+*.keystore
+
 # Metro
 .metro-health-check*
 

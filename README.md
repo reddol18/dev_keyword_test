@@ -11,7 +11,7 @@ React Native (Expo prebuild) · TypeScript · ONNX Runtime
 > 이름은 단기기억을 관장하는 **해마**(hippocampus)에서 Hippo 를 따왔다.
 > IT 용어를 먹어 치우는 하마라는 뜻이다.
 
-<sub>최종 수정 2026-11-05 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
+<sub>최종 수정 2026-11-16 · 2026-09-18 시작 · [변경 이력](#변경-이력)</sub>
 
 ---
 
@@ -358,6 +358,99 @@ ARM 기기용으로만 빌드한다 (`arm64-v8a`, `armeabi-v7a`). x86 계열을 
 > 개발 빌드(`assembleDebug`)는 Metro 서버가 있어야 실행된다.
 > 오프라인 동작을 확인하려면 release로 빌드할 것.
 
+### 구글 플레이 업로드용 AAB
+
+플레이 스토어는 APK 를 받지 않는다. `.aab`(Android App Bundle)로 올린다.
+
+```sh
+cd android && ./gradlew bundleRelease
+# → android/app/build/outputs/bundle/release/app-release.aab
+```
+
+서명이 제대로 들어갔는지는 인증서 주체로 확인한다.
+
+```sh
+keytool -printcert -jarfile android/app/build/outputs/bundle/release/app-release.aab
+```
+
+`CN=Android Debug` 가 나오면 **잘못된 것이다.** debug 키로 서명된
+AAB 는 플레이가 거부한다.
+
+---
+
+## 릴리스 서명
+
+### prebuild 가 서명을 지우는 문제
+
+Expo 가 만드는 `android/app/build.gradle` 은 release 빌드도 debug 키로
+서명한다. 템플릿에 경고까지 박혀 있다.
+
+```gradle
+release {
+    // Caution! In production, you need to generate your own keystore file.
+    signingConfig signingConfigs.debug
+```
+
+그런데 `android/` 는 저장소에 두지 않고 `expo prebuild` 로 생성한다.
+**`build.gradle` 을 손으로 고치면 다음 prebuild 에서 사라진다.**
+한 번 올리고 끝이면 모르겠지만, 의존성을 하나 추가할 때마다 서명이
+조용히 debug 로 되돌아가는 건 사고다. 빌드는 성공하고, 거부는
+업로드할 때 알게 된다.
+
+`expo-build-properties` 에 서명 옵션이 있으면 그걸 썼겠지만
+[v57 옵션 목록](https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/)에
+없다. `buildArchs`·`minSdkVersion`·`extraProguardRules` 류뿐이다.
+
+그래서 **prebuild 파이프라인 안에** 끼워 넣었다 —
+`plugins/withReleaseSigning.js` 가 config plugin 으로 돌면서
+`signingConfigs.release` 를 추가하고 `buildTypes.release` 를 그쪽으로
+돌린다. prebuild 가 네이티브 파일을 만든 직후에 실행되므로, 몇 번을
+다시 만들어도 끝에서 항상 같은 수정이 다시 적용된다.
+`--clean` 을 붙여도 살아남는다.
+
+### 비밀번호는 어디에 있나
+
+`build.gradle` 에 박지 않는다. 생성물이라 실수로 커밋될 여지가 있고,
+이 저장소는 공개다. 값의 출처는 `.env` 한 곳이다 (AdMob ID 와 같은 자리).
+
+```
+ANDROID_KEYSTORE_FILE=keystore/release.keystore
+ANDROID_KEYSTORE_PASSWORD=...
+ANDROID_KEY_ALIAS=...
+ANDROID_KEY_PASSWORD=...
+```
+
+플러그인이 이 값을 읽어 `android/gradle.properties` 로 옮기고,
+`build.gradle` 은 속성 이름만 참조한다. `.env` 가 없는 환경
+(저장소를 clone 한 남의 PC, CI)에서는 아무것도 하지 않고 debug 서명을
+그대로 둔다 — 서명 키가 없다고 빌드가 깨지는 쪽이 더 불편하다.
+
+### ★ 키스토어 백업 — 잃으면 복구가 안 된다
+
+키스토어는 `keystore/release.keystore` 에 있고 **git 에 올라가지 않는다**
+(`.gitignore` 의 `/keystore/`, `*.keystore`).
+
+구글 플레이는 **앱의 신원을 이 키로 확인한다.** 잃어버리면:
+
+- 그 앱에 **업데이트를 영구히 올릴 수 없다.** 비밀번호 재발급 같은 건 없다
+- 새 키로 새 앱을 올리는 수밖에 없다 — 패키지명도, 설치 수도, 리뷰도 전부 처음부터
+- 유출되면 남이 내 앱 이름으로 업데이트를 배포할 수 있다
+
+유효기간은 2050년 이후까지(`-validity 10000`) 잡아 뒀다. 플레이 권장이다.
+
+**지금 해 둘 일** — `keystore/release.keystore` 와 `.env` 를 함께:
+
+1. **이 PC 밖**으로 복사한다. 외장 디스크나 USB 하나, 개인 클라우드 하나
+   (최소 두 곳. 한 곳은 물리적으로 다른 장소)
+2. 비밀번호는 키스토어와 **다른 곳**에 둔다 — 비밀번호 관리자가 제일 낫다.
+   같은 폴더에 메모로 넣으면 백업이 통째로 유출될 때 같이 넘어간다
+3. 압축해서 암호를 거는 방법도 괜찮다. 단 그 암호도 어딘가 남겨야 한다
+
+> 플레이 콘솔의 **Play App Signing** 을 켜면 구글이 배포용 서명 키를
+> 따로 보관해 주지만, 여기 있는 **업로드 키는 여전히 내 책임**이다.
+> 업로드 키를 잃으면 구글에 재설정을 요청할 수는 있다 — 백업보다 느리고
+> 번거롭다.
+
 ---
 
 ## 프로젝트 구조
@@ -384,6 +477,10 @@ data/
 assets/model/
   model.onnx        임베딩 모델 (git 제외, 스크립트로 받음)
   tokenizer.json
+plugins/
+  withReleaseSigning.js  릴리스 서명을 prebuild 후에도 유지 (→ 릴리스 서명)
+keystore/
+  release.keystore  업로드 키 (git 제외 — 백업 필수)
 ```
 
 ---
@@ -439,12 +536,39 @@ tar -xf app-release.apk assets/index.android.bundle
 ./gradlew assembleRelease
 ```
 
-### 3. `VersionNumber` — Gradle 9에서 제거된 API
+### 3. 서명 비밀번호가 `#` 에서 잘린다
+
+릴리스 서명을 붙이고 처음 AAB 를 만들 때 마지막 태스크에서 죽었다.
+
+```
+> Task :app:signReleaseBundle FAILED
+  Failed to read key wordbook-release from store "...release.keystore":
+  keystore password was incorrect
+```
+
+비밀번호는 맞았다. **`gradle.properties` 가 비밀번호를 끝까지 담지
+못한 것**이었다. 이 파일은 자바 `.properties` 포맷이고 `#` 이 주석
+시작이라, `Wb!2026#Rls$kS7q` 를 넣으면 파일에는 `Wb!2026` 만 남는다.
+
+```
+WORDBOOK_RELEASE_STORE_PASSWORD=Wb!2026        ← # 뒤가 사라졌다
+```
+
+Gradle 은 잘린 값으로 키스토어를 열려다 실패하고, 메시지는 "비밀번호가
+틀렸다"고만 말한다. **원인이 비밀번호가 아니라 파일 포맷이라 메시지만
+보고는 찾기 어렵다.** 빌드가 2분을 다 쓰고 맨 마지막에 죽는 것도
+확인을 느리게 만든다.
+
+`plugins/withReleaseSigning.js` 가 값을 쓸 때 영숫자 아닌 글자를
+유니코드 이스케이프(`\uXXXX`)로 바꾸게 해서 막았다. `.properties` 는
+이 표기를 읽어 주므로 비밀번호에 무엇이 들어가도 그대로 전달된다.
+
+### 4. `VersionNumber` — Gradle 9에서 제거된 API
 
 `build.gradle`이 `org.gradle.util.VersionNumber`를 쓰는데 Gradle 9에서 빠졌다.
 RN 0.71 미만에서만 쓰이는 분기라 문자열 비교로 교체했다.
 
-### 4. 긴 목록에서 스크롤이 아예 멈춘다
+### 5. 긴 목록에서 스크롤이 아예 멈춘다
 
 갤럭시 S8(안드로이드 9)에서 424개 목록을 내리다 보면 **20회차쯤부터
 스크롤이 먹지 않았다.** 끝이 아니라 113번째에서였다. 그때 화면 좌표를
@@ -506,6 +630,7 @@ y=   0  투자 대비 수익률                    ← 좌표가 0으로 튐
 
 | 날짜 | 한 일 |
 |---|---|
+| **2026-11-16** | 구글 플레이 업로드 준비 — 릴리스 키스토어 생성 · AAB 빌드 추가(`build-android.ps1 bundle`) · 서명 설정을 config plugin 으로 옮겨 `expo prebuild --clean` 후에도 살아남게 했다 (`build.gradle` 직접 수정은 prebuild 가 지운다) |
 | **2026-11-05** | 목록 스크롤이 멈추던 문제 수정 ([#15](https://github.com/reddol18/dev_keyword_test/issues/15)) · 검색 결과가 없을 때 다른 덱에 있으면 알려 준다 · `Reproducibility` 추가 (423 → **424**) ([#14](https://github.com/reddol18/dev_keyword_test/issues/14)) · 목록 화면 스크린샷 갱신 |
 | **2026-11-02** | IT 용어 32개 추가 (391 → **423**) — 빌드·패키지 / 타입 계약 / 서버 상태·스트림 / LLM 평가 네 분야 신설 |
 | **2026-10-29** | IT 용어 90개 추가 (301 → **391**) — 쿠버네티스·인프라 / LLM 게이트웨이 / 문서 AI·LangGraph 세 분야 신설 |

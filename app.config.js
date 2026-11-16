@@ -1,5 +1,5 @@
 /**
- * 동적 앱 설정 — AdMob ID 만 여기서 주입한다.
+ * 동적 앱 설정 — AdMob ID 와 릴리스 서명을 여기서 주입한다.
  *
  * ## 왜 app.json 을 두고 이 파일을 또 두는가
  *
@@ -32,6 +32,13 @@
  * 깨지지 않아야 한다. 그때는 구글 공식 테스트 ID 로 떨어진다.
  * 실제 ID 가 안 들어간 빌드는 광고가 테스트 광고로 뜨니, 잘못 섞여도
  * 무효 클릭 사고로는 이어지지 않는다.
+ *
+ * ## 릴리스 서명도 여기서 거쳐 간다
+ *
+ * `./plugins/withReleaseSigning` 이 `.env` 의 서명 값을 읽어
+ * `android/` 에 주입한다. `android/` 는 gitignore 되고 prebuild 가
+ * 다시 만들기 때문에, 서명 설정을 prebuild 파이프라인 안에 넣지 않으면
+ * 다음 prebuild 에서 debug 키로 되돌아간다. 자세한 이유는 그 파일에 적었다.
  */
 
 /** 구글 공식 테스트 ID. `.env` 가 없을 때 쓰는 기본값이다. */
@@ -50,6 +57,8 @@ module.exports = ({ config }) => ({
       (p) => !(Array.isArray(p) ? p[0] : p)?.includes?.('google-mobile-ads'),
     ),
     ['react-native-google-mobile-ads', { androidAppId: appId }],
+    // 릴리스 서명. `.env` 에 서명 값이 없으면 아무것도 하지 않는다.
+    './plugins/withReleaseSigning',
   ],
   extra: {
     ...config.extra,
