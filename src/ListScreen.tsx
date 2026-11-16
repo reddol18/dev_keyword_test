@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Alert, Pressable, ScrollView, SectionList, Share,
+  Alert, Linking, Pressable, ScrollView, SectionList, Share,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import type { DeckId } from './decks';
@@ -11,6 +11,19 @@ import { deckIcon, fieldIcon, levelIcon } from './icons';
 import { C, S } from './theme';
 
 const LEVEL_LABEL: Record<number, string> = { 1: '기초', 2: '일반', 3: '면접 우선' };
+
+/**
+ * 개인정보처리방침.
+ *
+ * 앱 안에 **접근 경로가 있어야 한다.** AdMob 을 넣으면서 INTERNET ·
+ * ACCESS_NETWORK_STATE · AD_ID 권한이 머지됐는데, 이 앱은 오프라인 학습
+ * 앱이라 사용자가 권한 목록을 보면 설명이 필요하다. 플레이 스토어도 광고
+ * SDK 가 든 앱에 방침 URL 을 요구하고, 콘솔에만 넣는 것으로는 통상
+ * 부족하다 (이슈 #24).
+ *
+ * 저장소의 `docs/privacy.md` 는 삭제됐고 블로그가 정본이다.
+ */
+const PRIVACY_URL = 'https://reddol18.pe.kr/privacy/yongeo-hama.html';
 
 /**
  * 항목·헤더의 고정 높이(dp). getItemLayout 이 쓴다.
@@ -173,6 +186,24 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
     );
   };
 
+  /**
+   * 개인정보처리방침을 브라우저로 연다.
+   *
+   * `Linking.openURL` 은 **reject 될 수 있다** — 브라우저가 없거나 비활성인
+   * 기기, URL 을 처리할 앱이 없는 경우다. 안 잡으면 unhandled rejection 이
+   * 되고 사용자는 아무 반응도 못 본다. 그래서 알리고, URL 을 같이 보여준다
+   * (링크가 안 열려도 주소를 옮겨 적을 수 있어야 한다).
+   *
+   * `canOpenURL` 로 미리 확인하지 않는 이유: 안드로이드에서 확인 자체가
+   * reject 될 수 있어서 분기가 둘로 늘기만 하고, 결국 실패 처리는 똑같이
+   * 필요하다. 바로 열어 보고 실패하면 알리는 쪽이 짧다.
+   */
+  const openPrivacy = () => {
+    Linking.openURL(PRIVACY_URL).catch(() => {
+      Alert.alert('링크를 열 수 없습니다', `브라우저에서 아래 주소를 열어 주세요.\n\n${PRIVACY_URL}`);
+    });
+  };
+
   const pickDeck = (id: DeckId) => {
     setDeckId(id);
     // 덱마다 레벨·분야 구성이 달라 초기화한다.
@@ -294,12 +325,20 @@ export default function ListScreen({ onExit }: { onExit: () => void }) {
           <View style={l.dataBox}>
             <Text style={l.dataNote}>
               학습 기록은 이 기기에만 저장됩니다. 앱을 지우면 사라집니다.
+              {'\n'}
+              단어 학습은 오프라인으로 동작하고, 인터넷은 광고 표시에만
+              사용합니다.
             </Text>
             <Pressable onPress={exportProgress} style={l.dataBtn}>
               <Text style={l.dataBtnText}>진도 내보내기</Text>
             </Pressable>
             <Pressable onPress={resetProgress} style={l.dataBtn}>
               <Text style={l.dataDanger}>처음부터 다시 외우기</Text>
+            </Pressable>
+            {/* 데이터 관리 버튼들과 같은 성격의 정보라 한자리에 모은다.
+                버튼 테두리를 주지 않아 파괴적 동작과 섞이지 않게 한다. */}
+            <Pressable onPress={openPrivacy} style={l.linkBtn} hitSlop={6}>
+              <Text style={l.linkText}>개인정보처리방침 ↗</Text>
             </Pressable>
           </View>
         }
@@ -448,6 +487,10 @@ const l = StyleSheet.create({
   dataBtnText: { fontSize: 15, color: C.text },
   // 파괴적인 동작이라 색으로 구분한다. 확인 다이얼로그가 한 겹 더 있다.
   dataDanger: { fontSize: 15, color: C.no },
+
+  // 외부 링크. 테두리 없는 보조 항목이라 위 버튼들보다 눈에 덜 띈다.
+  linkBtn: { paddingVertical: 10, alignItems: 'center' },
+  linkText: { fontSize: 14, color: C.blue },
 
   emptyBox: { paddingVertical: 48, paddingHorizontal: 20, gap: 16 },
   empty: { textAlign: 'center', color: C.faint, fontSize: 15 },
